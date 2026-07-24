@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(mvn -q -o compile)",
+      "Bash(mkdir -p /tmp/safx-build)",
+      "Bash(javac -d /tmp/safx-build src/main/java/com/caldeira/service/*.java src/main/java/com/caldeira/Main.java)",
+      "Bash(echo \"=== SAFX07 ===\"; cat -A /tmp/safx-build/SAFX07.txt | tr '^I' '\\\\t' | head -1 | tr '\\\\t' '\\\\n' | head -40 *)",
+      "Bash(cp /tmp/safx-build/SAFX07.txt /Users/alscaldeira/Workspaces/T2/safx-formatter/SAFX07.txt)",
+      "Bash(cp /tmp/safx-build/SAFX08.txt /Users/alscaldeira/Workspaces/T2/safx-formatter/SAFX08.txt)",
+      "Bash(cp /tmp/safx-build/SAFX49.txt /Users/alscaldeira/Workspaces/T2/safx-formatter/SAFX49.txt)",
+      "Read(//Users/alscaldeira/IdeaProjects/safx-formatter/src/main/resources/**)",
+      "Bash(diff -rq /Users/alscaldeira/IdeaProjects/safx-formatter/src /Users/alscaldeira/Workspaces/T2/safx-formatter/src 2>&1)",
+      "Read(//private/tmp/safx-build2/**)",
+      "Bash(python3)",
+      "Bash(awk -F'\\\\t' '{print $15}' SAFX49.txt)",
+      "Bash(awk -F'\\\\t' '{print length\\($8\\), $8}' SAFX07.txt)",
+      "Bash(awk -F'\\\\t' '{print $7}' SAFX07.txt)",
+      "Bash(awk -F'|' '{print $4}')",
+      "Bash(awk -F'\\\\t' '{print $26}' SAFX08.txt)",
+      "Bash(cp /tmp/safx-build3/SAFX07.txt /tmp/safx-build3/SAFX08.txt /tmp/safx-build3/SAFX49.txt /Users/alscaldeira/Workspaces/T2/safx-formatter/)",
+      "Bash(awk '-F\\\\t' '{c=0; for\\(i=1;i<=NF;i++\\) if\\($i!=\"@\" && $i!=\"0000000000000000\"\\) c++; print c}' SAFX07.txt)",
+      "Bash(awk -F'\\\\t' '{print NF}' SAFX07.txt)",
+      "Bash(awk -F'\\\\t' '{print NF}' SAFX08.txt)",
+      "Bash(awk -F'\\\\t' '{print NF}' SAFX49.txt)",
+      "Bash(awk '-F|' ' *)",
+      "Bash(python3 /tmp/validate.py)",
+      "Bash(cat >> *)"
+    ]
+  }
+}
