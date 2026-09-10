@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="63a2a46a94024cbeb8c320b360ced569" Name="Diagram1" ZoomLevel="92">
+        <EntityTypeShape EntityType="RANFEModel.ABMC_RACTE_CONTROLE" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.ABMC_RACTE_XML_TMP" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_CONTROLE" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_ARMAS" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_COMBUST" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_DI" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_DI_ADI" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_COFINS" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_ICMS" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_II" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_IPI" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_ISSQN" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_IMP_PIS" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_MEDIC" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_LINHA_VEIC" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_AVULSA" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_CANA_DEDUC" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_CANA_FORDIA" Width="1.5" PointX="14.75" PointY="11.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_COBR" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_COBR_DUP" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_EMIT" Width="1.5" PointX="6.75" PointY="16.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_ENTREGA" Width="1.5" PointX="16.75" PointY="8.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_INF_ADIC" Width="1.5" PointX="16.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_INF_ADIC_CANA" Width="1.5" PointX="8.75" PointY="17.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_INF_ADIC_OBSCONT" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_INF_ADIC_OBSFISCO" Width="1.5" PointX="18.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_INF_ADIC_PROCREF" Width="1.5" PointX="18.75" PointY="8.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_REFER" Width="1.5" PointX="18.75" PointY="12.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_RETIRADA" Width="1.5" PointX="14.75" PointY="18.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_TOTAIS" Width="1.5" PointX="16.75" PointY="19.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_TRANSP" Width="1.5" PointX="18.75" PointY="19.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_TRANSP_REBOQUE" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_TRANSP_VOL" Width="1.5" PointX="20.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_TRANSP_VOL_LAC" Width="1.5" PointX="20.75" PointY="9.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_ORIGEM_XML" Width="1.5" PointX="20.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_XML" Width="1.5" PointX="20.75" PointY="20.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_XML_TMP" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="RANFEModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="21.75" />
+        <EntityTypeShape EntityType="RANFEModel.INT_NFE_NOTA_DEST" Width="1.5" PointX="3.375" PointY="18.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

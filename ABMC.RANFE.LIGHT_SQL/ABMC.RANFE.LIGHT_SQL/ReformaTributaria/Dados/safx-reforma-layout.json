@@ -1,0 +1,3421 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedFrom": "Manual_Layout_TAXONE_Reforma_Tributaria.xlsx (aba 'Tabelas SAFX')",
+  "purpose": "Contrato de saida dos layouts SAFX da Reforma Tributaria gerados a partir de XML. 'origem' documenta de qual caminho do XML cada campo vem; campo sem 'origem' nao existe na origem e sai nulo.",
+  "serialization": {
+    "delimiter": "TAB",
+    "nullValue": "@",
+    "dateFormat": "YYYYMMDD",
+    "numericFormat": "16 digitos sem separador decimal, mesma convencao do SAFX07/08"
+  },
+  "layouts": {
+    "SAFX3007": {
+      "description": "Notas Fiscais - Reforma Tributaria (vinculada a SAFX07)",
+      "fieldCountOficial": 130,
+      "ordemConfirmada": true,
+      "fields": [
+        {
+          "posicao": 1,
+          "campo": "COD_EMPRESA",
+          "descricao": "Código da Empresa",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro estabelecimentos.properties",
+          "codigosErroTaxOne": [
+            "90001"
+          ]
+        },
+        {
+          "posicao": 2,
+          "campo": "COD_ESTAB",
+          "descricao": "Código do Estabelecimento",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro estabelecimentos.properties",
+          "codigosErroTaxOne": [
+            "90002"
+          ]
+        },
+        {
+          "posicao": 3,
+          "campo": "DATA_FISCAL",
+          "descricao": "Data da Escrita Fiscal",
+          "tamanho": "008",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "NF-e ide/dhSaiEnt | NFS-e infDPS/dCompet"
+        },
+        {
+          "posicao": 4,
+          "campo": "MOVTO_E_S",
+          "descricao": "Movimento Entrada/Saída",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "regra do SAFX07 (ide/tpNF)",
+          "codigosErroTaxOne": [
+            "90129"
+          ]
+        },
+        {
+          "posicao": 5,
+          "campo": "NORM_DEV",
+          "descricao": "Normal ou Devolução",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "regra do SAFX07 (ide/finNFe)",
+          "codigosErroTaxOne": [
+            "90130"
+          ]
+        },
+        {
+          "posicao": 6,
+          "campo": "COD_DOCTO",
+          "descricao": "Tipo do Documento",
+          "tamanho": "005",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo por tipo (NFI/NFS)",
+          "codigosErroTaxOne": [
+            "90119",
+            "90125",
+            "90470"
+          ]
+        },
+        {
+          "posicao": 7,
+          "campo": "IND_FIS_JUR",
+          "descricao": "Indicador Pessoa Física/Jurídica",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "papel do participante (igual ao SAFX07)",
+          "codigosErroTaxOne": [
+            "90088"
+          ]
+        },
+        {
+          "posicao": 8,
+          "campo": "COD_FIS_JUR",
+          "descricao": "Código/Destinatário/Emitente/ Remetente",
+          "tamanho": "014",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "participantes.properties ou CNPJ",
+          "codigosErroTaxOne": [
+            "90089",
+            "90087",
+            "90124"
+          ]
+        },
+        {
+          "posicao": 9,
+          "campo": "NUM_DOCFIS",
+          "descricao": "Número do Documento Fiscal/ Número do Mapa Resumo de Caixa",
+          "tamanho": "012",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "ide/nNF | infNFSe/nNFSe",
+          "codigosErroTaxOne": [
+            "90112"
+          ]
+        },
+        {
+          "posicao": 10,
+          "campo": "SERIE_DOCFIS",
+          "descricao": "Série do Documento Fiscal",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "ide/serie | infDPS/serie",
+          "codigosErroTaxOne": [
+            "90504"
+          ]
+        },
+        {
+          "posicao": 11,
+          "campo": "SUB_SERIE_DOCFIS",
+          "descricao": "Subsérie do Documento Fiscal",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "90505"
+          ]
+        },
+        {
+          "posicao": 12,
+          "campo": "COD_MUN_FT_GER_IBS_CBS",
+          "descricao": "Código do Município de consumo, fato gerador do IBS / CBS",
+          "tamanho": "007",
+          "tipo": "N",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913274"
+          ]
+        },
+        {
+          "posicao": 13,
+          "campo": "TIPO_CHAVE_DFE",
+          "descricao": "Tipo de Chave DF-e",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "derivado do schema: 1 = NFS-e, 2 = NF-e (lista do manual)",
+          "codigosErroTaxOne": [
+            "913277",
+            "913278"
+          ]
+        },
+        {
+          "posicao": 14,
+          "campo": "DESC_CHAVE_DFE",
+          "descricao": "Descrição de chave DF-e",
+          "tamanho": "255",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913279",
+            "913280"
+          ]
+        },
+        {
+          "posicao": 15,
+          "campo": "FINALIDADE_EMISSAO_NFE",
+          "descricao": "Finalidade da Emissão (NF-e)",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "ide/finNFe",
+          "codigosErroTaxOne": [
+            "913259",
+            "913281"
+          ]
+        },
+        {
+          "posicao": 16,
+          "campo": "FINALIDADE_EMISSAO_NFSE",
+          "descricao": "Finalidade da emissão (NFS-e)",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "infDPS/IBSCBS/finNFSe",
+          "codigosErroTaxOne": [
+            "913282",
+            "913283"
+          ]
+        },
+        {
+          "posicao": 17,
+          "campo": "TIPO_NF_DEBITO",
+          "descricao": "Tipo de Nota de Débito",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913260"
+          ]
+        },
+        {
+          "posicao": 18,
+          "campo": "TIPO_NF_CREDITO",
+          "descricao": "Tipo de Nota de Crédito",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913261"
+          ]
+        },
+        {
+          "posicao": 19,
+          "campo": "IND_OPER_FINAL",
+          "descricao": "Indica operação com Consumidor final",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "ide/indFinal",
+          "codigosErroTaxOne": [
+            "913259",
+            "913262"
+          ]
+        },
+        {
+          "posicao": 20,
+          "campo": "IND_OPER_USO_CONS_PESSOAL",
+          "descricao": "Indica operação de uso ou consumo pessoal",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913284",
+            "913285"
+          ]
+        },
+        {
+          "posicao": 21,
+          "campo": "IND_OPER_FORNECIMENTO",
+          "descricao": "Indicador da operação de fornecimento",
+          "tamanho": "010",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "infDPS/IBSCBS/cIndOp (TACES120)",
+          "codigosErroTaxOne": [
+            "913286",
+            "913287",
+            "913291"
+          ]
+        },
+        {
+          "posicao": 22,
+          "campo": "IND_DESTINATARIO_SERVICO",
+          "descricao": "Destinatário dos Serviços",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "infDPS/IBSCBS/indDest",
+          "codigosErroTaxOne": [
+            "913289",
+            "913290"
+          ]
+        },
+        {
+          "posicao": 23,
+          "campo": "IND_COMPRA_MOMENTO_OPER",
+          "descricao": "Indicador de presença do comprador no estabelecimento comercial no momento da operação",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "ide/indPres",
+          "codigosErroTaxOne": [
+            "913263"
+          ]
+        },
+        {
+          "posicao": 24,
+          "campo": "IND_INTERM",
+          "descricao": "Indicador de intermediador/marketplace",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "ide/indIntermed",
+          "codigosErroTaxOne": [
+            "913264"
+          ]
+        },
+        {
+          "posicao": 25,
+          "campo": "IND_COMPRA_GOVERN",
+          "descricao": "Indicador de compra governamental",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913265"
+          ]
+        },
+        {
+          "posicao": 26,
+          "campo": "TIPO_OPERACAO",
+          "descricao": "Tipo de Operação com Entes Governamentais ou outros serviços sobre bens imóveis",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913288"
+          ]
+        },
+        {
+          "posicao": 27,
+          "campo": "TIPO_ENTE_GOVERN",
+          "descricao": "Tipo de ente governamental",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913266"
+          ]
+        },
+        {
+          "posicao": 28,
+          "campo": "PERC_RED_ALIQ_COMPRA_GOVERN",
+          "descricao": "Percentual de redução de aliquota em compra governamental",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 29,
+          "campo": "CST_IS",
+          "descricao": "Código de Situação Tributária do Imposto Seletivo",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 30,
+          "campo": "CCLASS_IS",
+          "descricao": "Código de Classificação Tributária do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 31,
+          "campo": "BC_IS",
+          "descricao": "Valor da Base de Cálculo do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 32,
+          "campo": "ALIQ_IS",
+          "descricao": "Alíquota do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 33,
+          "campo": "ALIQ_ESP_UNID_MED_APR_IS",
+          "descricao": "Alíquota específica por unidade de medida apropriada do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 34,
+          "campo": "VLR_IS",
+          "descricao": "Valor do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 35,
+          "campo": "UNID_MED_TRIBUT_IS",
+          "descricao": "Unidade de Medida Tributável do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913273"
+          ]
+        },
+        {
+          "posicao": 36,
+          "campo": "QTD_TRIB_IS",
+          "descricao": "Quantidade Tributável do Imposto Seletivo",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 37,
+          "campo": "CST_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/CST",
+          "codigosErroTaxOne": [
+            "913267"
+          ]
+        },
+        {
+          "posicao": 38,
+          "campo": "CCLASS_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/cClassTrib",
+          "codigosErroTaxOne": [
+            "913268"
+          ]
+        },
+        {
+          "posicao": 39,
+          "campo": "BC_IBS_CBS",
+          "descricao": "Base de cálculo do IBS e CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e infNFSe/IBSCBS/valores/vBC"
+        },
+        {
+          "posicao": 40,
+          "campo": "VLR_MON_DOCREF_N_INC_IBS_CBS",
+          "descricao": "Valor monetário -Documento Referenciado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 41,
+          "campo": "ALIQ_IBS_UF",
+          "descricao": "Alíquota do IBS de competência das UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/uf/pIBSUF"
+        },
+        {
+          "posicao": 42,
+          "campo": "VLR_IBS_UF",
+          "descricao": "Valor do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF"
+        },
+        {
+          "posicao": 43,
+          "campo": "PERC_DIF_IBS_UF",
+          "descricao": "Percentual do diferimento do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 44,
+          "campo": "VLR_DIF_IBS_UF",
+          "descricao": "Valor do Diferimento do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 45,
+          "campo": "VLR_TRIB_DEV_IBS_UF",
+          "descricao": "Valor do tributo devolvido do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 46,
+          "campo": "PERC_RED_ALIQ_IBS_UF",
+          "descricao": "Percentual da redução de alíquota do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/uf/pRedAliqUF"
+        },
+        {
+          "posicao": 47,
+          "campo": "ALIQ_EFET_IBS_UF",
+          "descricao": "Aliquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/uf/pAliqEfetUF"
+        },
+        {
+          "posicao": 48,
+          "campo": "ALIQ_IBS_MUN",
+          "descricao": "Alíquota do IBS de competência dos Municípios",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/mun/pIBSMun"
+        },
+        {
+          "posicao": 49,
+          "campo": "VLR_IBS_MUN",
+          "descricao": "Valor do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 50,
+          "campo": "PERC_DIF_IBS_MUN",
+          "descricao": "Percentual do diferimento do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 51,
+          "campo": "VLR_DIF_IBS_MUN",
+          "descricao": "Valor do Diferimento do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 52,
+          "campo": "VLR_BRUTO_IBS_MUN",
+          "descricao": "Valor da operação do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 53,
+          "campo": "VLR_TRIB_DEV_IBS_MUN",
+          "descricao": "Valor do tributo devolvido do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 54,
+          "campo": "PERC_RED_ALIQ_IBS_MUN",
+          "descricao": "Percentual da redução de alíquota do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/mun/pRedAliqMun"
+        },
+        {
+          "posicao": 55,
+          "campo": "ALIQ_EFET_IBS_MUN",
+          "descricao": "Aliquota Efetiva do IBS de competência dos Municípios que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/mun/pAliqEfetMun"
+        },
+        {
+          "posicao": 56,
+          "campo": "ALIQ_CBS",
+          "descricao": "Alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/fed/pCBS"
+        },
+        {
+          "posicao": 57,
+          "campo": "VLR_CBS",
+          "descricao": "Valor da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS"
+        },
+        {
+          "posicao": 58,
+          "campo": "PERC_DIF_CBS",
+          "descricao": "Percentual do diferimento da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 59,
+          "campo": "VLR_DIF_CBS",
+          "descricao": "Valor do Diferimento da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 60,
+          "campo": "VLR_BRUTO_CBS",
+          "descricao": "Valor da CBS Bruto na operação da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 61,
+          "campo": "VLR_TRIB_DEV_CBS",
+          "descricao": "Valor do tributo devolvido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 62,
+          "campo": "PERC_RED_ALIQ_CBS",
+          "descricao": "Percentual da redução de alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/fed/pRedAliqCBS"
+        },
+        {
+          "posicao": 63,
+          "campo": "ALIQ_EFET_CBS",
+          "descricao": "Alíquota Efetiva da CBS que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "NFS-e IBSCBS/valores/fed/pAliqEfetCBS"
+        },
+        {
+          "posicao": 64,
+          "campo": "CST_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913269"
+          ]
+        },
+        {
+          "posicao": 65,
+          "campo": "CCLASS_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913270"
+          ]
+        },
+        {
+          "posicao": 66,
+          "campo": "ALIQ_IBS_TRIB_REG_UF",
+          "descricao": "Valor da alíquota do IBS da UF - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 67,
+          "campo": "VLR_TRIB_REG_TRIB_IBS_UF",
+          "descricao": "Valor do Tributo do IBS da UF - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 68,
+          "campo": "ALIQ_TRIB_REG_IBS_MUN",
+          "descricao": "Valor da alíquota do IBS do Município - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 69,
+          "campo": "VLR_TRIB_REG_TRIB_IBS_MUN",
+          "descricao": "Valor do Tributo do IBS do Município - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 70,
+          "campo": "ALIQ_TRIB_REG_CBS",
+          "descricao": "Valor da alíquota da CBS - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 71,
+          "campo": "VLR_TRIB_REG_TRIB_CBS",
+          "descricao": "Valor do Tributo da CBS - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 72,
+          "campo": "CCLASS_CRED_PRES_IBS",
+          "descricao": "Código de Classificação do Crédito Presumido do IBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913271"
+          ]
+        },
+        {
+          "posicao": 73,
+          "campo": "PERC_CRED_PRES_IBS",
+          "descricao": "Percentual do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 74,
+          "campo": "ALIQ_CRED_PRES_IBS",
+          "descricao": "Alíquota do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 75,
+          "campo": "VLR_CRED_PRES_IBS",
+          "descricao": "Valor do Crédito Presumido do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 76,
+          "campo": "VLR_CRED_PRES_C_SUS_IBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva do IBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 77,
+          "campo": "CCLASS_CRED_PRES_CBS",
+          "descricao": "Código de Classificação do Crédito Presumido da CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913272"
+          ]
+        },
+        {
+          "posicao": 78,
+          "campo": "PERC_CRED_PRES_CBS",
+          "descricao": "Percentual do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 79,
+          "campo": "ALIQ_CRED_PRES_CBS",
+          "descricao": "Alíquota do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 80,
+          "campo": "VLR_CRED_PRES_CBS",
+          "descricao": "Valor do Crédito Presumido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 81,
+          "campo": "VLR_CRED_PRES_C_SUS_CBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva da CBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 82,
+          "campo": "QTD_TRIB_MONO_IBS_CBS",
+          "descricao": "Quantidade tributada na monofasia",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 83,
+          "campo": "ALIQ_AD_REM_IBS",
+          "descricao": "Alíquota ad rem do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 84,
+          "campo": "ALIQ_AD_REM_CBS",
+          "descricao": "Alíqutoa ad rem da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 85,
+          "campo": "VLR_MONO_IBS",
+          "descricao": "Valor do IBS monofásico",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 86,
+          "campo": "VLR_MONO_CBS",
+          "descricao": "Valor da CBS monofásica",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 87,
+          "campo": "QTD_TRIB_RET_MONO_IBS_CBS",
+          "descricao": "Quantidade tributada sujeita à retenção na monofasia do IBS e da CBS",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 88,
+          "campo": "ALIQ_AD_REM_RET_IBS",
+          "descricao": "Alíquota ad rem do IBS sujeito a retenção",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 89,
+          "campo": "VLR_MONO_RET_IBS",
+          "descricao": "Valor do IBS monofásico sujeito a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 90,
+          "campo": "ALIQ_AD_REM_RET_CBS",
+          "descricao": "Alíquota ad rem da CBS sujeito a retenção",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 91,
+          "campo": "VLR_MONO_RET_CBS",
+          "descricao": "Valor da CBS monofásico sujeito a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 92,
+          "campo": "QTD_TRIB_RET_ANT_IBS_CBS",
+          "descricao": "Quantidade tributada retida anteriormente do IBS e da CBS",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 93,
+          "campo": "ALIQ_AD_REM_RET_ANT_IBS",
+          "descricao": "Alíquota ad rem do IBS retido anteriormente",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 94,
+          "campo": "VLR_RET_ANT_IBS",
+          "descricao": "Valor do IBS retido anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 95,
+          "campo": "ALIQ_AD_REM_RET_ANT_CBS",
+          "descricao": "Alíquota ad rem da CBS retida anteriormente",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 96,
+          "campo": "VLR_RET_ANT_CBS",
+          "descricao": "Valor da CBS retida anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 97,
+          "campo": "PERC_DIF_MONO_IBS",
+          "descricao": "Percentual do diferimento do imposto monofásico do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 98,
+          "campo": "VLR_MONO_DIF_IBS",
+          "descricao": "Valor do IBS mono diferido.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 99,
+          "campo": "PERC_DIF_MONO_CBS",
+          "descricao": "Percentual do diferimento do imposto monofásico da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 100,
+          "campo": "VLR_MONO_DIF_CBS",
+          "descricao": "Valor da CBS Mono diferido",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 101,
+          "campo": "ALIQ_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Estado - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 102,
+          "campo": "VLR_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS da UF calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 103,
+          "campo": "ALIQ_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Município - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 104,
+          "campo": "VLR_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS do Município calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 105,
+          "campo": "ALIQ_CBS_COMPRA_GOVERN",
+          "descricao": "Alíquota da CBS - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 106,
+          "campo": "VLR_CBS_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo da CBS calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 107,
+          "campo": "CHAVE_DFE_REF",
+          "descricao": "Chave de acesso do DF-e referenciado",
+          "tamanho": "044",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "ide/NFref/refNFe (somente quando houver uma referencia)"
+        },
+        {
+          "posicao": 108,
+          "campo": "VLR_TOT_IS",
+          "descricao": "Total do imposto seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 109,
+          "campo": "VLR_TOT_BC_IBS_CBS",
+          "descricao": "Valor total da BC do IBS e da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "total/IBSCBSTot/vBCIBSCBS | infNFSe/IBSCBS/valores/vBC"
+        },
+        {
+          "posicao": 110,
+          "campo": "VLR_TOT_DIF_IBS_UF",
+          "descricao": "Valor total do diferimento do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vDif"
+        },
+        {
+          "posicao": 111,
+          "campo": "VLR_TOT_DEV_TRIB_IBS_UF",
+          "descricao": "Valor total de devolução de tributos do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vDevTrib"
+        },
+        {
+          "posicao": 112,
+          "campo": "VLR_TOT_IBS_UF",
+          "descricao": "Valor total do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF"
+        },
+        {
+          "posicao": 113,
+          "campo": "VLR_TOT_DIF_IBS_MUN",
+          "descricao": "Valor total do diferimento do IBS do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSMun/vDif"
+        },
+        {
+          "posicao": 114,
+          "campo": "VLR_TOT_DEV_TRIB_IBS_MUN",
+          "descricao": "Valor total de devolução de tributos do IBS do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSMun/vDevTrib"
+        },
+        {
+          "posicao": 115,
+          "campo": "VLR_TOT_IBS_MUN",
+          "descricao": "Valor total do IBS do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/gIBSMun/vIBSMun | totCIBS/gIBS/gIBSMunTot/vIBSMun"
+        },
+        {
+          "posicao": 116,
+          "campo": "VLR_TOT_IBS",
+          "descricao": "Valor total do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/vIBS | totCIBS/gIBS/vIBSTot"
+        },
+        {
+          "posicao": 117,
+          "campo": "VLR_TOT_CRED_PRES_IBS",
+          "descricao": "Valor total do crédito presumido do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/vCredPres"
+        },
+        {
+          "posicao": 118,
+          "campo": "VLR_TOT_CRED_PRES_C_SUS_IBS",
+          "descricao": "Valor total do crédito presumido em condição suspensiva do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gIBS/vCredPresCondSus"
+        },
+        {
+          "posicao": 119,
+          "campo": "VLR_TOT_CRED_PRES_CBS",
+          "descricao": "Valor total do crédito presumido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vCredPres"
+        },
+        {
+          "posicao": 120,
+          "campo": "VLR_TOT_CRED_PRES_C_SUS_CBS",
+          "descricao": "Valor total do crédito presumido em condição suspensiva da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vCredPresCondSus"
+        },
+        {
+          "posicao": 121,
+          "campo": "VLR_TOT_DIF_CBS",
+          "descricao": "Valor total do diferimento da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vDif"
+        },
+        {
+          "posicao": 122,
+          "campo": "VLR_TOT_DEV_TRIB_CBS",
+          "descricao": "Valor total de devolução de tributos da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vDevTrib"
+        },
+        {
+          "posicao": 123,
+          "campo": "VLR_TOT_CBS",
+          "descricao": "Valor total da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS"
+        },
+        {
+          "posicao": 124,
+          "campo": "TOT_MONO_IBS",
+          "descricao": "Total do IBS monofásico",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 125,
+          "campo": "TOT_MONO_CBS",
+          "descricao": "Total da CBS monofásica",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 126,
+          "campo": "TOT_MONO_RET_IBS",
+          "descricao": "Total do IBS monofásico sujeito a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 127,
+          "campo": "TOT_MONO_RET_CBS",
+          "descricao": "Total da CBS monofásica sujeita a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 128,
+          "campo": "TOT_MONO_RET_ANT_IBS",
+          "descricao": "Total do IBS monofásico retido anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 129,
+          "campo": "TOT_MONO_RET_ANT_CBS",
+          "descricao": "Total da CBS monofásica retido anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 130,
+          "campo": "VLR_TOT_NF_IBS_CBS_IS",
+          "descricao": "Valor total da nota com IBS / CBS / IS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "total/vNFTot | infNFSe/IBSCBS/totCIBS/vTotNF"
+        }
+      ]
+    },
+    "SAFX3008": {
+      "description": "Itens de Mercadorias/Produtos - Reforma Tributaria (vinculada a SAFX08)",
+      "fieldCountOficial": 88,
+      "ordemConfirmada": true,
+      "fields": [
+        {
+          "posicao": 1,
+          "campo": "COD_EMPRESA",
+          "descricao": "Código da Empresa",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro",
+          "codigosErroTaxOne": [
+            "90001"
+          ]
+        },
+        {
+          "posicao": 2,
+          "campo": "COD_ESTAB",
+          "descricao": "Código do Estabelecimento",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro",
+          "codigosErroTaxOne": [
+            "90002"
+          ]
+        },
+        {
+          "posicao": 3,
+          "campo": "DATA_FISCAL",
+          "descricao": "Data da Escrita Fiscal",
+          "tamanho": "008",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "ide/dhSaiEnt",
+          "codigosErroTaxOne": [
+            "90131",
+            "90209",
+            "90386"
+          ]
+        },
+        {
+          "posicao": 4,
+          "campo": "MOVTO_E_S",
+          "descricao": "Movimento Entrada/Saída",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "regra do SAFX08",
+          "codigosErroTaxOne": [
+            "90129"
+          ]
+        },
+        {
+          "posicao": 5,
+          "campo": "NORM_DEV",
+          "descricao": "Normal ou Devolução",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "regra do SAFX08",
+          "codigosErroTaxOne": [
+            "90130"
+          ]
+        },
+        {
+          "posicao": 6,
+          "campo": "COD_DOCTO",
+          "descricao": "Tipo do Documento",
+          "tamanho": "005",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo NFI",
+          "codigosErroTaxOne": [
+            "90119",
+            "90125",
+            "90470"
+          ]
+        },
+        {
+          "posicao": 7,
+          "campo": "IND_FIS_JUR",
+          "descricao": "Indicador da Pessoa Física/Jurídica",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "papel do participante",
+          "codigosErroTaxOne": [
+            "90088"
+          ]
+        },
+        {
+          "posicao": 8,
+          "campo": "COD_FIS_JUR",
+          "descricao": "Código do Destinatário/Emitente",
+          "tamanho": "014",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "participantes.properties ou CNPJ",
+          "codigosErroTaxOne": [
+            "90089",
+            "90087",
+            "90124"
+          ]
+        },
+        {
+          "posicao": 9,
+          "campo": "NUM_DOCFIS",
+          "descricao": "Número do Documento Fiscal",
+          "tamanho": "012",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "ide/nNF",
+          "codigosErroTaxOne": [
+            "90112"
+          ]
+        },
+        {
+          "posicao": 10,
+          "campo": "SERIE_DOCFIS",
+          "descricao": "Série do Documento Fiscal",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "ide/serie",
+          "codigosErroTaxOne": [
+            "90504"
+          ]
+        },
+        {
+          "posicao": 11,
+          "campo": "SUB_SERIE_DOCFIS",
+          "descricao": "Subsérie do Documento Fiscal",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "90505"
+          ]
+        },
+        {
+          "posicao": 12,
+          "campo": "IND_BEM_PATR",
+          "descricao": "Bem Patrimonial",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo N (igual ao SAFX08)",
+          "codigosErroTaxOne": [
+            "90395"
+          ]
+        },
+        {
+          "posicao": 13,
+          "campo": "IND_PRODUTO",
+          "descricao": "Indicador do Produto",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo 5 (igual ao SAFX08)",
+          "codigosErroTaxOne": [
+            "90035"
+          ]
+        },
+        {
+          "posicao": 14,
+          "campo": "COD_PRODUTO",
+          "descricao": "Produto",
+          "tamanho": "060",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "det/prod/cProd",
+          "codigosErroTaxOne": [
+            "90033",
+            "90034",
+            "90032"
+          ]
+        },
+        {
+          "posicao": 15,
+          "campo": "COD_BEM",
+          "descricao": "Código do Bem",
+          "tamanho": "060",
+          "tipo": "A",
+          "obrigatorio": true,
+          "codigosErroTaxOne": [
+            "90015",
+            "90016"
+          ]
+        },
+        {
+          "posicao": 16,
+          "campo": "COD_INC_BEM",
+          "descricao": "Código do Incorporador",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true
+        },
+        {
+          "posicao": 17,
+          "campo": "COD_UND_PADRAO",
+          "descricao": "Unidade Padrão",
+          "tamanho": "008",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "det/prod/uCom normalizado (unidades.properties)",
+          "codigosErroTaxOne": [
+            "90147",
+            "90148",
+            "90474"
+          ]
+        },
+        {
+          "posicao": 18,
+          "campo": "NUM_ITEM",
+          "descricao": "Item Nota Fiscal",
+          "tamanho": "005",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "det@nItem",
+          "codigosErroTaxOne": [
+            "90132"
+          ]
+        },
+        {
+          "posicao": 19,
+          "campo": "CST_IS",
+          "descricao": "Código de Situação Tributária do Imposto Seletivo",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 20,
+          "campo": "CCLASS_IS",
+          "descricao": "Código de Classificação Tributária do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 21,
+          "campo": "BC_IS",
+          "descricao": "Valor da Base de Cálculo do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 22,
+          "campo": "ALIQ_IS",
+          "descricao": "Alíquota do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 23,
+          "campo": "ALIQ_ESP_UNID_MED_APR_IS",
+          "descricao": "Alíquota específica por unidade de medida apropriada do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 24,
+          "campo": "VLR_IS",
+          "descricao": "Valor do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 25,
+          "campo": "UNID_MED_TRIBUT_IS",
+          "descricao": "Unidade de Medida Tributável do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913273"
+          ]
+        },
+        {
+          "posicao": 26,
+          "campo": "QTD_TRIB_IS",
+          "descricao": "Quantidade Tributável do Imposto Seletivo",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 27,
+          "campo": "CST_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "det/imposto/IBSCBS/CST",
+          "codigosErroTaxOne": [
+            "913267"
+          ]
+        },
+        {
+          "posicao": 28,
+          "campo": "CCLASS_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "det/imposto/IBSCBS/cClassTrib",
+          "codigosErroTaxOne": [
+            "913268"
+          ]
+        },
+        {
+          "posicao": 29,
+          "campo": "BC_IBS_CBS",
+          "descricao": "Base de cálculo do IBS e CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "det/imposto/IBSCBS/gIBSCBS/vBC"
+        },
+        {
+          "posicao": 30,
+          "campo": "VLR_MON_DOCREF_N_INC_IBS_CBS",
+          "descricao": "Valor monetário -Documento Referenciado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 31,
+          "campo": "ALIQ_IBS_UF",
+          "descricao": "Alíquota do IBS de competência das UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "gIBSCBS/gIBSUF/pIBSUF"
+        },
+        {
+          "posicao": 32,
+          "campo": "VLR_IBS_UF",
+          "descricao": "Valor do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "gIBSCBS/gIBSUF/vIBSUF"
+        },
+        {
+          "posicao": 33,
+          "campo": "PERC_DIF_IBS_UF",
+          "descricao": "Percentual do diferimento do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 34,
+          "campo": "VLR_DIF_IBS_UF",
+          "descricao": "Valor do Diferimento do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 35,
+          "campo": "VLR_TRIB_DEV_IBS_UF",
+          "descricao": "Valor do tributo devolvido do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 36,
+          "campo": "PERC_RED_ALIQ_IBS_UF",
+          "descricao": "Percentual da redução de alíquota do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 37,
+          "campo": "ALIQ_EFET_IBS_UF",
+          "descricao": "Aliquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 38,
+          "campo": "ALIQ_CBS",
+          "descricao": "Alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "gIBSCBS/gCBS/pCBS"
+        },
+        {
+          "posicao": 39,
+          "campo": "VLR_CBS",
+          "descricao": "Valor da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "gIBSCBS/gCBS/vCBS"
+        },
+        {
+          "posicao": 40,
+          "campo": "PERC_DIF_CBS",
+          "descricao": "Percentual do diferimento da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 41,
+          "campo": "VLR_DIF_CBS",
+          "descricao": "Valor do Diferimento da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 42,
+          "campo": "VLR_BRUTO_CBS",
+          "descricao": "Valor da CBS Bruto na operação da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 43,
+          "campo": "VLR_TRIB_DEV_CBS",
+          "descricao": "Valor do tributo devolvido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 44,
+          "campo": "PERC_RED_ALIQ_CBS",
+          "descricao": "Percentual da redução de alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 45,
+          "campo": "ALIQ_EFET_CBS",
+          "descricao": "Alíquota Efetiva da CBS que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 46,
+          "campo": "CST_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913269"
+          ]
+        },
+        {
+          "posicao": 47,
+          "campo": "CCLASS_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913270"
+          ]
+        },
+        {
+          "posicao": 48,
+          "campo": "ALIQ_TRIB_REG_IBS_UF",
+          "descricao": "Valor da alíquota do IBS da UF - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 49,
+          "campo": "VLR_TRIB_REG_TRIB_IBS_UF",
+          "descricao": "Valor do Tributo do IBS da UF - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 50,
+          "campo": "ALIQ_TRIB_REG_CBS",
+          "descricao": "Valor da alíquota da CBS - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 51,
+          "campo": "VLR_TRIB_REG_TRIB_CBS",
+          "descricao": "Valor do Tributo da CBS - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 52,
+          "campo": "CCLASS_CRED_PRES_IBS",
+          "descricao": "Código de Classificação do Crédito Presumido do IBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913271"
+          ]
+        },
+        {
+          "posicao": 53,
+          "campo": "PERC_CRED_PRES_IBS",
+          "descricao": "Percentual do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 54,
+          "campo": "ALIQ_CRED_PRES_IBS",
+          "descricao": "Alíquota do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 55,
+          "campo": "VLR_CRED_PRES_IBS",
+          "descricao": "Valor do Crédito Presumido do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 56,
+          "campo": "VLR_CRED_PRES_C_SUS_IBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva do IBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 57,
+          "campo": "CCLASS_CRED_PRES_CBS",
+          "descricao": "Código de Classificação do Crédito Presumido da CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913272"
+          ]
+        },
+        {
+          "posicao": 58,
+          "campo": "PERC_CRED_PRES_CBS",
+          "descricao": "Percentual do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 59,
+          "campo": "ALIQ_CRED_PRES_CBS",
+          "descricao": "Alíquota do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 60,
+          "campo": "VLR_CRED_PRES_CBS",
+          "descricao": "Valor do Crédito Presumido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 61,
+          "campo": "VLR_CRED_PRES_C_SUS_CBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva da CBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 62,
+          "campo": "QTD_TRIB_MONO_IBS_CBS",
+          "descricao": "Quantidade tributada na monofasia",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 63,
+          "campo": "ALIQ_AD_REM_IBS",
+          "descricao": "Alíquota ad rem do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 64,
+          "campo": "ALIQ_AD_REM_CBS",
+          "descricao": "Alíqutoa ad rem da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 65,
+          "campo": "VLR_MONO_IBS",
+          "descricao": "Valor do IBS monofásico",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 66,
+          "campo": "VLR_MONO_CBS",
+          "descricao": "Valor da CBS monofásica",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 67,
+          "campo": "QTD_TRIB_RET_MONO_IBS_CBS",
+          "descricao": "Quantidade tributada sujeita à retenção na monofasia do IBS e da CBS",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 68,
+          "campo": "ALIQ_AD_REM_RET_IBS",
+          "descricao": "Alíquota ad rem do IBS sujeito a retenção",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 69,
+          "campo": "VLR_MONO_RET_IBS",
+          "descricao": "Valor do IBS monofásico sujeito a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 70,
+          "campo": "ALIQ_AD_REM_RET_CBS",
+          "descricao": "Alíquota ad rem da CBS sujeito a retenção",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 71,
+          "campo": "VLR_MONO_RET_CBS",
+          "descricao": "Valor da CBS monofásico sujeito a retenção",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 72,
+          "campo": "QTD_TRIB_RET_ANT_IBS_CBS",
+          "descricao": "Quantidade tributada retida anteriormente do IBS e da CBS",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 73,
+          "campo": "ALIQ_AD_REM_RET_ANT_IBS",
+          "descricao": "Alíquota ad rem do IBS retido anteriormente",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 74,
+          "campo": "VLR_RET_ANT_IBS",
+          "descricao": "Valor do IBS retido anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 75,
+          "campo": "ALIQ_AD_REM_RET_ANT_CBS",
+          "descricao": "Alíquota ad rem da CBS retida anteriormente",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 76,
+          "campo": "VLR_RET_ANT_CBS",
+          "descricao": "Valor da CBS retida anteriormente",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 77,
+          "campo": "PERC_DIF_MONO_IBS",
+          "descricao": "Percentual do diferimento do imposto monofásico do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 78,
+          "campo": "VLR_MONO_DIF_IBS",
+          "descricao": "Valor do IBS mono diferido.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 79,
+          "campo": "PERC_DIF_MONO_CBS",
+          "descricao": "Percentual do diferimento do imposto monofásico da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 80,
+          "campo": "VLR_MONO_DIF_CBS",
+          "descricao": "Valor da CBS Mono diferido",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 81,
+          "campo": "ALIQ_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Estado - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 82,
+          "campo": "VLR_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS da UF calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 83,
+          "campo": "ALIQ_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Município - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 84,
+          "campo": "VLR_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS do Município calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 85,
+          "campo": "ALIQ_CBS_COMPRA_GOVERN",
+          "descricao": "Alíquota da CBS - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 86,
+          "campo": "VLR_CBS_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo da CBS calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 87,
+          "campo": "VLR_TOT_ITEM",
+          "descricao": "Valor Total do Item da Nota",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "det/vItem"
+        },
+        {
+          "posicao": 88,
+          "campo": "NUM_ITEM_DOC_REFER",
+          "descricao": "Número do item do documento referenciado.",
+          "tamanho": "003",
+          "tipo": "N",
+          "obrigatorio": false
+        }
+      ]
+    },
+    "SAFX3009": {
+      "description": "Itens de Servicos - Reforma Tributaria (vinculada a SAFX09)",
+      "fieldCountOficial": 64,
+      "ordemConfirmada": true,
+      "fields": [
+        {
+          "posicao": 1,
+          "campo": "COD_EMPRESA",
+          "descricao": "Código da Empresa",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro",
+          "codigosErroTaxOne": [
+            "90001"
+          ]
+        },
+        {
+          "posicao": 2,
+          "campo": "COD_ESTAB",
+          "descricao": "Código do Estabelecimento",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "cadastro",
+          "codigosErroTaxOne": [
+            "90002"
+          ]
+        },
+        {
+          "posicao": 3,
+          "campo": "DATA_FISCAL",
+          "descricao": "Data da Escrita Fiscal",
+          "tamanho": "008",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "infDPS/dCompet",
+          "codigosErroTaxOne": [
+            "90131",
+            "90209",
+            "90386"
+          ]
+        },
+        {
+          "posicao": 4,
+          "campo": "MOVTO_E_S",
+          "descricao": "Movimento Entrada/Saída",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "regra do SAFX07 (servico tomado = 1)",
+          "codigosErroTaxOne": [
+            "90129"
+          ]
+        },
+        {
+          "posicao": 5,
+          "campo": "NORM_DEV",
+          "descricao": "Normal ou Devolução",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo 1",
+          "codigosErroTaxOne": [
+            "90130"
+          ]
+        },
+        {
+          "posicao": 6,
+          "campo": "COD_DOCTO",
+          "descricao": "Tipo do Documento",
+          "tamanho": "005",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "fixo NFS",
+          "codigosErroTaxOne": [
+            "90119",
+            "90125",
+            "90470"
+          ]
+        },
+        {
+          "posicao": 7,
+          "campo": "IND_FIS_JUR",
+          "descricao": "Indicador da Pessoa Física/Jurídica",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "papel do prestador",
+          "codigosErroTaxOne": [
+            "90088"
+          ]
+        },
+        {
+          "posicao": 8,
+          "campo": "COD_FIS_JUR",
+          "descricao": "Código do Destinatário/Emitente",
+          "tamanho": "014",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "participantes.properties ou CNPJ",
+          "codigosErroTaxOne": [
+            "90089",
+            "90087",
+            "90124"
+          ]
+        },
+        {
+          "posicao": 9,
+          "campo": "NUM_DOCFIS",
+          "descricao": "Número do Documento Fiscal",
+          "tamanho": "012",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "infNFSe/nNFSe",
+          "codigosErroTaxOne": [
+            "90112"
+          ]
+        },
+        {
+          "posicao": 10,
+          "campo": "SERIE_DOCFIS",
+          "descricao": "Série do Documento Fiscal",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "infDPS/serie",
+          "codigosErroTaxOne": [
+            "90504"
+          ]
+        },
+        {
+          "posicao": 11,
+          "campo": "SUB_SERIE_DOCFIS",
+          "descricao": "Subsérie do Documento Fiscal",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "90505"
+          ]
+        },
+        {
+          "posicao": 12,
+          "campo": "COD_SERVICO",
+          "descricao": "Código do Serviço",
+          "tamanho": "004",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "infDPS/serv/cServ/cTribNac (4 últimos dígitos: 310103 -> 0103)",
+          "codigosErroTaxOne": [
+            "90134",
+            "90135",
+            "90475"
+          ]
+        },
+        {
+          "posicao": 13,
+          "campo": "NUM_ITEM",
+          "descricao": "Item Documento Fiscal",
+          "tamanho": "005",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": "NFS-e tem um servico por documento: fixo 00001",
+          "codigosErroTaxOne": [
+            "90132",
+            "90461",
+            "90994"
+          ]
+        },
+        {
+          "posicao": 14,
+          "campo": "COD_MUN_FT_GER_IBS_CBS",
+          "descricao": "Código do Município de consumo, fato gerador do IBS / CBS",
+          "tamanho": "007",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "infNFSe/IBSCBS/cLocalidadeIncid",
+          "codigosErroTaxOne": [
+            "913274"
+          ]
+        },
+        {
+          "posicao": 15,
+          "campo": "CST_IS",
+          "descricao": "Código de Situação Tributária do Imposto Seletivo",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 16,
+          "campo": "CCLASS_IS",
+          "descricao": "Código de Classificação Tributária do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 17,
+          "campo": "BC_IS",
+          "descricao": "Valor da Base de Cálculo do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 18,
+          "campo": "ALIQ_IS",
+          "descricao": "Alíquota do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 19,
+          "campo": "ALIQ_ESP_UNID_MED_APR_IS",
+          "descricao": "Alíquota específica por unidade de medida apropriada do Imposto Seletivo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 20,
+          "campo": "VLR_IS",
+          "descricao": "Valor do Imposto Seletivo",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 21,
+          "campo": "UNID_MED_TRIBUT_IS",
+          "descricao": "Unidade de Medida Tributável do Imposto Seletivo",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 22,
+          "campo": "QTD_TRIB_IS",
+          "descricao": "Quantidade Tributável do Imposto Seletivo",
+          "tamanho": "011V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 23,
+          "campo": "CST_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "infDPS/IBSCBS/valores/trib/gIBSCBS/CST",
+          "codigosErroTaxOne": [
+            "913267"
+          ]
+        },
+        {
+          "posicao": 24,
+          "campo": "CCLASS_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "infDPS/IBSCBS/valores/trib/gIBSCBS/cClassTrib",
+          "codigosErroTaxOne": [
+            "913268"
+          ]
+        },
+        {
+          "posicao": 25,
+          "campo": "BC_IBS_CBS",
+          "descricao": "Base de cálculo do IBS e CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "infNFSe/IBSCBS/valores/vBC"
+        },
+        {
+          "posicao": 26,
+          "campo": "VLR_MON_DOCREF_N_INC_IBS_CBS",
+          "descricao": "Valor monetário -Documento Referenciado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 27,
+          "campo": "ALIQ_IBS_MUN",
+          "descricao": "Alíquota do IBS de competência dos Municípios",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/mun/pIBSMun"
+        },
+        {
+          "posicao": 28,
+          "campo": "VLR_IBS_MUN",
+          "descricao": "Valor do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "totCIBS/gIBS/gIBSMunTot/vIBSMun"
+        },
+        {
+          "posicao": 29,
+          "campo": "PERC_DIF_IBS_MUN",
+          "descricao": "Percentual do diferimento do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 30,
+          "campo": "VLR_DIF_IBS_MUN",
+          "descricao": "Valor do Diferimento do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 31,
+          "campo": "VLR_BRUTO_IBS_MUN",
+          "descricao": "Valor da operação do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 32,
+          "campo": "VLR_TRIB_DEV_IBS_MUN",
+          "descricao": "Valor do tributo devolvido do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 33,
+          "campo": "PERC_RED_ALIQ_IBS_MUN",
+          "descricao": "Percentual da redução de alíquota do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/mun/pRedAliqMun"
+        },
+        {
+          "posicao": 34,
+          "campo": "ALIQ_EFET_IBS_MUN",
+          "descricao": "Aliquota Efetiva do IBS de competência dos Municípios que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/mun/pAliqEfetMun"
+        },
+        {
+          "posicao": 35,
+          "campo": "ALIQ_CBS",
+          "descricao": "Alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/fed/pCBS"
+        },
+        {
+          "posicao": 36,
+          "campo": "VLR_CBS",
+          "descricao": "Valor da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "totCIBS/gCBS/vCBS"
+        },
+        {
+          "posicao": 37,
+          "campo": "VLR_BRUTO_CBS",
+          "descricao": "Valor da CBS Bruto na operação da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 38,
+          "campo": "VLR_TRIB_DEV_CBS",
+          "descricao": "Valor do tributo devolvido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 39,
+          "campo": "PERC_RED_ALIQ_CBS",
+          "descricao": "Percentual da redução de alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/fed/pRedAliqCBS"
+        },
+        {
+          "posicao": 40,
+          "campo": "ALIQ_EFET_CBS",
+          "descricao": "Alíquota Efetiva da CBS que será aplicada a Base de Cálculo",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "IBSCBS/valores/fed/pAliqEfetCBS"
+        },
+        {
+          "posicao": 41,
+          "campo": "CST_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Situação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913269"
+          ]
+        },
+        {
+          "posicao": 42,
+          "campo": "CCLASS_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Classificação Tributária do IBS e CBS - tributação regular",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913270"
+          ]
+        },
+        {
+          "posicao": 43,
+          "campo": "ALIQ_TRIB_REG_IBS_MUN",
+          "descricao": "Valor da alíquota do IBS do Município - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 44,
+          "campo": "VLR_TRIB_REG_TRIB_IBS_MUN",
+          "descricao": "Valor do Tributo do IBS do Município - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 45,
+          "campo": "ALIQ_TRIB_REG_CBS",
+          "descricao": "Valor da alíquota da CBS - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 46,
+          "campo": "VLR_TRIB_REG_TRIB_CBS",
+          "descricao": "Valor do Tributo da CBS - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 47,
+          "campo": "CCLASS_CRED_PRES_IBS",
+          "descricao": "Código de Classificação do Crédito Presumido do IBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913271"
+          ]
+        },
+        {
+          "posicao": 48,
+          "campo": "PERC_CRED_PRES_IBS",
+          "descricao": "Percentual do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 49,
+          "campo": "ALIQ_CRED_PRES_IBS",
+          "descricao": "Alíquota do Crédito Presumido do IBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 50,
+          "campo": "VLR_CRED_PRES_IBS",
+          "descricao": "Valor do Crédito Presumido do IBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 51,
+          "campo": "VLR_CRED_PRES_C_SUS_IBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva do IBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 52,
+          "campo": "CCLASS_CRED_PRES_CBS",
+          "descricao": "Código de Classificação do Crédito Presumido da CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "codigosErroTaxOne": [
+            "913272"
+          ]
+        },
+        {
+          "posicao": 53,
+          "campo": "PERC_CRED_PRES_CBS",
+          "descricao": "Percentual do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 54,
+          "campo": "ALIQ_CRED_PRES_CBS",
+          "descricao": "Alíquota do Crédito Presumido da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 55,
+          "campo": "VLR_CRED_PRES_CBS",
+          "descricao": "Valor do Crédito Presumido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 56,
+          "campo": "VLR_CRED_PRES_C_SUS_CBS",
+          "descricao": "Valor do Crédito Presumido em condição suspensiva da CBS.",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 57,
+          "campo": "ALIQ_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Estado - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 58,
+          "campo": "VLR_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS da UF calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 59,
+          "campo": "ALIQ_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Alíquota do IBS de competência do Município - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 60,
+          "campo": "VLR_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS do Município calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 61,
+          "campo": "ALIQ_CBS_COMPRA_GOVERN",
+          "descricao": "Alíquota da CBS - Compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 62,
+          "campo": "VLR_CBS_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo da CBS calculado - Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false
+        },
+        {
+          "posicao": 63,
+          "campo": "VLR_TOT_ITEM",
+          "descricao": "Valor Total do Item da Nota",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "infDPS/valores/vServPrest/vServ"
+        },
+        {
+          "posicao": 64,
+          "campo": "NUM_ITEM_DOC_REFER",
+          "descricao": "Número do item do documento referenciado.",
+          "tamanho": "003",
+          "tipo": "N",
+          "obrigatorio": false
+        }
+      ]
+    },
+    "SAFX3042": {
+      "description": "Capa de Documentos Fiscais de Utilities - Reforma Tributaria (vinculada a SAFX42)",
+      "fieldCountOficial": 29,
+      "ordemConfirmada": true,
+      "geradorImplementado": false,
+      "fields": [
+        {
+          "posicao": 1,
+          "campo": "COD_EMPRESA",
+          "descricao": "Código da Empresa",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "90001"
+          ]
+        },
+        {
+          "posicao": 2,
+          "campo": "COD_ESTAB",
+          "descricao": "Código do Estabelecimento",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "90002"
+          ]
+        },
+        {
+          "posicao": 3,
+          "campo": "DAT_FISCAL",
+          "descricao": "Data de Emissão/Escr. Fiscal",
+          "tamanho": "008",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 4,
+          "campo": "IND_FIS_JUR",
+          "descricao": "Indicador Pessoa Física/Jurídica",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 5,
+          "campo": "COD_FIS_JUR",
+          "descricao": "Código/Destinatário/Emitente/Remetente",
+          "tamanho": "014",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 6,
+          "campo": "NUM_DOCFIS",
+          "descricao": "Número do Documento Fiscal",
+          "tamanho": "012",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 7,
+          "campo": "SERIE_DOCFIS",
+          "descricao": "Série",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 8,
+          "campo": "SUB_SERIE_DOCFIS",
+          "descricao": "Subsérie",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 9,
+          "campo": "VLR_TOT_BC_IBS_CBS",
+          "descricao": "Total da Base de cálculo do IBS/CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 10,
+          "campo": "VLR_TOT_DIF_IBS_UF",
+          "descricao": "Total do Diferimento do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 11,
+          "campo": "VLR_TOT_DEV_TRIB_IBS_UF",
+          "descricao": "Total de Devolução de Tributo IBS UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 12,
+          "campo": "VLR_TOT_IBS_UF",
+          "descricao": "Total do IBS UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 13,
+          "campo": "VLR_TOT_DIF_IBS_MUN",
+          "descricao": "Total do Diferimento do IBS do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 14,
+          "campo": "VLR_TOT_DEV_TRIB_IBS_MUN",
+          "descricao": "Total de Devolução de Tributo IBS Municipal",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 15,
+          "campo": "VLR_TOT_IBS_MUN",
+          "descricao": "Total do IBS Municipal",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 16,
+          "campo": "VLR_TOT_IBS",
+          "descricao": "Total do IBS (IBS UF + IBS Mun)",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 17,
+          "campo": "VLR_TOT_DIF_CBS",
+          "descricao": "Total do Diferimento da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 18,
+          "campo": "VLR_TOT_DEV_TRIB_CBS",
+          "descricao": "Total de Devolução do tributo CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 19,
+          "campo": "VLR_TOT_CBS",
+          "descricao": "Total do CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 20,
+          "campo": "VLR_TOT_TRIB_REG_IBS_UF",
+          "descricao": "Total do IBS da UF - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 21,
+          "campo": "VLR_TOT_TRIB_REG_IBS_MUN",
+          "descricao": "Total do IBS do Município - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 22,
+          "campo": "VLR_TOT_TRIB_REG_CBS",
+          "descricao": "Total  da CBS - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 23,
+          "campo": "VLR_TOT_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Total do IBS  da UF utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 24,
+          "campo": "VLR_TOT_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Total do IBS  do Município utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 25,
+          "campo": "VLR_TOT_CBS_COMPRA_GOVERN",
+          "descricao": "Total do CBS  utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 26,
+          "campo": "VLR_TOT_IBS_ESTORNADO",
+          "descricao": "Total do IBS estornado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 27,
+          "campo": "VLR_TOT_CBS_ESTORNADO",
+          "descricao": "Total do CBS estornado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 28,
+          "campo": "TIPO_ENTE_GOVERN",
+          "descricao": "Tipo de Ente",
+          "tamanho": "001",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913266"
+          ]
+        },
+        {
+          "posicao": 29,
+          "campo": "PERC_RED_ALIQ_COMPRA_GOVERN",
+          "descricao": "Percentual de redução de alíquota em compra governamental.",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        }
+      ]
+    },
+    "SAFX3043": {
+      "description": "Itens de Documentos Fiscais de Utilities - Reforma Tributaria (vinculada a SAFX43)",
+      "fieldCountOficial": 51,
+      "ordemConfirmada": true,
+      "geradorImplementado": false,
+      "fields": [
+        {
+          "posicao": 1,
+          "campo": "COD_EMPRESA",
+          "descricao": "Código da Empresa",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "90001"
+          ]
+        },
+        {
+          "posicao": 2,
+          "campo": "COD_ESTAB",
+          "descricao": "Código do Estabelecimento",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "90002"
+          ]
+        },
+        {
+          "posicao": 3,
+          "campo": "DAT_FISCAL",
+          "descricao": "Data da  Emissão/Escrita Fiscal",
+          "tamanho": "008",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 4,
+          "campo": "IND_FIS_JUR",
+          "descricao": "Indicador da Pessoa Física/Jurídica",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 5,
+          "campo": "COD_FIS_JUR",
+          "descricao": "Código do Destinatário/Emitente",
+          "tamanho": "014",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 6,
+          "campo": "NUM_DOCFIS",
+          "descricao": "Número do Documento Fiscal",
+          "tamanho": "012",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 7,
+          "campo": "SERIE_DOCFIS",
+          "descricao": "Série",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 8,
+          "campo": "SUB_SERIE_DOCFIS",
+          "descricao": "Subsérie",
+          "tamanho": "002",
+          "tipo": "A",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 9,
+          "campo": "NUM_ITEM",
+          "descricao": "Item Nota Fiscal",
+          "tamanho": "007",
+          "tipo": "N",
+          "obrigatorio": true,
+          "origem": ""
+        },
+        {
+          "posicao": 10,
+          "campo": "CST_IBS_CBS",
+          "descricao": "Código da Situação Tributária do IBS/CBS",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913267"
+          ]
+        },
+        {
+          "posicao": 11,
+          "campo": "CCLASS_IBS_CBS",
+          "descricao": "Código da Classificação Tributária do IBS/CBS",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913310"
+          ]
+        },
+        {
+          "posicao": 12,
+          "campo": "IND_DOACAO",
+          "descricao": "Indicador de doação",
+          "tamanho": "001",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913309"
+          ]
+        },
+        {
+          "posicao": 13,
+          "campo": "BC_IBS_CBS",
+          "descricao": "Valor da Base de cálculo IBS/CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913270"
+          ]
+        },
+        {
+          "posicao": 14,
+          "campo": "ALIQ_IBS_UF",
+          "descricao": "Alíquota do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 15,
+          "campo": "PERC_DIF_IBS_UF",
+          "descricao": "Percentual de diferimento do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 16,
+          "campo": "VLR_DIF_IBS_UF",
+          "descricao": "Valor do diferimento IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 17,
+          "campo": "VLR_TRIB_DEV_IBS_UF",
+          "descricao": "Valor do tributo devolvido do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 18,
+          "campo": "PERC_RED_ALIQ_IBS_UF",
+          "descricao": "Percentual da redução de Alíquota do IBS de competência da UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 19,
+          "campo": "ALIQ_EFET_IBS_UF",
+          "descricao": "Alíquota efetiva do IBS de competência das UF",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 20,
+          "campo": "VLR_IBS_UF",
+          "descricao": "Valor do IBS de competência da UF",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 21,
+          "campo": "ALIQ_IBS_MUN",
+          "descricao": "Alíquota do IBS Municipal",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 22,
+          "campo": "PERC_DIF_IBS_MUN",
+          "descricao": "Percentual do diferimento do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 23,
+          "campo": "VLR_DIF_IBS_MUN",
+          "descricao": "Valor do Diferimento do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 24,
+          "campo": "VLR_TRIB_DEV_IBS_MUN",
+          "descricao": "Valor do tributo devolvido do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 25,
+          "campo": "PERC_RED_ALIQ_IBS_MUN",
+          "descricao": "Percentual da redução de alíquota do IBS de competência do Município",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 26,
+          "campo": "ALIQ_EFET_IBS_MUN",
+          "descricao": "Aliquota Efetiva do IBS de competência dos Municípios",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 27,
+          "campo": "VLR_IBS_MUN",
+          "descricao": "Valor do IBS de competência do Município",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 28,
+          "campo": "TOT_IBS_ITEM",
+          "descricao": "Valor do IBS (IBS UF + IBS MUN)",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 29,
+          "campo": "ALIQ_CBS",
+          "descricao": "Alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 30,
+          "campo": "PERC_DIF_CBS",
+          "descricao": "Percentual do diferimento da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 31,
+          "campo": "VLR_DIF_CBS",
+          "descricao": "Valor do Diferimento da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 32,
+          "campo": "VLR_TRIB_DEV_CBS",
+          "descricao": "Valor do tributo devolvido da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 33,
+          "campo": "PERC_RED_ALIQ_CBS",
+          "descricao": "Percentual da redução de alíquota da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 34,
+          "campo": "ALIQ_EFET_CBS",
+          "descricao": "Alíquota Efetiva da CBS",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 35,
+          "campo": "VLR_CBS",
+          "descricao": "Valor da CBS",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 36,
+          "campo": "CST_TRIB_REG_IBS_CBS",
+          "descricao": "Código da Situação Tributária - Tributação Regular",
+          "tamanho": "003",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913269"
+          ]
+        },
+        {
+          "posicao": 37,
+          "campo": "CCLASS_TRIB_REG_IBS_CBS",
+          "descricao": "Código de Classificação Tributária - Tributação Regular",
+          "tamanho": "006",
+          "tipo": "A",
+          "obrigatorio": false,
+          "origem": "",
+          "codigosErroTaxOne": [
+            "913311"
+          ]
+        },
+        {
+          "posicao": 38,
+          "campo": "ALIQ_TRIB_REG_IBS_UF",
+          "descricao": "Valor da alíquota efetiva do IBS da UF - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 39,
+          "campo": "VLR_TRIB_REG_IBS_UF",
+          "descricao": "Valor do Tributo do IBS da UF - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 40,
+          "campo": "ALIQ_TRIB_REG_IBS_MUN",
+          "descricao": "Valor da alíquota efetiva do IBS do Município - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 41,
+          "campo": "VLR_TRIB_REG_IBS_MUN",
+          "descricao": "Valor do Tributo do IBS do Município - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 42,
+          "campo": "ALIQ_TRIB_REG_CBS",
+          "descricao": "Valor da alíquota da CBS - tributação regular",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 43,
+          "campo": "VLR_TRIB_REG_CBS",
+          "descricao": "Valor do Tributo da CBS - tributação regular",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 44,
+          "campo": "ALIQ_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Alíquota IBS da UF utilizada nas compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 45,
+          "campo": "VLR_IBS_UF_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS  da UF utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 46,
+          "campo": "ALIQ_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Alíquota IBS  do Município utilizada nas compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 47,
+          "campo": "VLR_IBS_MUN_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo do IBS  do Município utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 48,
+          "campo": "ALIQ_CBS_COMPRA_GOVERN",
+          "descricao": "Alíquota da CBS utilizada nas compras governamentais",
+          "tamanho": "003V004",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 49,
+          "campo": "VLR_CBS_COMPRA_GOVERN",
+          "descricao": "Valor do Tributo da CBS utilizado em Compras governamentais",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 50,
+          "campo": "IBS_ESTORNADO",
+          "descricao": "Valor do IBS a ser estornado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        },
+        {
+          "posicao": 51,
+          "campo": "CBS_ESTORNADO",
+          "descricao": "Valor da CBS a ser estornado",
+          "tamanho": "015V002",
+          "tipo": "N",
+          "obrigatorio": false,
+          "origem": ""
+        }
+      ]
+    }
+  }
+}

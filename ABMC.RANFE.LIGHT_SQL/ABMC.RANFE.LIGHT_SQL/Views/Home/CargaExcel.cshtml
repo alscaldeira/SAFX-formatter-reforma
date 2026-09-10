@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("cARGAeXCEL", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "frmID" }))
+{
+
+    <!-- Page heading two starts -->
+
+    <div class="page-heading-two">
+        <div class="container">
+            <h2>RANFe Light @*<span>Processamento XML</span>*@</h2>
+            @*<div class="breads">
+                    Home / <a href="#">Page</a> / <a href="#">Sub Page</a>
+                </div>*@
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page heading two ends -->
+
+    <div class="container">
+        <div class="contact-us-two">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Contact Form -->
+                    <div class="contact-form">
+                        <h5>Upload Excel</h5>
+                        <!-- Form -->
+                        <form class="form" role="form">
+                            <!-- Form Group -->
+                            <div class="form-group">
+                                <input type="file" class="form-control" name="iFile" id="iFile" multiple placeholder="Enter Name">
+                            </div>
+                            <!-- Button -->
+                            <button type="submit" class="btn btn-red">Enviar</button>&nbsp;
+                        </form>
+                    </div>
+                    <hr />
+
+                </div>
+
+            </div>
+
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+}

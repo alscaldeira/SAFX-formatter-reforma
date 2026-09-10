@@ -1,0 +1,313 @@
+ --08
+ 
+ select distinct
+ case 
+	when INFNFE_DEST_CNPJ in ('03823704000152','03823704000314','03823704000233') then 
+		'001' 
+	when INFNFE_DEST_CNPJ in ('03848527000169') then 
+		'002' 
+	when INFNFE_DEST_CNPJ in ('04613348000105') then 
+		'003'
+	when INFNFE_DEST_CNPJ in ('22725405000120','22725405000200') then 
+		'004' 
+	else 
+		'001'
+	end as																				COD_EMPRESA,
+  
+  case 
+  	when INFNFE_DEST_CNPJ in ('03823704000152','03848527000169','04613348000105','22725405000120') then 
+		'0001' 
+	when INFNFE_DEST_CNPJ in ('03823704000314','22725405000200') then 
+		'0002' 
+	when INFNFE_DEST_CNPJ in ('03823704000233') then 
+		'0003'
+	else 
+		'0009'
+	end as 																				COD_ESTAB,
+
+
+
+ YEAR(a.INFNFE_IDE_DEMI) * 10000 + MONTH(a.INFNFE_IDE_DEMI) * 100 + DAY(a.INFNFE_IDE_DEMI) 	DATA_FISCAL	,
+  --case when (a.INFNFE_IDE_TPNF = 1 and g.INFNFE_EMIT_XNOME not like 'South%') then '1' else '9' end MOVTO_E_S,
+  case when  (a.INFNFE_IDE_TPNF = 0) then '4' else '9' end MOVTO_E_S,
+-- '1' 	NORM_DEV	,
+case when (a.INFNFE_IDE_FINNFE = '4') then '2' else '1' end NORM_DEV	,
+ 'NFE' 	COD_DOCTO	,
+ '2' 	IND_FIS_JUR	,
+ -- case when (a.INFNFE_IDE_TPNF = 1 and g.INFNFE_EMIT_XNOME not like 'South%') then '1' else '2' end IDENT_FIS_JUR,
+ INFNFE_DEST_CNPJ 	COD_FIS_JUR	,
+ -- case when (a.INFNFE_IDE_TPNF = 1 and g.INFNFE_EMIT_XNOME not like 'South%') then g.INFNFE_EMIT_CNPJ else INFNFE_DEST_CNPJ  end  COD_FIS_JUR,
+ right(replicate('0',12)+cast(A.INFNFE_IDE_NNF as varchar(12)),12) 	NUM_DOCFIS	,
+ '1' 	SERIE_DOCFIS	,
+ '' 	SUB_SERIE_DOCFIS	,
+ 'N' 	IND_BEM_PATR	,
+ '1' 	IND_PRODUTO	,
+ B.INFNFE_DET_PROD_CPROD 	COD_PRODUTO	,
+ '' 	COD_BEM	,
+ '' 	COD_INC_BEM	,
+ B.INFNFE_DET_PROD_UTRIB 	COD_UND_PADRAO	,
+ B.INFNFE_DET_NITEM 	NUM_ITEM	,
+ '' 	COD_ALMOX	,
+ '' 	COD_CUSTO	,
+ dbo.fnTiraAcento(SUBSTRing(B.INFNFE_DET_PROD_XPROD,1,50)) 	DESCRICAO_COMPL	,
+ --B.INFNFE_DET_PROD_CFOP 	COD_CFO	,
+  case when  (a.INFNFE_IDE_TPNF = 0 and b.INFNFE_DET_PROD_CFOP = 2207) then 6207 else INFNFE_DET_PROD_CFOP end  COD_CFO,
+ '' 	COD_NATUREZA_OP	,
+ right(replicate('0',17)+cast(REPLACE(B.INFNFE_DET_PROD_QCOM,'.','') as varchar(17)) + '00',17) QUANTIDADE,
+ B.INFNFE_DET_PROD_UCOM 	COD_MEDIDA	,
+ B.INFNFE_DET_PROD_NCM  	COD_NBM	,
+ right(replicate('0',19)+cast(REPLACE(INFNFE_DET_PROD_VUNCOM,'.','') as varchar(19)),19) VLR_UNIT,
+ right(replicate('0',17)+cast(REPLACE(B.INFNFE_DET_PROD_VPROD,'.','') as varchar(17)),17) VLR_ITEM,
+ right(replicate('0',17)+cast(REPLACE(y.INFNFE_TOTAL_ICMSTOT_VDESC,'.','') as varchar(17)),17)  VLR_DESCONTO	,
+ C.TAG_ORIG 	COD_SITUACAO_A	,
+ C.TAG_CST 	COD_SITUACAO_B	,
+ case 
+	when C.TAG_ORIG = '0' then '1'
+	when C.TAG_ORIG = '1' then '2'
+	when C.TAG_ORIG = '2' then '3'
+	END 
+ COD_FEDERAL	,
+ 'N' 	IND_IPI_INCLUSO	,
+ '' 	NUM_ROMANEIO	,
+ '' 	DATA_ROMANEIO	,
+  right(replicate('0',14)+cast(REPLACE(z.INFNFE_TRANSP_VOL_PESOL,'.','') as varchar(14)),14) PESO_LIQUIDO,
+ '' 	COD_INDICE	,
+ '' 	VLR_ITEM_CONVER	,
+ B.INFNFE_DET_PROD_VFRETE 	VLR_FRETE	,
+ --B.INFNFE_DET_PROD_VSEG 	VLR_SEGURO	,
+ right(replicate('0',17)+cast(REPLACE(Y.INFNFE_TOTAL_ICMSTOT_VSEG,'.','') as varchar(17)),17)  	VLR_SEGURO	,
+ B.INFNFE_DET_PROD_VOUTRO 	VLR_OUTRAS	,
+ --'' 	VLR_ALIQ_ICMS	,
+ 
+ right(replicate('0',7)+cast(REPLACE(c.TAG_PICMS,'.','') as varchar(7)),7)  AS VLR_ALIQ_ICMS,
+  right(replicate('0',17)+cast(REPLACE(c.Tag_vicms,'.','') as varchar(17)),17) as VLR_ICMS,
+ 
+ --'' 	VLR_ICMS	,
+ '' 	DIF_ALIQ_ICMS	,
+ '' 	OBS_ICMS	,
+ '' 	COD_APUR_ICMS	,
+ right(replicate('0',7)+cast(REPLACE(TAG_IPITRIB_PIPI,'.','') as varchar(7)),7)	VLR_ALIQ_IPI	,
+  right(replicate('0',17)+cast(REPLACE(TAG_IPITRIB_VIPI,'.','') as varchar(17)),17) 	VLR_IPI	, 
+ '' 	OBS_IPI	,
+ '' 	COD_APUR_IPI	,
+ C.TAG_PICMSST 	VLR_ALIQ_SUB_ICMS	,
+ C.TAG_VICMSST 	VLR_SUBST_ICMS	,
+ '' 	OBS_SUBST_ICMS	,
+ '' 	COD_APUR_SUB_ICMS	,
+ case 
+	when C.TAG_CST = '00' then '1'
+	when C.TAG_CST = '10' then '1'
+	when C.TAG_CST = '30' then '1'
+	when C.TAG_CST = '70' then '1'
+	when C.TAG_CST = '40' then '2'
+	when C.TAG_CST = '41' then '2'
+	when C.TAG_CST = '50' then '2'
+	when C.TAG_CST = '51' then '2'
+	when C.TAG_CST = '60' then '2'
+	else '3'
+end 
+  	TRIB_ICMS	,
+ case when C.TAG_VBC is null then right(replicate('0',17)+cast(REPLACE(B.INFNFE_DET_PROD_VPROD,'.','') as varchar(17)),17) else right(replicate('0',17)+cast(REPLACE(C.TAG_VBC,'.','') as varchar(17)),17)  end 	BASE_ICMS	,
+ '' 	BASE_REDU_ICMS	,
+ case 
+	when C.TAG_CST = '00' then '1'
+	when C.TAG_CST = '01' then '1'
+	when C.TAG_CST = '02' then '2'
+	when C.TAG_CST = '03' then '2'
+	when C.TAG_CST = '04' then '2'
+	when C.TAG_CST = '05' then '2'
+	else '3'
+end TRIB_IPI	,
+right(replicate('0',17)+cast(REPLACE(B.INFNFE_DET_PROD_VPROD,'.','') as varchar(17)),17) 	BASE_IPI	,
+ '' 	BASE_REDU_IPI	,
+ '' 	BASE_SUB_TRIB_ICMS	,
+ '' 	VLR_CONTAB_COMPL	,
+ '' 	VLR_ALIQ_DESTINO	,
+ right(replicate('0',17)+cast(REPLACE(B.INFNFE_DET_PROD_VPROD,'.','') as varchar(17)),17) VLR_CONTAB_ITEM,
+ '' 	COD_OBS_VCONT_COMP	,
+ '' 	COD_OBS_VCONT_ITEM	,
+ '' 	VLR_OUTROS_ICMS	,
+ '' 	VLR_OUTROS_IPI	,
+ B.INFNFE_DET_PROD_VOUTRO 	VLR_OUTROS1	,
+ '' 	NUM_ATO_CONCES	,
+ '' 	DAT_EMBARQUE	,
+ '' 	NUM_REG_EXP	,
+ '' 	NUM_DESP_EXP	,
+ '' 	VLR_TOM_SERVICO	,
+ '' 	VLR_DESP_MOEDA_EXP	,
+ '' 	COD_MOEDA_NEGOC	,
+ '' 	COD_PAIS_DEST_ORIG	,
+ '' 	IND_CRED_ICMSS	,
+ '' 	COD_TRIB_INT	,
+ '' 	VLR_ICMS_NDESTAC	,
+ '' 	VLR_IPI_NDESTAC	,
+ '' 	TRIB_ICMS_AUX	,
+ '' 	BASE_ICMS_AUX	,
+ '' 	TRIB_IPI_AUX	,
+ '' 	BASE_IPI_AUX	,
+ right(replicate('0',17)+cast(REPLACE(E.TAG_PISALIQ_VBC,'.','') as varchar(17)),17) VLR_BASE_PIS,
+ right(replicate('0',17)+cast(REPLACE(E.TAG_PISALIQ_VPIS,'.','') as varchar(17)),17) VLR_PIS,
+ right(replicate('0',17)+cast(REPLACE(F.TAG_COFINSALIQ_VBC,'.','') as varchar(17)),17) VLR_BASE_COFINS,
+ right(replicate('0',17)+cast(REPLACE(F.TAG_COFINSALIQ_VCOFINS,'.','') as varchar(17)),17) VLR_COFINS,
+ '' 	BASE_ICMS_ORIGDEST	,
+ '' 	VLR_ICMS_ORIGDEST	,
+ '' 	ALIQ_ICMS_ORIGDEST	,
+ '' 	VLR_DESC_CONDIC	,
+ '' 	TRIB_ICMSS	,
+ '' 	BASE_REDU_ICMSS	,
+ '' 	VLR_CUSTO_TRANSF	,
+ '' 	PERC_RED_BASE_ICMS	,
+ '' 	QTD_EMBARCADA	,
+ '' 	DAT_REGISTRO_EXP	,
+ '' 	DAT_DESPACHO	,
+ '' 	DAT_AVERBACAO	,
+ '' 	DAT_DI	,
+ '' 	NUM_DEC_IMP_REF	,
+ '' 	DSC_MOT_OCOR	,
+ '' 	COD_CONTA	,
+ '' 	VLR_BASE_ICMS_ORIG	,
+ '' 	VLR_TRIB_ICMS_ORIG	,
+ '' 	VLR_BASE_ICMS_DEST	,
+ '' 	VLR_TRIB_ICMS_DEST	,
+ '' 	VLR_PERC_PRES_ICMS	,
+ '' 	VLR_PRECO_BASE_ST	,
+ '' 	COD_OPER_OIL	,
+ '' 	COD_DCR	,
+ '' 	COD_PROJETO	,
+ '' 	IND_MOV_FIS	,
+ '' 	CHASSI	,
+ '' 	NUM_DOCFIS_REF	,
+ '' 	SERIE_DOCFIS_REF	,
+ '' 	SSERIE_DOCFIS_REF	,
+ '' 	VLR_BASE_PIS_ST	,
+ '' 	VLR_ALIQ_PIS_ST	,
+ '' 	VLR_PIS_ST	,
+ '' 	VLR_BASE_COFINS_ST	,
+ '' 	VLR_ALIQ_COFINS_ST	,
+ '' 	VLR_COFINS_ST	,
+ '' 	VLR_BASE_CSLL	,
+ '' 	VLR_ALIQ_CSLL	,
+ '' 	VLR_CSLL	,
+ right(replicate('0',7)+cast(REPLACE(E.TAG_PISALIQ_PPIS,'.','') as varchar(7)) + '00',7) VLR_ALIQ_PIS,
+ right(replicate('0',7)+cast(REPLACE(F.TAG_COFINSALIQ_PCOFINS,'.','') as varchar(7)) + '00',7) VLR_ALIQ_COFINS,
+ '' 	IND_FORNEC_ICMSS	,
+ '' 	IND_SITUACAO_ESP_ST	,
+ '' 	VLR_ICMSS_NDESTAC	,
+ '' 	IND_DOCTO_REC	,
+ '' 	DAT_PGTO_GNRE_DARJ	,
+ '' 	VLR_CUSTO_UNIT	,
+ '' 	QUANTIDADE_CONV	,
+ '' 	VLR_FECP_ICMS	,
+ '' 	VLR_FECP_DIFALIQ	,
+ '' 	VLR_FECP_ICMS_ST	,
+ '' 	VLR_FECP_FONTE	,
+ '' 	TRIB_ICMSS_AUX2	,
+ '' 	BASE_ICMSS_AUX2	,
+ '' 	VLR_BASE_ICMSS_N_ESCRIT	,
+ '' 	VLR_ICMSS_N_ESCRIT	,
+ --H.TAG_IPINT_CST 	COD_TRIB_IPI	,
+case when H.TAG_IPINT_CST != null then H.TAG_IPINT_CST else 53 end  	COD_TRIB_IPI	,
+ '' 	LOTE_MEDICAMENTO	,
+ '' 	VALID_MEDICAMENTO	,
+ '' 	IND_BASE_MEDICAMENTO	,
+ '' 	VLR_PRECO_MEDICAMENTO	,
+ '' 	IND_TIPO_ARMA	,
+ '' 	NUM_SERIE_ARMA	,
+ '' 	NUM_CANO_ARMA	,
+ '' 	DSC_ARMA	,
+ '' 	COD_OBSERVACAO	,
+ '' 	COD_EX_NCM	,
+ '' 	COD_EX_IMP	,
+ '' 	CNPJ_OPERADORA	,
+ '' 	CPF_OPERADORA	,
+ '' 	UF_OPERADORA	,
+ '' 	INS_EST_OPERADORA	,
+ '' 	IND_ESPECIF_RECEITA	,
+ '' 	COD_CLASS_ITEM	,
+ '' 	VLR_TERCEIROS	,
+ '' 	VLR_PRECO_SUGER	,
+ '' 	VLR_BASE_CIDE	,
+ '' 	VLR_ALIQ_CIDE	,
+ '' 	VLR_CIDE	,
+ '' 	COD_OPER_ESP_ST	,
+ '' 	VLR_COMISSAO	,
+ '' 	VLR_ICMS_FRETE	,
+ '' 	VLR_DIFAL_FRETE	,
+ 'S' 	IND_VLR_PIS_COFINS	,
+ '' 	COD_ENQUAD_IPI	,
+    case when INFNFE_DEST_ENDERDEST_UF = 'EX' then 
+			right(replicate('0',2)+cast((case when TAG_PISNT_CST IS null then TAG_PISOUTR_CST else TAG_PISNT_CST end) as varchar(2)),2)  
+		else 
+			right(replicate('0',2)+cast((case when TAG_PISALIQ_CST is null then TAG_PISOUTR_CST else TAG_PISALIQ_CST end) as varchar(2)),2) 
+		end 
+			COD_SITUACAO_PIS,
+ '' 	QTD_BASE_PIS	,
+ '' 	VLR_ALIQ_PIS_R	,
+  case when INFNFE_DEST_ENDERDEST_UF = 'EX' then 
+			right(replicate('0',2)+cast((case when TAG_COFINSNT_CST is null then TAG_COFINSOUTR_CST else TAG_COFINSNT_CST end) as varchar(2)),2)  
+		else 
+			right(replicate('0',2)+cast((case when TAG_COFINSALIQ_CST is null then TAG_COFINSOUTR_CST else TAG_COFINSALIQ_CST end) as varchar(2)),2) 
+		end 
+			COD_SITUACAO_COFINS,
+  '' 	QTD_BASE_COFINS	,
+ '' 	VLR_ALIQ_COFINS_R	,
+ '' 	ITEM_PORT_TARE	,
+ '' 	VLR_FUNRURAL	,
+ '' 	IND_TP_PROD_MEDIC	,
+ '' 	VLR_CUSTO_DCA	,
+ '' 	COD_TP_LANCTO	,
+ '' 	VLR_PERC_CRED_OUT	,
+ '' 	VLR_CRED_OUT	,
+ '' 	VLR_ICMS_DCA	,
+ '' 	VLR_PIS_EXP	,
+ '' 	VLR_PIS_TRIB	,
+ '' 	VLR_PIS_N_TRIB	,
+ '' 	VLR_COFINS_EXP	,
+ '' 	VLR_COFINS_TRIB	,
+ '' 	VLR_COFINS_N_TRIB	,
+ '' 	COD_ENQ_LEGAL	,
+
+(case when A.INFNFE_IDE_DSAIENT is null then
+	YEAR(A.INFNFE_IDE_DEMI) * 10000 + MONTH(A.INFNFE_IDE_DEMI) * 100 + DAY(A.INFNFE_IDE_DEMI)
+else
+	YEAR(A.INFNFE_IDE_DSAIENT) * 10000 + MONTH(A.INFNFE_IDE_DSAIENT) * 100 + DAY(A.INFNFE_IDE_DSAIENT) end) as 	DAT_LANC_PIS_COFINS	,
+ '' 	IND_PIS_COFINS_EXTEMP	,
+ '9' 	IND_NATUREZA_FRETE	,
+ '' 	COD_NAT_REC	,
+ '' 	IND_NAT_BASE_CRED	,
+ '' 	VLR_ACRESCIMO 	,
+ '' 	IND_IPI_NDESTAC_DF	,
+ '' 	DSC_RESERVADO1	,
+ '' 	DSC_RESERVADO2	,
+ '' 	DSC_RESERVADO3	,
+ '' 	COD_TRIB_PROD	,
+ '' 	DSC_RESERVADO4	,
+ '' 	DSC_RESERVADO5	,
+ '' 	DSC_RESERVADO6	,
+ '' 	DSC_RESERVADO7	,
+ '' 	DSC_RESERVADO8	,
+ '' 	INDICE_PROD_ACAB	,
+ '' 	VLR_BASE_DIA_AM	,
+ '' 	VLR_ALIQ_DIA_AM	,
+ '' 	VLR_ICMS_DIA_AM	,
+ '' 	VLR_ADUANEIRO	,
+ '' 	COD_SITUACAO_PIS_ST	,
+ '' 	COD_SITUACAO_COFINS_ST	,
+ '' 	VLR_ALIQ_DCIP	,
+ '' 	NUM_LI	,
+ '' 	VLR_FCP_UF_DEST	,
+ '' 	VLR_ICMS_UF_DEST	,
+ '' 	VLR_ICMS_UF_ORIG	
+
+ FROM     INT_NFE_CONTROLE as A
+         inner join INT_NFE_LINHA as B			on A.id = b.id_controle
+         inner join INT_NFE_LINHA_IMP_ICMS as C	on b.id_controle = c.id_controle and b.ID = c.id_linha
+         inner join int_nfe_nota_emit as G		on A.id = g.id_controle
+         inner join INT_NFE_LINHA_IMP_PIS as E	on A.id = e.id_controle
+         inner join INT_NFE_LINHA_IMP_COFINS as F on A.id = f.id_controle
+		 left join INT_NFE_LINHA_IMP_IPI as h on A.id = h.id_controle
+		 inner join INT_NFE_NOTA_DEST  as x  on A.id = x.id_controle
+		 inner join INT_NFE_NOTA_TOTAIS as y on a.id = y.ID_CONTROLE
+		 left join INT_NFE_NOTA_TRANSP_VOL as z on a.ID = z.ID_CONTROLE
+ORDER BY NUM_DOCFIS, B.INFNFE_DET_NITEM
+	

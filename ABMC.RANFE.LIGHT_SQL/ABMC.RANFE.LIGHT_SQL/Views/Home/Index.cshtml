@@ -1,0 +1,99 @@
+﻿@using System.Collections.Generic
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "frmID" }))
+{
+
+    <!-- Page heading two starts -->
+
+    <div class="page-heading-two">
+        <div class="container">
+            <h2>RANFe Light @*<span>Processamento XML</span>*@</h2>
+            @*<div class="breads">
+                    Home / <a href="#">Page</a> / <a href="#">Sub Page</a>
+                </div>*@
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page heading two ends -->
+
+    <div class="container">
+        <div class="contact-us-two">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Contact Form -->
+                    <div class="contact-form">
+                        <h5>Upload XML's</h5>
+                        <!-- Form -->
+                        <form class="form" role="form">
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="form-group">
+                                        <div class="col-sm-1">
+                                            <label class="control-label">Empresa:</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" name="empresa" id="empresa" class="form-control input-sm" multiple placeholder="Informe o nome da empresa ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- Form Group -->
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" name="iFile" id="iFile" multiple placeholder="Enter Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-start">
+                                    <div class="col-sm-4">
+                                        <!-- Button -->
+                                        <button type="submit" class="btn btn-red">Processar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <hr />
+
+                </div>
+
+            </div>
+            @if (ViewBag.nomearquivo != null)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                             <h5> <a href="@Url.Content("~/Export/" + ViewBag.NomeArquivo)" target="_blank" style="color:red;">Download do arquivo</a>: @ViewBag.NomeArquivo</h5>
+                       
+                    </div>
+                </div>
+            }
+            @if (ViewBag.AvisosReforma != null && ((List<string>)ViewBag.AvisosReforma).Count > 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @* Avisos da Reforma Tributaria: nao sao erros. Cadastro faltando
+                           (o codigo saiu de um palpite) ou dado que o XML nao traz. O
+                           arquivo foi gerado; o que esta aqui precisa de conferencia. *@
+                        <h5>Reforma Tributária (SAFX3007/3008/3009) — pontos a conferir:</h5>
+                        <ul>
+                            @foreach (string aviso in (List<string>)ViewBag.AvisosReforma)
+                            {
+                                <li>@aviso</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+}

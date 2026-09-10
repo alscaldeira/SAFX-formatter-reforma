@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Config", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "frmID" }))
+{
+
+    <!-- Page heading two starts -->
+
+    <div class="page-heading-two">
+        <div class="container">
+            <h2>Configurações - Scripts @*<span>Processamento XML</span>*@</h2>
+            @*<div class="breads">
+                    Home / <a href="#">Page</a> / <a href="#">Sub Page</a>
+                </div>*@
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page heading two ends -->
+
+    <div class="container">
+        <div class="contact-us-two">
+
+            <div class="row ">
+                <div class="col-md-3 text-center">
+                    <!-- Contact Item -->
+                    <div class="contact-item bg-blue">
+                        <!-- Icon -->
+                        <i class="fa fa-file-text-o  fa-lg"></i>
+                        <!-- Heading -->
+                        <h4>SAFX07</h4>
+                        <!-- Paragraph -->
+                        <p>
+                            Download : <b><a href="@Url.Content("~/ScriptSQL/SAFX07.TXT")" target="_blank">SAFX07.TXT</a><br /></b>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <!-- Contact Item -->
+                    <div class="contact-item bg-orange">
+                        <!-- Icon -->
+                        <i class="fa fa-file-text-o fa-lg"></i>
+                        <!-- Heading -->
+                        <h4>SAFX08</h4>
+                        <!-- Paragraph -->
+                        <p>
+                            Download : <b><a href="@Url.Content("~/ScriptSQL/SAFX08.TXT")" target="_blank">SAFX08.TXT</a><br /></b>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Contact Form -->
+                    <div class="contact-form">
+                        <h5>Atualizar Script</h5>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="iFile" id="iFile" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control" id="ddlTipoScript" name="ddlTipoScript">
+                                        <option value="SAFX07">SAFX07</option>
+                                        <option value="SAFX08">SAFX08</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-red">Atualizar</button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+}
