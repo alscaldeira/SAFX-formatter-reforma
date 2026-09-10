@@ -37,3 +37,30 @@ build/
 
 ### Mac OS ###
 .DS_Store
+### Claude ###
+.claude/
+
+### Visual Studio / .NET Framework (projeto ABMC.RANFE.LIGHT_SQL) ###
+# Artefatos de build e dependencias restauraveis: nao versionar.
+# packages/ volta com o restore do NuGet; bin/ e obj/ saem do build.
+[Bb]in/
+[Oo]bj/
+packages/
+.vs/
+*.user
+*.suo
+
+### Arquivos grandes / temporarios ###
+*.zip
+.DS_Store
+
+### Saida da conversao (gerada em tempo de execucao) ###
+SAFX3007.txt
+SAFX3008.txt
+SAFX3009.txt
+SAFX3007.csv
+SAFX3008.csv
+SAFX3009.csv
+
+### IDE ###
+.idea/
