@@ -249,11 +249,17 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
             r["COD_FIS_JUR"] = Participantes.CodFisJur(nota.Participante.Documento());
             r["NUM_DOCFIS"] = NumeroDocumento(nota.NumDoc);
             r["SERIE_DOCFIS"] = nota.Serie;
+            r["SUB_SERIE_DOCFIS"] = "";
         }
 
         // ----------------------------------------------------------- gravação
 
-        private static DataTable Escrever(string layout, List<Dictionary<string, object>> registros,
+        /// <summary>
+        /// Grava um layout (posicional + CSV) a partir de registros já montados
+        /// nome -> valor. Reaproveitado por <see cref="XmlToSafxCadastro"/> para o
+        /// SAFX04, que segue o mesmo mecanismo de leiaute nomeado por JSON.
+        /// </summary>
+        internal static DataTable Escrever(string layout, List<Dictionary<string, object>> registros,
                                           ResultadoReforma resultado)
         {
             LayoutReforma.Layout declarado = LayoutReforma.De(layout);
@@ -349,7 +355,10 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                 else
                 {
                     string texto = SafxLinha.Limpar(Convert.ToString(valor, CultureInfo.InvariantCulture));
-                    valores[i] = texto.Length == 0 ? "@" : texto;
+                    // SUB_SERIE_DOCFIS não usa o sentinela "@": o layout exige
+                    // que o campo saia realmente vazio quando não há subsérie.
+                    bool vazioIntencional = campo.Nome == "SUB_SERIE_DOCFIS";
+                    valores[i] = texto.Length == 0 && !vazioIntencional ? "@" : texto;
                 }
             }
             return valores;

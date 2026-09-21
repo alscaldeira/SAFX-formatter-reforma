@@ -147,7 +147,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
             nota.IndicadorIntermediador = Txt(ide, "indIntermed");
             // NORM_DEV: finNFe 4 (devolução/retorno) -> "2" no domínio do SAFX
             nota.NormDev = nota.Finalidade == "4" ? "2" : "1";
-            nota.CodDocto = "NFI";
+            nota.CodDocto = "NFE";
             nota.CodClassDocFis = "1"; // mercadorias/produtos -> SAFX3008
 
             string cnpjEmit = Documento(Txt(emit, "CNPJ"));

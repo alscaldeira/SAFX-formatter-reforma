@@ -131,7 +131,7 @@ final class XmlLeitor {
         nota.indicadorIntermediador = txt(ide, "indIntermed");
         // NORM_DEV: finNFe 4 (devolução/retorno) -> "2" no domínio do SAFX
         nota.normDev = "4".equals(nota.finalidade) ? "2" : "1";
-        nota.codDocto = "NFI";
+        nota.codDocto = "NFE";
         nota.codClassDocFis = "1"; // mercadorias/produtos -> SAFX08
 
         String cnpjEmit = documento(txt(emit, "CNPJ"));

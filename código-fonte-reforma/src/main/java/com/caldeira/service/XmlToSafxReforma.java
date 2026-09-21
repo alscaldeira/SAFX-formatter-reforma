@@ -207,6 +207,7 @@ final class XmlToSafxReforma {
         r.put("COD_FIS_JUR", Participantes.codFisJur(nota.participante.documento()));
         r.put("NUM_DOCFIS", numeroDocumento(nota.numDoc));
         r.put("SERIE_DOCFIS", nota.serie);
+        r.put("SUB_SERIE_DOCFIS", "");
     }
 
     // ----------------------------------------------------------- gravação
@@ -275,7 +276,10 @@ final class XmlToSafxReforma {
                 valores[i] = SafxFormat.numero((Double) valor, decimais, digitos);
             } else {
                 String texto = SafxLinha.limpar(String.valueOf(valor));
-                valores[i] = texto.isEmpty() ? "@" : texto;
+                // SUB_SERIE_DOCFIS não usa o sentinela "@": o layout exige
+                // que o campo saia realmente vazio quando não há subsérie.
+                boolean vazioIntencional = "SUB_SERIE_DOCFIS".equals(campo.nome);
+                valores[i] = texto.isEmpty() && !vazioIntencional ? "@" : texto;
             }
         }
         return valores;
