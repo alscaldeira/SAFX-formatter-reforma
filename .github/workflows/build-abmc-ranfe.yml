@@ -52,13 +52,18 @@ jobs:
           /p:Platform="Any CPU"
           /m /nologo
 
+      # Platform aqui e "AnyCPU" (sem espaco): esse token e o que o .csproj usa
+      # nas condicoes de PropertyGroup. "Any CPU" (com espaco) so existe como
+      # nome de configuracao da solution (.sln) e e traduzido pra "AnyCPU" na
+      # hora de montar o .csproj -- so vale quando se builda via .sln, nao
+      # quando se chama o MSBuild direto no .csproj, como aqui na publicacao.
       - name: Publicar (File System, igual ao Publish do Visual Studio)
         run: >
           msbuild ABMC.RANFE.LIGHT_SQL\ABMC.RANFE.LIGHT_SQL.csproj
           /p:DeployOnBuild=true
           /p:PublishProfile=FolderProfile
           /p:Configuration=Release
-          /p:Platform="Any CPU"
+          /p:Platform=AnyCPU
           /p:publishUrl="${{ github.workspace }}\publish"
           /nologo
 
