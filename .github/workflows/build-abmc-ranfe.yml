@@ -1,0 +1,72 @@
+name: Build ABMC.RANFE.LIGHT_SQL (.NET Framework)
+
+# Projeto ASP.NET MVC classico (.NET Framework 4.0): so compila com o
+# MSBuild + targets de Web Application do Visual Studio, que so existem no
+# Windows. Por isso o build roda num runner windows-latest, nao Docker/Linux.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'ABMC.RANFE.LIGHT_SQL/**'
+      - '.github/workflows/build-abmc-ranfe.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        working-directory: ABMC.RANFE.LIGHT_SQL
+        shell: pwsh
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Configurar NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restaurar pacotes NuGet (packages.config)
+        run: nuget restore ABMC.RANFE.LIGHT_SQL.sln
+
+      # EPPlus.dll e referenciado direto de bin/EPPlus.dll no .csproj (nao via
+      # packages.config), e bin/ e obj/ estao no .gitignore. Sem esse passo o
+      # build falha por faltar a DLL.
+      - name: Repor EPPlus.dll (referenciada fora do NuGet, em bin/)
+        run: |
+          nuget install EPPlus -Version 4.0.4 -OutputDirectory ..\packages-epplus
+          New-Item -ItemType Directory -Force -Path "ABMC.RANFE.LIGHT_SQL\bin" | Out-Null
+          Copy-Item "..\packages-epplus\EPPlus.4.0.4\lib\net40\EPPlus.dll" "ABMC.RANFE.LIGHT_SQL\bin\EPPlus.dll"
+
+      - name: Compilar (Release)
+        run: msbuild ABMC.RANFE.LIGHT_SQL.sln /p:Configuration=Release /p:Platform="Any CPU" /m /nologo
+
+      - name: Publicar (File System, igual ao Publish do Visual Studio)
+        run: >
+          msbuild ABMC.RANFE.LIGHT_SQL\ABMC.RANFE.LIGHT_SQL.csproj
+          /p:DeployOnBuild=true
+          /p:PublishProfile=FolderProfile
+          /p:Configuration=Release
+          /p:Platform="Any CPU"
+          /p:publishUrl="${{ github.workspace }}\publish"
+          /nologo
+
+      - name: Upload da DLL/PDB compiladas
+        uses: actions/upload-artifact@v4
+        with:
+          name: ABMC.RANFE.LIGHT_SQL-dll
+          path: |
+            ABMC.RANFE.LIGHT_SQL/ABMC.RANFE.LIGHT_SQL/bin/ABMC.RANFE.LIGHT_SQL.dll
+            ABMC.RANFE.LIGHT_SQL/ABMC.RANFE.LIGHT_SQL/bin/ABMC.RANFE.LIGHT_SQL.pdb
+          if-no-files-found: error
+
+      - name: Upload da pasta publicada (equivalente ao CargaSouth32)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ABMC.RANFE.LIGHT_SQL-publish
+          path: publish/
+          if-no-files-found: error
