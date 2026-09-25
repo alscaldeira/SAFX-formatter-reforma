@@ -42,8 +42,22 @@ jobs:
           New-Item -ItemType Directory -Force -Path "ABMC.RANFE.LIGHT_SQL\bin" | Out-Null
           Copy-Item "..\packages-epplus\EPPlus.4.0.4\lib\net20\EPPlus.dll" "ABMC.RANFE.LIGHT_SQL\bin\EPPlus.dll"
 
+      # O runner windows-latest nao traz mais o Developer Pack do .NET
+      # Framework 4.0 (so versoes mais recentes). Sem as reference assemblies
+      # o MSBuild falha com MSB3644. Baixamos via NuGet e apontamos
+      # FrameworkPathOverride pra essa pasta em vez de instalar nada no SO.
+      - name: Repor reference assemblies do .NET Framework 4.0
+        run: |
+          nuget install Microsoft.NETFramework.ReferenceAssemblies.net40 -Version 1.0.3 -OutputDirectory ..\packages-refassemblies
+          echo "FRAMEWORK_PATH_OVERRIDE=$(Resolve-Path '..\packages-refassemblies\Microsoft.NETFramework.ReferenceAssemblies.net40.1.0.3\build\.NETFramework\v4.0')" >> $env:GITHUB_ENV
+
       - name: Compilar (Release)
-        run: msbuild ABMC.RANFE.LIGHT_SQL.sln /p:Configuration=Release /p:Platform="Any CPU" /m /nologo
+        run: >
+          msbuild ABMC.RANFE.LIGHT_SQL.sln
+          /p:Configuration=Release
+          /p:Platform="Any CPU"
+          /p:FrameworkPathOverride="${{ env.FRAMEWORK_PATH_OVERRIDE }}"
+          /m /nologo
 
       - name: Publicar (File System, igual ao Publish do Visual Studio)
         run: >
@@ -52,6 +66,7 @@ jobs:
           /p:PublishProfile=FolderProfile
           /p:Configuration=Release
           /p:Platform="Any CPU"
+          /p:FrameworkPathOverride="${{ env.FRAMEWORK_PATH_OVERRIDE }}"
           /p:publishUrl="${{ github.workspace }}\publish"
           /nologo
 
