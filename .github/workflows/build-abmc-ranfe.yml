@@ -40,7 +40,7 @@ jobs:
         run: |
           nuget install EPPlus -Version 4.0.4 -OutputDirectory ..\packages-epplus
           New-Item -ItemType Directory -Force -Path "ABMC.RANFE.LIGHT_SQL\bin" | Out-Null
-          Copy-Item "..\packages-epplus\EPPlus.4.0.4\lib\net40\EPPlus.dll" "ABMC.RANFE.LIGHT_SQL\bin\EPPlus.dll"
+          Copy-Item "..\packages-epplus\EPPlus.4.0.4\lib\net20\EPPlus.dll" "ABMC.RANFE.LIGHT_SQL\bin\EPPlus.dll"
 
       - name: Compilar (Release)
         run: msbuild ABMC.RANFE.LIGHT_SQL.sln /p:Configuration=Release /p:Platform="Any CPU" /m /nologo
