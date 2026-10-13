@@ -800,91 +800,64 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
 
         /// <summary>
         /// Acrescenta as linhas de <paramref name="origem"/> em
-        /// <paramref name="destino"/> casando as colunas pelo NOME.
+        /// <paramref name="destino"/> casando as colunas pelo NOME, e devolve a
+        /// tabela resultante.
         ///
         /// destino (a tabela vinda do banco, layout completo) e origem (a tabela
         /// do CT-e, so com as colunas que LerCTes preenche) nao declaram as
         /// colunas na mesma ordem nem no mesmo numero — copiar por indice
         /// embaralharia os campos.
+        ///
+        /// A tabela devolvida tem colunas sem tipo e sem limite de tamanho
+        /// (object): o SQL Server tipa pelo literal do script, entao
+        /// "'' COD_MUNICIPIO_ORIG" vira varchar(1) e "'NFE' COD_DOCTO" varchar(3),
+        /// e o DataColumn herda esse MaxLength — cortar o valor do CT-e por ele
+        /// reduzia "CT-E" a "CT-" e "11300" a "1". O mesmo vale para o tipo:
+        /// TELEFONE e Int32 no banco e o fone de 10 digitos do XML estoura. Os
+        /// valores ja carregados do banco sao mantidos como estao; a tabela so
+        /// alimenta a gravacao do Excel, que escreve o valor de cada celula.
         /// </summary>
         private static DataTable Mesclar(DataTable destino, DataTable origem)
         {
             if (origem == null || origem.Rows.Count == 0 || destino == null) return destino;
 
+            DataTable solto = new DataTable(destino.TableName);
+
+            foreach (DataColumn coluna in destino.Columns)
+            {
+                solto.Columns.Add(coluna.ColumnName, typeof(object));
+            }
+
+            foreach (DataRow existente in destino.Rows)
+            {
+                solto.Rows.Add(existente.ItemArray);
+            }
+
             foreach (DataRow linha in origem.Rows)
             {
-                DataRow nova = destino.NewRow();
+                DataRow nova = solto.NewRow();
 
-                foreach (DataColumn coluna in destino.Columns)
+                foreach (DataColumn coluna in solto.Columns)
                 {
-                    object candidato;
                     if (!origem.Columns.Contains(coluna.ColumnName))
                     {
                         // Coluna que a origem nao preenche (ex.: campo do SAFX04
                         // que so o SQL do SPED traz, como COD_ATIVIDADE) — mesma
                         // convencao do proprio script SQL, que usa '' fixo para
                         // esses campos.
-                        candidato = "";
+                        nova[coluna] = "";
                     }
                     else
                     {
                         object valor = linha[coluna.ColumnName];
-                        candidato = Vazio(valor) ? "@" : valor;
+                        nova[coluna] = Vazio(valor) ? "@" : valor;
                     }
-                    AtribuirSeguro(nova, coluna, candidato);
                 }
 
-                destino.Rows.Add(nova);
+                solto.Rows.Add(nova);
             }
 
-            return destino;
-        }
-
-        /// <summary>
-        /// Grava o valor na coluna do destino sem derrubar a exportacao inteira
-        /// por causa de UM campo que a coluna real do SQL Server nao aceita.
-        ///
-        /// A largura e o TIPO de cada coluna do SAFX04/07/08 so o SQL Server sabe
-        /// — este projeto nunca viu o schema, so a tabela ja carregada em runtime.
-        /// Ja apareceram os dois problemas possiveis: string maior que o
-        /// MaxLength da coluna (CPF_CGC, E_MAIL) e coluna de um TIPO que a origem
-        /// nao respeita (TELEFONE gravado como Int32 no banco, XML manda uma
-        /// string de 10 digitos que estoura o Int32). Em vez de tratar campo a
-        /// campo — a lista nunca acaba —, corta pelo MaxLength quando a coluna e
-        /// texto e, se mesmo assim a atribuicao falhar (tipo incompativel,
-        /// overflow numerico, formato invalido), cai num valor neutro do tipo da
-        /// coluna em vez de estourar.
-        /// </summary>
-        private static void AtribuirSeguro(DataRow linha, DataColumn coluna, object valor)
-        {
-            object efetivo = CabeNaColuna(valor, coluna);
-            try
-            {
-                linha[coluna] = efetivo;
-            }
-            catch (Exception)
-            {
-                linha[coluna] = ValorNeutro(coluna);
-            }
-        }
-
-        /// <summary>Corta pelo MaxLength real da coluna, quando ela declara um e o valor e texto.</summary>
-        private static object CabeNaColuna(object valor, DataColumn coluna)
-        {
-            if (coluna.MaxLength < 0 || valor == null || valor == DBNull.Value) return valor;
-            string texto = valor as string;
-            if (texto == null) return valor;
-            return texto.Length > coluna.MaxLength ? texto.Substring(0, coluna.MaxLength) : texto;
-        }
-
-        /// <summary>Valor que qualquer coluna aceita, para quando a atribuicao real falha.</summary>
-        private static object ValorNeutro(DataColumn coluna)
-        {
-            if (coluna.AllowDBNull) return DBNull.Value;
-            if (coluna.DataType == typeof(string)) return "";
-            if (coluna.DataType == typeof(DateTime)) return DateTime.MinValue;
-            if (coluna.DataType == typeof(bool)) return false;
-            return Activator.CreateInstance(coluna.DataType);
+            return solto;
         }
 
         /// <summary>Campo nulo do SAFX e "@" — mesma convencao do restante do arquivo.</summary>
