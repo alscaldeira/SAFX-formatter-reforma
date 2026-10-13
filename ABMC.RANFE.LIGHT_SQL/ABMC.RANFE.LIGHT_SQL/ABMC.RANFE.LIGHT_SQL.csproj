@@ -90,14 +90,14 @@
     </Reference>
     <Reference Include="System.Net.Http">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Net.Http.2.0.30506.0\lib\net40\System.Net.Http.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Net.Http.2.0.30506.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
@@ -147,6 +147,7 @@
     <Compile Include="ReformaTributaria\Cadastros\Participantes.cs" />
     <Compile Include="ReformaTributaria\Cadastros\Unidades.cs" />
     <Compile Include="ReformaTributaria\ConversorXmlReforma.cs" />
+    <Compile Include="ReformaTributaria\XmlToSafxCadastro.cs" />
     <Compile Include="ReformaTributaria\Leiaute\JsonMinimo.cs" />
     <Compile Include="ReformaTributaria\Leiaute\LayoutReforma.cs" />
     <Compile Include="ReformaTributaria\Modelo\XmlDi.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="DAO\sysdiagrams.cs">
       <DependentUpon>RanfeLight_ModelSQL.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClassificadorXml.cs" />
     <Compile Include="Funcoes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

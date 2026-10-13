@@ -3416,6 +3416,33 @@
           "origem": ""
         }
       ]
+    },
+    "SAFX04": {
+      "description": "Cadastro de Pessoa Física/Jurídica gerado a partir do XML — só para participante SEM de-para em participantes.properties (ver Cadastros/Participantes.cs). Quem já tem de-para já está cadastrado no MasterSAF e não entra aqui, para não duplicar.",
+      "fieldCountOficial": 58,
+      "ordemConfirmada": false,
+      "fields": [
+        { "posicao": 1, "campo": "IND_FIS_JUR", "descricao": "Indicador Pessoa Física/Jurídica", "tamanho": "001", "tipo": "A", "obrigatorio": true, "origem": "papel do participante" },
+        { "posicao": 2, "campo": "COD_FIS_JUR", "descricao": "Código/Destinatário/Emitente", "tamanho": "014", "tipo": "A", "obrigatorio": true, "origem": "CNPJ/CPF (sem de-para)" },
+        { "posicao": 3, "campo": "DATA_X04", "descricao": "Data de competência (ano/mês/01)", "tamanho": "008", "tipo": "N", "obrigatorio": true, "origem": "data de emissão do primeiro documento do participante" },
+        { "posicao": 4, "campo": "IND_CONTEM_COD", "descricao": "Indicador contém código de país", "tamanho": "001", "tipo": "A", "obrigatorio": true, "origem": "1 = nacional, 4 = exterior" },
+        { "posicao": 5, "campo": "RAZAO_SOCIAL", "descricao": "Razão Social", "tamanho": "050", "tipo": "A", "obrigatorio": true, "origem": "xNome do participante" },
+        { "posicao": 6, "campo": "CPF_CGC", "descricao": "CPF/CNPJ", "tamanho": "018", "tipo": "A", "obrigatorio": false, "origem": "CNPJ ou CPF do participante" },
+        { "posicao": 7, "campo": "INSC_ESTADUAL", "descricao": "Inscrição Estadual", "tamanho": "020", "tipo": "A", "obrigatorio": false, "origem": "IE do participante" },
+        { "posicao": 8, "campo": "NOME_FANTASIA", "descricao": "Nome Fantasia", "tamanho": "050", "tipo": "A", "obrigatorio": false, "origem": "xFant, com xNome como fallback" },
+        { "posicao": 9, "campo": "ENDERECO", "descricao": "Endereço", "tamanho": "060", "tipo": "A", "obrigatorio": false, "origem": "xLgr" },
+        { "posicao": 10, "campo": "NUM_ENDERECO", "descricao": "Número do Endereço", "tamanho": "010", "tipo": "A", "obrigatorio": false, "origem": "nro" },
+        { "posicao": 11, "campo": "COMPL_ENDERECO", "descricao": "Complemento do Endereço", "tamanho": "030", "tipo": "A", "obrigatorio": false, "origem": "xCpl" },
+        { "posicao": 12, "campo": "BAIRRO", "descricao": "Bairro", "tamanho": "020", "tipo": "A", "obrigatorio": false, "origem": "xBairro" },
+        { "posicao": 13, "campo": "CIDADE", "descricao": "Cidade", "tamanho": "040", "tipo": "A", "obrigatorio": false, "origem": "xMun" },
+        { "posicao": 14, "campo": "UF", "descricao": "UF", "tamanho": "002", "tipo": "A", "obrigatorio": false, "origem": "UF" },
+        { "posicao": 15, "campo": "CEP", "descricao": "CEP", "tamanho": "008", "tipo": "A", "obrigatorio": false, "origem": "CEP" },
+        { "posicao": 16, "campo": "COD_PAIS", "descricao": "Código do País", "tamanho": "003", "tipo": "A", "obrigatorio": false, "origem": "cPais, 105 (Brasil) como fallback" },
+        { "posicao": 17, "campo": "TELEFONE", "descricao": "Telefone", "tamanho": "010", "tipo": "A", "obrigatorio": false, "origem": "fone" },
+        { "posicao": 18, "campo": "COD_MUNICIPIO", "descricao": "Código do Município", "tamanho": "005", "tipo": "N", "obrigatorio": false, "origem": "cMun (5 últimos dígitos)" },
+        { "posicao": 19, "campo": "IND_SIMPLES_NAC", "descricao": "Indicador Simples Nacional", "tamanho": "001", "tipo": "A", "obrigatorio": false, "origem": "opSimpNac da NFS-e" },
+        { "posicao": 20, "campo": "E_MAIL", "descricao": "E-mail", "tamanho": "060", "tipo": "A", "obrigatorio": false, "origem": "email" }
+      ]
     }
   }
 }

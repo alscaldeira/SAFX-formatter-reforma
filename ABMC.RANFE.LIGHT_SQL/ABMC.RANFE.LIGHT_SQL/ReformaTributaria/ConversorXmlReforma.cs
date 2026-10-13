@@ -12,9 +12,14 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
     /// único arquivo XML — e gera SAFX3007/3008/3009 (.txt posicional e .csv
     /// nomeado) a partir dos grupos IBSCBS do XML.
     ///
-    /// O cadastro de Pessoa Física/Jurídica (SAFX04) não é gerado por este fluxo:
-    /// os participantes já existem na base do MasterSAF, e os registros da Reforma
-    /// apenas os referenciam pelo IND_FIS_JUR + COD_FIS_JUR.
+    /// Também gera SAFX04 (cadastro de Pessoa Física/Jurídica), mas só para quem
+    /// NÃO tem de-para em participantes.properties: participante já cadastrado no
+    /// MasterSAF continua sendo só referenciado pelo IND_FIS_JUR + COD_FIS_JUR,
+    /// sem duplicar cadastro. Ver <see cref="XmlToSafxCadastro"/>.
+    ///
+    /// Não gera SAFX07/08: para NF-e eles já vêm do banco (mesmo upload, via SPED)
+    /// e duplicariam; para NFS-e não fazem sentido (são orientados a CFOP/ICMS de
+    /// mercadoria).
     /// </summary>
     public static class ConversorXmlReforma
     {
@@ -73,11 +78,16 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                         + nota.Arquivo + " (sem CNPJ de emitente/destinatário/tomador).");
                 }
             }
-            // não gera SAFX04, mas o papel consolidado do participante é o que vai
-            // no IND_FIS_JUR dos registros da Reforma
+            // o papel consolidado do participante é o que vai no IND_FIS_JUR dos
+            // registros da Reforma
             ParticipantesXml.Consolidar(notas);
 
             XmlToSafxReforma.Gerar(notas, resultado);
+
+            // roda depois do XmlToSafxReforma: é ele quem, ao montar a chave de
+            // cada registro, popula Participantes.SemCadastro() — a lista de quem
+            // não tem de-para e por isso pode ganhar um SAFX04 novo.
+            XmlToSafxCadastro.Gerar(notas, resultado);
 
             foreach (string cnpj in Estabelecimentos.SemCadastro())
             {

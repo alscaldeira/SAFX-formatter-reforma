@@ -29,6 +29,12 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
         /// <summary>Item de serviço.</summary>
         public DataTable Safx3009 { get; internal set; }
 
+        /// <summary>
+        /// Cadastro de Pessoa Física/Jurídica dos participantes sem de-para em
+        /// participantes.properties — ver <see cref="XmlToSafxCadastro"/>.
+        /// </summary>
+        public DataTable Safx04 { get; internal set; }
+
         /// <summary>O que precisa de conferência humana (cadastro faltando, dado ausente no XML).</summary>
         public List<string> Avisos { get; private set; }
 
@@ -40,6 +46,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
             if (layout == "SAFX3007") return Safx3007;
             if (layout == "SAFX3008") return Safx3008;
             if (layout == "SAFX3009") return Safx3009;
+            if (layout == "SAFX04") return Safx04;
             return null;
         }
     }

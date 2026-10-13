@@ -27,8 +27,12 @@
                     <!-- Contact Form -->
                     <div class="contact-form">
                         <h5>Upload XML's</h5>
-                        <!-- Form -->
-                        <form class="form" role="form">
+                        @* Sem <form> aqui dentro: o Html.BeginForm acima ja e o
+                           formulario. HTML nao permite forms aninhados — o parser do
+                           navegador descarta a tag interna, e era so por isso que o
+                           upload funcionava. Um <div> deixa o layout igual sem
+                           depender desse descarte. *@
+                        <div class="form" role="form">
                             <div class="container">
                                 <div class="row justify-content-start">
                                     <div class="form-group">
@@ -43,8 +47,22 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <!-- Form Group -->
+                                        @* Um campo so para o lote inteiro. NF-e e CT-e
+                                           sao separados pelo conteudo de cada XML, no
+                                           ClassificadorXml, e nao por campos distintos
+                                           que o usuario tinha de preencher certo. *@
                                         <div class="form-group">
-                                            <input type="file" class="form-control" name="iFile" id="iFile" multiple placeholder="Enter Name">
+                                            <label class="control-label">Arquivos XML — NF-e, NFS-e e CT-e no mesmo envio (aceita .zip, .eml e .msg):</label>
+                                            <input type="file" class="form-control" name="iFile" id="iFile" multiple accept=".xml,.zip,.eml,.msg">
+                                            &nbsp;
+                                            @* Sem checkbox nao ha como o CT-e (que nao carrega PIS/COFINS
+                                               proprio, e cujo ICMS pode ser so uma base informativa)
+                                               decidir se calcula esses valores ou sai com "@"/zero. *@
+                                            <input type="checkbox" name="chkPisCofins" id="chkPisCofins" />
+                                            <label for="chkPisCofins">Calcular PIS/COFINS do CT-e</label>
+
+                                            <input type="checkbox" name="chkIcms" id="chkIcms" />
+                                            <label for="chkIcms">Calcular ICMS do CT-e</label>
                                         </div>
                                     </div>
                                 </div>
@@ -55,13 +73,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <hr />
 
                 </div>
 
             </div>
+            @if (ViewBag.Erro != null)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="color:red;">@ViewBag.Erro</h5>
+                    </div>
+                </div>
+            }
             @if (ViewBag.nomearquivo != null)
             {
                 <div class="row">
@@ -76,10 +102,12 @@
             {
                 <div class="row">
                     <div class="col-md-12">
-                        @* Avisos da Reforma Tributaria: nao sao erros. Cadastro faltando
-                           (o codigo saiu de um palpite) ou dado que o XML nao traz. O
-                           arquivo foi gerado; o que esta aqui precisa de conferencia. *@
-                        <h5>Reforma Tributária (SAFX3007/3008/3009) — pontos a conferir:</h5>
+                        @* Nao sao erros: o arquivo foi gerado. Aqui entram o XML que
+                           ficou de fora do lote, o CT-e que ainda nao vira aba, e os
+                           avisos da Reforma — cadastro faltando (o codigo saiu de um
+                           palpite) ou dado que o XML nao traz. Tudo isso precisa de
+                           conferencia antes de importar no MasterSAF. *@
+                        <h5>Pontos a conferir no lote:</h5>
                         <ul>
                             @foreach (string aviso in (List<string>)ViewBag.AvisosReforma)
                             {
