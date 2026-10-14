@@ -393,7 +393,8 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 "VLR_ALIQ_PIS", "VLR_ALIQ_COFINS", "COD_SIT_PIS", "COD_SIT_COFINS", "VLR_PRODUTO",
                 "NUM_AUTENTIC_NFE", "DATA_SAIDA_REC", "DAT_LANC_PIS_COFINS", "VLR_TOT_NOTA",
                 "VLR_BASE_PIS", "VLR_BASE_COFINS", "VLR_PIS", "VLR_COFINS", "IND_TP_FRETE",
-                "COD_SITUACAO_B", "BASE_OUTR_ICMS");
+                "COD_SITUACAO_B", "BASE_OUTR_ICMS", "VLR_FRETE", "VLR_SEGURO", "VLR_OUTRAS", "VLR_ALIQ_IPI",
+                "VLR_SUBST_ICMS");
 
             public DataTable Safx08 = CriarTabela(
                 "MOVTO_E_S", "COD_TRIB_IPI", "DATA_FISCAL", "DAT_LANC_PIS_COFINS", "COD_DOCTO",
@@ -401,7 +402,7 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 "VLR_UNIT", "VLR_ITEM", "COD_SITUACAO_B", "BASE_ICMS", "VLR_ALIQ_ICMS", "VLR_ICMS",
                 "TRIB_ICMS", "VLR_CONTAB_ITEM", "VLR_ALIQ_PIS", "VLR_ALIQ_COFINS",
                 "COD_SITUACAO_PIS", "COD_SITUACAO_COFINS", "VLR_BASE_PIS", "VLR_BASE_COFINS",
-                "VLR_PIS", "VLR_COFINS");
+                "VLR_PIS", "VLR_COFINS", "NUM_ITEM", "VLR_FRETE", "VLR_OUTRAS", "VLR_OUTROS1");
 
             public DataTable Safx04 = CriarTabela(
                 "DATA_X04", "COD_FIS_JUR", "RAZAO_SOCIAL", "CPF_CGC", "INSC_ESTADUAL",
@@ -633,6 +634,15 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 else if (!string.IsNullOrEmpty(toma)) l07["IND_TP_FRETE"] = toma;
 
                 l07["COD_SITUACAO_B"] = cst;
+
+                // Componentes que o CT-e nao calcula. Sem eles a coluna saia em
+                // branco (a mescla nao herda mais o 0 padrao das colunas inteiras
+                // do SQL), e o campo numerico do SAFX nao e para ficar vazio.
+                l07["VLR_FRETE"] = SEVENTEEN_ZEROS;
+                l07["VLR_SEGURO"] = SEVENTEEN_ZEROS;
+                l07["VLR_OUTRAS"] = SEVENTEEN_ZEROS;
+                l07["VLR_SUBST_ICMS"] = SEVENTEEN_ZEROS;
+                l07["VLR_ALIQ_IPI"] = SEVEN_ZEROS;
                 if (!calcIcms) l07["BASE_OUTR_ICMS"] = To17Z(vBC);
 
                 // ------------------------------------------------- SAFX08
@@ -672,6 +682,13 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 }
 
                 l08["VLR_CONTAB_ITEM"] = To17Z(vTPrest);
+
+                // O CT-e tem um unico item (a prestacao). Item 0 nao existe no
+                // SAFX; os demais componentes nao se aplicam e saem zerados.
+                l08["NUM_ITEM"] = "1";
+                l08["VLR_FRETE"] = SEVENTEEN_ZEROS;
+                l08["VLR_OUTRAS"] = SEVENTEEN_ZEROS;
+                l08["VLR_OUTROS1"] = SEVENTEEN_ZEROS;
 
                 if (calcPisCofins)
                 {
