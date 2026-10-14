@@ -11,11 +11,13 @@ public class TelaPrincipal extends JFrame {
 
     private JTextField txtArquivo;
     private JLabel lblTipoDetectado;
+    private JCheckBox chkPisCofins;
+    private JCheckBox chkIcms;
     private File origemSelecionada;
 
     public TelaPrincipal() {
         setTitle("Conversor SPED/XML para SAFX");
-        setSize(620, 170);
+        setSize(620, 215);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -43,9 +45,20 @@ public class TelaPrincipal extends JFrame {
         lblTipoDetectado = new JLabel(" ");
         lblTipoDetectado.setForeground(new Color(0, 100, 0));
 
+        // Opções do CT-e (as mesmas caixas da tela do sistema original)
+        chkPisCofins = new JCheckBox("Calcular PIS/COFINS do CT-e");
+        chkIcms = new JCheckBox("Calcular ICMS do CT-e");
+        JPanel painelOpcoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelOpcoes.add(chkPisCofins);
+        painelOpcoes.add(chkIcms);
+
+        JPanel painelInfo = new JPanel(new BorderLayout(5, 5));
+        painelInfo.add(lblTipoDetectado, BorderLayout.NORTH);
+        painelInfo.add(painelOpcoes, BorderLayout.CENTER);
+
         JPanel painelCentro = new JPanel(new BorderLayout(5, 5));
         painelCentro.add(painelArquivo, BorderLayout.NORTH);
-        painelCentro.add(lblTipoDetectado, BorderLayout.CENTER);
+        painelCentro.add(painelInfo, BorderLayout.CENTER);
 
         painel.add(painelCentro, BorderLayout.CENTER);
 
@@ -71,7 +84,8 @@ public class TelaPrincipal extends JFrame {
             }
 
             try {
-                List<String> avisos = Conversao.executar(origemSelecionada.getAbsolutePath());
+                List<String> avisos = Conversao.executar(origemSelecionada.getAbsolutePath(),
+                        chkPisCofins.isSelected(), chkIcms.isSelected());
 
                 if (avisos.isEmpty()) {
                     JOptionPane.showMessageDialog(
@@ -131,8 +145,8 @@ public class TelaPrincipal extends JFrame {
             lblTipoDetectado.setText("Identificado: " + descricao
                     + (origem == Conversao.Origem.SPED
                             ? " — a conversão gera o IMPORTACAO.csv."
-                            : " — a conversão gera os arquivos da Reforma Tributária"
-                                    + " (SAFX3007/3008/3009)."));
+                            : " — a conversão gera SAFX07/08/04/2013/2043 (NF-e e CT-e)"
+                                    + " e SAFX3007/3008/3009 (Reforma Tributária)."));
         } catch (Exception ex) {
             lblTipoDetectado.setForeground(Color.RED);
             lblTipoDetectado.setText("Não reconhecido — veja o detalhe ao converter.");

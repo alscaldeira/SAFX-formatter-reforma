@@ -38,6 +38,11 @@ final class XmlLeitor {
 
     /** Aceita uma pasta (varrida recursivamente) ou um único arquivo XML. */
     static List<XmlNota> lerPasta(String origem, List<String> avisos) throws IOException {
+        return lerArquivos(listarXml(origem), origem, avisos);
+    }
+
+    /** Os .xml de uma pasta (recursivo, em ordem de caminho) ou o arquivo único informado. */
+    static List<Path> listarXml(String origem) throws IOException {
         Path raiz = Paths.get(origem);
         List<Path> arquivos = new ArrayList<>();
 
@@ -56,7 +61,12 @@ final class XmlLeitor {
         } else {
             throw new IOException("Caminho não encontrado: " + origem);
         }
+        return arquivos;
+    }
 
+    /** Lê uma lista já filtrada de arquivos (o fluxo misto separa NF-e/CT-e antes). */
+    static List<XmlNota> lerArquivos(List<Path> arquivos, String origem, List<String> avisos)
+            throws IOException {
         List<XmlNota> notas = new ArrayList<>();
         for (Path arquivo : arquivos) {
             XmlNota nota = ler(arquivo.toFile(), avisos);

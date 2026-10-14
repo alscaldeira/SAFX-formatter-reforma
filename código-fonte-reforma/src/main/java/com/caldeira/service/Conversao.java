@@ -24,7 +24,21 @@ public final class Conversao {
     }
 
     public static List<String> executar(Origem origem, String caminho) throws IOException {
-        return origem == Origem.XML ? apartirDeXml(caminho) : apartirDeSped(caminho);
+        return executar(origem, caminho, false, false);
+    }
+
+    /**
+     * @param calcPisCofins só vale para XML: calcula PIS/COFINS do CT-e
+     * @param calcIcms      só vale para XML: usa o ICMS do próprio CT-e
+     */
+    public static List<String> executar(String caminho, boolean calcPisCofins, boolean calcIcms)
+            throws IOException {
+        return executar(OrigemArquivo.detectar(caminho), caminho, calcPisCofins, calcIcms);
+    }
+
+    public static List<String> executar(Origem origem, String caminho, boolean calcPisCofins, boolean calcIcms)
+            throws IOException {
+        return origem == Origem.XML ? apartirDeXml(caminho, calcPisCofins, calcIcms) : apartirDeSped(caminho);
     }
 
     /** Exposto para a tela e para os testes conferirem a detecção. */
@@ -34,6 +48,11 @@ public final class Conversao {
 
     public static List<String> apartirDeXml(String pasta) throws IOException {
         return ConversorXml.converter(pasta);
+    }
+
+    public static List<String> apartirDeXml(String pasta, boolean calcPisCofins, boolean calcIcms)
+            throws IOException {
+        return ConversorXml.converter(pasta, calcPisCofins, calcIcms);
     }
 
     public static List<String> apartirDeSped(String arquivo) throws IOException {
