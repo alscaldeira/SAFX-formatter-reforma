@@ -160,8 +160,10 @@ estab, movimento, `NORM_DEV`, série, CFOP com a regra 2207→6207, `IND_FIS_JUR
 | Calcular PIS/COFINS | alíquotas `0016500`/`0076000`, `COD_SIT` `56`; base = `vTPrest` (próprio) ou `vTPrest − vICMS` (terceiro); PIS = base×1,65%, COFINS = base×7,6%, arredondados a 2 casas (arredondamento bancário, como `decimal.Round`). Desmarcado: tudo zero e `COD_SIT` `70` |
 | SAFX08 | 1 item (`NUM_ITEM=1`), `COD_PRODUTO=FRETES`, `IND_PRODUTO=4`, `COD_TRIB_IPI` `53` (próprio) / `03` (terceiro), `VLR_UNIT` = `vTPrest`×10000 (19), `DESCRICAO_COMPL` = `compl/xObs` |
 | Calcular ICMS | `COD_SITUACAO_B`=CST, `VLR_ALIQ_ICMS`=`pICMS`×10000 (7: 18,00→`0180000`), `VLR_ICMS`, `TRIB_ICMS=1`. Desmarcado: CST `90`, alíquota/valor zerados, `TRIB_ICMS=3` |
-| SAFX04 do CT-e | `COD_FIS_JUR`/`CPF_CGC`=CNPJ cru do emitente; telefone = 10 últimas posições; `COD_PAIS` 105 como fallback; `COD_MUNICIPIO` = 5 últimas; `IND_CONTEM_COD` = `4` se **`rem`** (não o emitente) não tem CNPJ; `IND_FIS_JUR=2`; um por CNPJ e sem repetir quem a NF-e já trouxe |
+| SAFX04 do CT-e | `COD_FIS_JUR`/`CPF_CGC`=CNPJ cru do emitente; telefone = 10 últimas posições; `COD_PAIS` 105 como fallback; `COD_MUNICIPIO` = 5 últimas; `IND_CONTEM_COD` = `4` se **`rem`** (não o emitente) não tem CNPJ; `IND_FIS_JUR=2`; **uma linha por CT-e**, sem dedupe (como a planilha de referência; o C# ainda deduplica por CNPJ) |
 | Campos fixos | `FIXOS_SAFX07/08/04` copiados 1:1 (valores iguais aos dos scripts de NF-e) |
+| `COD_CONTA` (07 e 08) | constante `191000`, sem origem no XML; vem da planilha de referência (98/98) e do mapeamento do layout. O `LerCTes` do C# ainda deixa em branco |
+| `SUB_SERIE_DOCFIS` (07 e 08) | `@` nos CT-e (planilha de referência) |
 
 ## 5. Reforma Tributária e SAFX04 de participantes sem de-para
 
@@ -170,7 +172,7 @@ estab, movimento, `NORM_DEV`, série, CFOP com a regra 2207→6207, `IND_FIS_JUR
 - `XmlToSafxCadastro` (novo): SAFX04 só para quem **não** tem de-para em `participantes.properties`; NF-e
   de saída fica de fora (o SAFX04 de NF-e já traz o destinatário); roda depois do `XmlToSafxReforma`, que
   é quem popula a lista de "sem cadastro". CPF/CNPJ vão sem máscara; campos cortados no tamanho do layout.
-- Os três SAFX04 (NF-e, CT-e, Reforma) saem num arquivo só, nessa ordem.
+- Os três SAFX04 (NF-e, CT-e, Reforma) saem num arquivo só, nessa ordem, com as **80 colunas** do leiaute (as 19 finais saem `@`).
 
 ## 6. Divergências deliberadas em relação ao C#
 
@@ -213,9 +215,10 @@ tela `CargaExcel`. O Java lê uma pasta ou arquivo e grava `.txt/.csv`.
 
 ## 9. Verificação
 
-- `src/test/java/com/caldeira/TestesRegrasCsharp.java`: 71 verificações (classificação do lote, 40 regras de
+- `src/test/java/com/caldeira/TestesRegrasCsharp.java`: 75 verificações (classificação do lote, 40 regras de
   NF-e/SAFX04/2013/2043 e CT-e). Autônoma, porque as demais suítes do projeto ainda referenciam classes
   `SpedToSafxNN` que não existem mais e não compilam (já era assim antes desta mudança).
+- Conversão de `temporario/entrada` (98 CT-e, com PIS/COFINS e ICMS calculados) comparada com `temporario/_20260909162928_cte.xlsx`: **0 diferenças** em SAFX07, SAFX08 e SAFX04 (`.txt`).
 - Saída da Reforma comparada com a do código anterior: idêntica.
 - Rodar:
 

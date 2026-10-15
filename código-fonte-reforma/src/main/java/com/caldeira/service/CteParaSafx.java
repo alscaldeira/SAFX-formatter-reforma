@@ -12,12 +12,10 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * CT-e (modelo 57) e CT-e OS (67) -> SAFX07, SAFX08 e SAFX04.
@@ -56,6 +54,11 @@ final class CteParaSafx {
             "VLR_OUTRAS", "0", "VLR_ALIQ_IPI", "0", "VLR_IPI", "0", "VLR_OUTROS1", "0",
             "ALIQ_ICMS_ORIGDEST", "0", "VLR_DESC_CONDIC", "0", "TRIB_ICMSS", "2",
             "BASE_REDU_ICMSS", "0", "VLR_CUSTO_UNIT", "0", "IND_NATUREZA_FRETE", "9");
+
+    // Sem origem no XML: a planilha de referência (temporario/_20260909162928_cte.xlsx) traz a
+    // conta 191000 nas 98 linhas de SAFX07 e SAFX08, e o leiaute a define como constante.
+    // SUB_SERIE_DOCFIS sai "@" nos CT-e (o gravador deixaria vazio).
+    private static final String COD_CONTA = "191000";
 
     private static final Map<String, String> FIXOS_SAFX04 = mapa("IND_FIS_JUR", "2");
 
@@ -173,6 +176,8 @@ final class CteParaSafx {
 
             // ------------------------------------------------- SAFX07
             Map<String, String> l07 = new LinkedHashMap<>(FIXOS_SAFX07);
+            l07.put("COD_CONTA", COD_CONTA);
+            l07.put("SUB_SERIE_DOCFIS", "@");
             l07.put("COD_EMPRESA", EmpresasFixas.codEmpresa(cnpjDest));
             l07.put("COD_ESTAB", EmpresasFixas.codEstab(cnpjDest));
             l07.put("COD_FIS_JUR", cnpjEmit);
@@ -234,6 +239,8 @@ final class CteParaSafx {
 
             // ------------------------------------------------- SAFX08
             Map<String, String> l08 = new LinkedHashMap<>(FIXOS_SAFX08);
+            l08.put("COD_CONTA", COD_CONTA);
+            l08.put("SUB_SERIE_DOCFIS", "@");
             l08.put("COD_EMPRESA", EmpresasFixas.codEmpresa(cnpjDest));
             l08.put("COD_ESTAB", EmpresasFixas.codEstab(cnpjDest));
             // CT-e de terceiro: entrada e CST de IPI '03'. CT-e próprio segue a NF-e: saída e '53'.
@@ -287,14 +294,7 @@ final class CteParaSafx {
             r.safx08.add(l08);
         }
 
-        removerParticipantesRepetidos(r.safx04);
         return r;
-    }
-
-    /** Um participante por CNPJ, como o 'distinct' do script de NF-e. */
-    static void removerParticipantesRepetidos(List<Map<String, String>> linhas) {
-        Set<String> vistos = new HashSet<>();
-        linhas.removeIf(l -> !vistos.add(l.get("COD_FIS_JUR").trim()));
     }
 
     // ------------------------------------------------------------ utilitários

@@ -103,15 +103,9 @@ public final class ConversorXml {
             }
         }
 
-        // SAFX04: NF-e, depois CT-e (sem repetir quem a NF-e já trouxe), depois a Reforma
+        // SAFX04: NF-e, depois CT-e (uma linha por CT-e, como na planilha de referência), depois a Reforma
         List<Map<String, String>> safx04 = new ArrayList<>(resNfe.safx04);
-        Set<String> jaTem = new HashSet<>();
-        for (Map<String, String> linha : resNfe.safx04) {
-            if (linha.get("COD_FIS_JUR") != null) jaTem.add(linha.get("COD_FIS_JUR").trim());
-        }
-        for (Map<String, String> linha : resCte.safx04) {
-            if (jaTem.add(linha.get("COD_FIS_JUR").trim())) safx04.add(linha);
-        }
+        safx04.addAll(resCte.safx04);
         if (!notas.isEmpty()) safx04.addAll(XmlToSafxCadastro.registros(notas));
 
         Set<String> gravados = new HashSet<>();

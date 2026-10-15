@@ -247,6 +247,21 @@ public final class TestesRegrasCsharp {
                 "2026-09-01T10:00:00-03:00", "ICMS45", "Transp SA", false), false, false, "SAFX07");
         chk("grupo ICMS diferente de ICMS00 é lido e avisado", "45".equals(unico(ic45.get("COD_SITUACAO_B"))), ic45.toString());
 
+        chk("COD_CONTA 191000 e SUB_SERIE_DOCFIS @ no SAFX07 do CT-e", "191000".equals(unico(terceiro.get("COD_CONTA")))
+                && "@".equals(terceiro.get("SUB_SERIE_DOCFIS")), terceiro.get("COD_CONTA"));
+        chk("COD_CONTA 191000 e SUB_SERIE_DOCFIS @ no SAFX08 do CT-e", "191000".equals(unico(item.get("COD_CONTA")))
+                && "@".equals(item.get("SUB_SERIE_DOCFIS")), item.get("COD_CONTA"));
+
+        Path doisIn = Files.createDirectories(caso.resolve("dois/in"));
+        Path doisOut = Files.createDirectories(caso.resolve("dois/out"));
+        Files.writeString(doisIn.resolve("a.xml"), cte("11222333000181", "5352", "2026-09-01T10:00:00-03:00", "ICMS00", "Transp SA", false));
+        Files.writeString(doisIn.resolve("b.xml"), cte("11222333000181", "5352", "2026-09-02T10:00:00-03:00", "ICMS00", "Transp SA", false)
+                .replace("<nCT>77</nCT>", "<nCT>78</nCT>"));
+        executar(doisOut, doisIn, false, false);
+        chk("SAFX04: uma linha por CT-e, sem dedupe por CNPJ", linhas(doisOut, "SAFX04").size() == 2, "" + linhas(doisOut, "SAFX04").size());
+        chk("SAFX04 com as 80 colunas do leiaute", linhas(doisOut, "SAFX04").get(0).size() == 80,
+                "" + linhas(doisOut, "SAFX04").get(0).size());
+
         Map<String, String> pf = unicoCte(caso.resolve("g"), cte("11222333000181", "5352",
                 "2026-09-01T10:00:00-03:00", "ICMS00", "Transp SA", false), false, false, "SAFX04");
         chk("SAFX04 do CT-e: COD_FIS_JUR = CNPJ cru do emitente, IND_FIS_JUR 2",
