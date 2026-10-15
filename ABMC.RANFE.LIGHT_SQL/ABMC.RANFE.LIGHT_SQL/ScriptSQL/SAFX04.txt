@@ -59,7 +59,26 @@ select
 	''																		NUM_CR,
 	''																		IND_IDENTIF_FISCAL,
 	''																		NUM_CAEPF,
-	''																		DATA_PREST_SERV
+	''																		DATA_PREST_SERV,
+	''		IND_CONCILIACAO,
+	''		BAIRRO_II,
+	''		NOM_CONTATO,
+	''		ENDERECO_WEB,
+	''		COD_CATEG_TRAB,
+	''		IND_NAT_ATIVIDADE,
+	''		COD_SETOR,
+	''		CPF_SP,
+	''		DSC_RESERVADO1,
+	''		DSC_RESERVADO2,
+	''		DSC_RESERVADO3,
+	''		DSC_RESERVADO4,
+	''		DSC_RESERVADO5,
+	''		VLR_RESERVADO6,
+	''		VLR_RESERVADO7,
+	''		VLR_RESERVADO8,
+	''		IND_ISENTO_IMUNE,
+	''		IND_CONTRIB_ICMS,
+	''		IND_PRODUTOR_RURAL
  from [dbo].[INT_NFE_NOTA_DEST] as a
  inner join INT_NFE_CONTROLE as b on a.id_controle = b.id
 

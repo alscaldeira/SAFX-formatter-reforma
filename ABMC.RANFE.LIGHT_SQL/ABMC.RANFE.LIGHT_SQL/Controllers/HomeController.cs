@@ -95,16 +95,32 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
             // ela — inclusive um CT-e, que ela reconhece ("infCte") mas nao
             // processa. Mover para uma pasta irma antes preserva o arquivo para o
             // LerCTes abaixo e evita que ele seja classificado e descartado a toa.
-            string pastaCTe = Path.Combine(Directory.GetParent(path).FullName, "UploadCTe");
-            LimparPasta(pastaCTe);
+            //
+            // Tudo do CT-e fica num try/catch: uma falha aqui (pasta bloqueada,
+            // arquivo em uso, caso de XML que o LerCTes nao previu) nao pode
+            // derrubar a requisicao e levar junto a planilha de NF-e, que nao
+            // depende do CT-e. O que deu errado vai para a tela, como na Reforma.
+            LoteCTe cte = new LoteCTe();
 
-            foreach (string arquivo in xmlCTe)
+            try
             {
-                string destino = Path.Combine(pastaCTe, Path.GetFileName(arquivo));
-                System.IO.File.Move(arquivo, destino);
-            }
+                string pastaCTe = Path.Combine(Directory.GetParent(path).FullName, "UploadCTe");
+                LimparPasta(pastaCTe);
 
-            LoteCTe cte = LerCTes(pastaCTe, calcPisCofins, calcIcms, avisosCTe);
+                foreach (string arquivo in xmlCTe)
+                {
+                    string destino = Path.Combine(pastaCTe, Path.GetFileName(arquivo));
+                    System.IO.File.Move(arquivo, destino);
+                }
+
+                cte = LerCTes(pastaCTe, calcPisCofins, calcIcms, avisosCTe);
+            }
+            catch (Exception ex)
+            {
+                cte = new LoteCTe();
+                avisosCTe.Add("CT-e nao convertido: " + ex.Message
+                    + " As abas de NF-e foram geradas normalmente.");
+            }
 
             // A classificacao roda antes de Funcoes.CarregarArquivo1, que e quem
             // descompacta .zip/.eml/.msg. Um lote enviado nesses formatos ainda nao
@@ -174,9 +190,13 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
             // sempre existem com o layout completo (a consulta SQL roda mesmo sem
             // nenhuma linha de NF-e no lote), entao a mescla so precisa casar as
             // colunas que o CT-e preenche — o resto da linha fica em branco.
-            dataTable = Mesclar(dataTable, cte.Safx07);
-            dataTable2 = Mesclar(dataTable2, cte.Safx08);
-            dataTable3 = Mesclar(dataTable3, cte.Safx04);
+            // Coluna que o CT-e nao preenche sai '@' (nulo), como no XLSX de referencia.
+            // O SAFX04 do CT-e sai com uma linha por CT-e, como no XLSX de referencia
+            // (98 CT-e da mesma transportadora = 98 linhas): nao ha dedupe por CNPJ.
+
+            dataTable = Mesclar(dataTable, cte.Safx07, "@");
+            dataTable2 = Mesclar(dataTable2, cte.Safx08, "@");
+            dataTable3 = Mesclar(dataTable3, cte.Safx04, "@");
 
             string path2 = base.Server.MapPath("~/Export");
             DirectoryInfo directoryInfo2 = new DirectoryInfo(path2);
@@ -383,6 +403,78 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
 
         // --------------------------------------------------------- CT-e
 
+        // Campos do CT-e sem origem no XML, com o mesmo valor e formato do XLSX de
+        // referencia (temporario/_20260909162928_cte.xlsx). Sao os valores fixos
+        // que o script SQL de NF-e (ScriptSQL/SAFX07.txt e SAFX08.txt) tambem grava
+        // para esses campos. Coluna do SAFX que nao esta aqui nem em LerCTes sai
+        // '@' (nulo), como no resto do arquivo.
+        private static readonly Dictionary<string, string> FIXOS_SAFX07 = new Dictionary<string, string>
+        {
+            { "NORM_DEV", "1" }, { "IDENT_FIS_JUR", "2" }, { "COD_CLASS_DOC_FIS", "1" },
+            { "SITUACAO", "N" }, { "VLR_ALIQ_ICMS", "0" }, { "VLR_ICMS", "0" },
+            { "DIF_ALIQ_ICMS", "0" }, { "VLR_IPI", "0" }, { "VLR_SUBST_ICMS", "0" },
+            { "IND_NF_ESPECIAL", "N" }, { "IND_TRANSF_CRED", "0" }, { "VLR_ICMS_NDESTAC", "0" },
+            { "VLR_INSS_RETIDO", "0" }, { "IND_FATURA", "1" }, { "BASE_ICMS_ORIGDEST", "0" },
+            { "VLR_ICMS_ORIGDEST", "0" }, { "IND_COMPRA_VENDA", "CP" }, { "COD_SITUACAO_A", "0" },
+            { "IND_NAT_FRETE", "9" },
+            // Sem origem no XML: constante '191000' nas 98 linhas do XLSX de referencia
+            // (conta do frete); SUB_SERIE_DOCFIS sai '@' (nulo) no CT-e.
+            { "COD_CONTA", "191000" }, { "SUB_SERIE_DOCFIS", "@" }
+        };
+
+        private static readonly Dictionary<string, string> FIXOS_SAFX08 = new Dictionary<string, string>
+        {
+            { "NORM_DEV", "1" }, { "IND_FIS_JUR", "2" }, { "IND_BEM_PATR", "N" }, { "IND_PRODUTO", "4" },
+            { "COD_PRODUTO", "FRETES" }, { "COD_UND_PADRAO", "UN" }, { "COD_MEDIDA", "UN" },
+            { "QUANTIDADE", "00000000001000000" }, { "COD_NBM", "00000000" }, { "VLR_DESCONTO", "0" },
+            { "COD_SITUACAO_A", "0" }, { "COD_FEDERAL", "2" }, { "IND_IPI_INCLUSO", "N" },
+            { "PESO_LIQUIDO", "00000000001000" }, { "VLR_FRETE", "0" }, { "VLR_SEGURO", "00000000000000000" },
+            { "VLR_OUTRAS", "0" }, { "VLR_ALIQ_IPI", "0" }, { "VLR_IPI", "0" }, { "VLR_OUTROS1", "0" },
+            { "ALIQ_ICMS_ORIGDEST", "0" }, { "VLR_DESC_CONDIC", "0" }, { "TRIB_ICMSS", "2" },
+            { "BASE_REDU_ICMSS", "0" }, { "VLR_CUSTO_UNIT", "0" }, { "IND_NATUREZA_FRETE", "9" },
+            { "COD_CONTA", "191000" }, { "SUB_SERIE_DOCFIS", "@" }
+        };
+
+        private static readonly Dictionary<string, string> FIXOS_SAFX04 = new Dictionary<string, string>
+        {
+            { "IND_FIS_JUR", "2" }
+        };
+
+        private static void AplicarFixos(DataRow linha, Dictionary<string, string> fixos)
+        {
+            foreach (KeyValuePair<string, string> fixo in fixos)
+            {
+                linha[fixo.Key] = fixo.Value;
+            }
+        }
+
+        /// <summary>
+        /// Empresa e estabelecimento pelo CNPJ do destinatario, com as mesmas listas e o
+        /// mesmo fallback (001 / 0009) de ScriptSQL/SAFX07.txt e SAFX08.txt.
+        /// </summary>
+        private static string CodEmpresa(string cnpjDest)
+        {
+            switch (cnpjDest)
+            {
+                case "03823704000152": case "03823704000314": case "03823704000233": return "001";
+                case "03848527000169": return "002";
+                case "04613348000105": return "003";
+                case "22725405000120": case "22725405000200": return "004";
+                default: return "001";
+            }
+        }
+
+        private static string CodEstab(string cnpjDest)
+        {
+            switch (cnpjDest)
+            {
+                case "03823704000152": case "03848527000169": case "04613348000105": case "22725405000120": return "0001";
+                case "03823704000314": case "22725405000200": return "0002";
+                case "03823704000233": return "0003";
+                default: return "0009";
+            }
+        }
+
         /// <summary>Linhas SAFX07/08/04 produzidas a partir dos CT-e do lote.</summary>
         private sealed class LoteCTe
         {
@@ -393,8 +485,7 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 "VLR_ALIQ_PIS", "VLR_ALIQ_COFINS", "COD_SIT_PIS", "COD_SIT_COFINS", "VLR_PRODUTO",
                 "NUM_AUTENTIC_NFE", "DATA_SAIDA_REC", "DAT_LANC_PIS_COFINS", "VLR_TOT_NOTA",
                 "VLR_BASE_PIS", "VLR_BASE_COFINS", "VLR_PIS", "VLR_COFINS", "IND_TP_FRETE",
-                "COD_SITUACAO_B", "BASE_OUTR_ICMS", "VLR_FRETE", "VLR_SEGURO", "VLR_OUTRAS", "VLR_ALIQ_IPI",
-                "VLR_SUBST_ICMS");
+                "COD_SITUACAO_B", "BASE_OUTR_ICMS", "COD_EMPRESA", "COD_ESTAB");
 
             public DataTable Safx08 = CriarTabela(
                 "MOVTO_E_S", "COD_TRIB_IPI", "DATA_FISCAL", "DAT_LANC_PIS_COFINS", "COD_DOCTO",
@@ -402,12 +493,27 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 "VLR_UNIT", "VLR_ITEM", "COD_SITUACAO_B", "BASE_ICMS", "VLR_ALIQ_ICMS", "VLR_ICMS",
                 "TRIB_ICMS", "VLR_CONTAB_ITEM", "VLR_ALIQ_PIS", "VLR_ALIQ_COFINS",
                 "COD_SITUACAO_PIS", "COD_SITUACAO_COFINS", "VLR_BASE_PIS", "VLR_BASE_COFINS",
-                "VLR_PIS", "VLR_COFINS", "NUM_ITEM", "VLR_FRETE", "VLR_OUTRAS", "VLR_OUTROS1");
+                "VLR_PIS", "VLR_COFINS", "NUM_ITEM", "COD_EMPRESA", "COD_ESTAB");
 
             public DataTable Safx04 = CriarTabela(
                 "DATA_X04", "COD_FIS_JUR", "RAZAO_SOCIAL", "CPF_CGC", "INSC_ESTADUAL",
                 "NOME_FANTASIA", "ENDERECO", "NUM_ENDERECO", "COMPL_ENDERECO", "BAIRRO", "CIDADE",
                 "UF", "CEP", "TELEFONE", "COD_PAIS", "COD_MUNICIPIO", "IND_CONTEM_COD");
+
+            public LoteCTe()
+            {
+                AdicionarColunas(Safx07, FIXOS_SAFX07.Keys);
+                AdicionarColunas(Safx08, FIXOS_SAFX08.Keys);
+                AdicionarColunas(Safx04, FIXOS_SAFX04.Keys);
+            }
+
+            private static void AdicionarColunas(DataTable tabela, IEnumerable<string> colunas)
+            {
+                foreach (string coluna in colunas)
+                {
+                    tabela.Columns.Add(coluna, typeof(object));
+                }
+            }
 
             private static DataTable CriarTabela(params string[] colunas)
             {
@@ -568,13 +674,22 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 string cMun = Txt(enderEmit, "cMun");
                 l04["COD_MUNICIPIO"] = cMun.Length > 5 ? cMun.Substring(cMun.Length - 5) : cMun;
                 l04["IND_CONTEM_COD"] = string.IsNullOrEmpty(Txt(No(infCte, "rem"), "CNPJ")) ? "4" : "1";
+                AplicarFixos(l04, FIXOS_SAFX04);
 
                 // ------------------------------------------------- SAFX07
                 DataRow l07 = lote.Safx07.NewRow();
                 lote.Safx07.Rows.Add(l07);
 
+                string cnpjDest = Txt(No(infCte, "dest"), "CNPJ");
+
+                AplicarFixos(l07, FIXOS_SAFX07);
+                l07["COD_EMPRESA"] = CodEmpresa(cnpjDest);
+                l07["COD_ESTAB"] = CodEstab(cnpjDest);
                 l07["COD_FIS_JUR"] = Txt(emit, "CNPJ");
-                if (!proprio) l07["MOVTO_E_S"] = "1";
+
+                // Entrada ('1') para CT-e de terceiro; CT-e proprio e saida ('9', a mesma
+                // regra da NF-e que nao e de entrada propria).
+                l07["MOVTO_E_S"] = proprio ? "9" : "1";
                 l07["COD_MODELO_COTEPE"] = modelo;
                 l07["COD_MODELO"] = modelo;
                 l07["COD_DOCTO"] = codDocto;
@@ -635,25 +750,20 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
 
                 l07["COD_SITUACAO_B"] = cst;
 
-                // Componentes que o CT-e nao calcula. Sem eles a coluna saia em
-                // branco (a mescla nao herda mais o 0 padrao das colunas inteiras
-                // do SQL), e o campo numerico do SAFX nao e para ficar vazio.
-                l07["VLR_FRETE"] = SEVENTEEN_ZEROS;
-                l07["VLR_SEGURO"] = SEVENTEEN_ZEROS;
-                l07["VLR_OUTRAS"] = SEVENTEEN_ZEROS;
-                l07["VLR_SUBST_ICMS"] = SEVENTEEN_ZEROS;
-                l07["VLR_ALIQ_IPI"] = SEVEN_ZEROS;
                 if (!calcIcms) l07["BASE_OUTR_ICMS"] = To17Z(vBC);
 
                 // ------------------------------------------------- SAFX08
                 DataRow l08 = lote.Safx08.NewRow();
                 lote.Safx08.Rows.Add(l08);
 
-                if (!proprio)
-                {
-                    l08["MOVTO_E_S"] = "1";
-                    l08["COD_TRIB_IPI"] = "03";
-                }
+                AplicarFixos(l08, FIXOS_SAFX08);
+                l08["COD_EMPRESA"] = CodEmpresa(cnpjDest);
+                l08["COD_ESTAB"] = CodEstab(cnpjDest);
+
+                // CT-e de terceiro: entrada ('1') e CST de IPI '03'. CT-e proprio segue a
+                // NF-e: saida ('9') e CST de IPI '53' (o ELSE de SAFX08.txt).
+                l08["MOVTO_E_S"] = proprio ? "9" : "1";
+                l08["COD_TRIB_IPI"] = proprio ? "53" : "03";
 
                 l08["DATA_FISCAL"] = ToDt(dhRecbto);
                 l08["DAT_LANC_PIS_COFINS"] = ToDt(dhRecbto);
@@ -683,12 +793,8 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
 
                 l08["VLR_CONTAB_ITEM"] = To17Z(vTPrest);
 
-                // O CT-e tem um unico item (a prestacao). Item 0 nao existe no
-                // SAFX; os demais componentes nao se aplicam e saem zerados.
+                // O CT-e tem um unico item (a prestacao). Item 0 nao existe no SAFX.
                 l08["NUM_ITEM"] = "1";
-                l08["VLR_FRETE"] = SEVENTEEN_ZEROS;
-                l08["VLR_OUTRAS"] = SEVENTEEN_ZEROS;
-                l08["VLR_OUTROS1"] = SEVENTEEN_ZEROS;
 
                 if (calcPisCofins)
                 {
@@ -834,7 +940,7 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
         /// valores ja carregados do banco sao mantidos como estao; a tabela so
         /// alimenta a gravacao do Excel, que escreve o valor de cada celula.
         /// </summary>
-        private static DataTable Mesclar(DataTable destino, DataTable origem)
+        private static DataTable Mesclar(DataTable destino, DataTable origem, string valorAusente = "")
         {
             if (origem == null || origem.Rows.Count == 0 || destino == null) return destino;
 
@@ -862,7 +968,7 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                         // que so o SQL do SPED traz, como COD_ATIVIDADE) — mesma
                         // convencao do proprio script SQL, que usa '' fixo para
                         // esses campos.
-                        nova[coluna] = "";
+                        nova[coluna] = valorAusente;
                     }
                     else
                     {

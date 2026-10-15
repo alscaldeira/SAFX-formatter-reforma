@@ -160,9 +160,9 @@ estab, movimento, `NORM_DEV`, série, CFOP com a regra 2207→6207, `IND_FIS_JUR
 | Calcular PIS/COFINS | alíquotas `0016500`/`0076000`, `COD_SIT` `56`; base = `vTPrest` (próprio) ou `vTPrest − vICMS` (terceiro); PIS = base×1,65%, COFINS = base×7,6%, arredondados a 2 casas (arredondamento bancário, como `decimal.Round`). Desmarcado: tudo zero e `COD_SIT` `70` |
 | SAFX08 | 1 item (`NUM_ITEM=1`), `COD_PRODUTO=FRETES`, `IND_PRODUTO=4`, `COD_TRIB_IPI` `53` (próprio) / `03` (terceiro), `VLR_UNIT` = `vTPrest`×10000 (19), `DESCRICAO_COMPL` = `compl/xObs` |
 | Calcular ICMS | `COD_SITUACAO_B`=CST, `VLR_ALIQ_ICMS`=`pICMS`×10000 (7: 18,00→`0180000`), `VLR_ICMS`, `TRIB_ICMS=1`. Desmarcado: CST `90`, alíquota/valor zerados, `TRIB_ICMS=3` |
-| SAFX04 do CT-e | `COD_FIS_JUR`/`CPF_CGC`=CNPJ cru do emitente; telefone = 10 últimas posições; `COD_PAIS` 105 como fallback; `COD_MUNICIPIO` = 5 últimas; `IND_CONTEM_COD` = `4` se **`rem`** (não o emitente) não tem CNPJ; `IND_FIS_JUR=2`; **uma linha por CT-e**, sem dedupe (como a planilha de referência; o C# ainda deduplica por CNPJ) |
+| SAFX04 do CT-e | `COD_FIS_JUR`/`CPF_CGC`=CNPJ cru do emitente; telefone = 10 últimas posições; `COD_PAIS` 105 como fallback; `COD_MUNICIPIO` = 5 últimas; `IND_CONTEM_COD` = `4` se **`rem`** (não o emitente) não tem CNPJ; `IND_FIS_JUR=2`; **uma linha por CT-e**, sem dedupe (como a planilha de referência; igual no C#) |
 | Campos fixos | `FIXOS_SAFX07/08/04` copiados 1:1 (valores iguais aos dos scripts de NF-e) |
-| `COD_CONTA` (07 e 08) | constante `191000`, sem origem no XML; vem da planilha de referência (98/98) e do mapeamento do layout. O `LerCTes` do C# ainda deixa em branco |
+| `COD_CONTA` (07 e 08) | constante `191000`, sem origem no XML; vem da planilha de referência (98/98) e do mapeamento do layout. Igual no C# (`FIXOS_SAFX07/08`) |
 | `SUB_SERIE_DOCFIS` (07 e 08) | `@` nos CT-e (planilha de referência) |
 
 ## 5. Reforma Tributária e SAFX04 de participantes sem de-para
