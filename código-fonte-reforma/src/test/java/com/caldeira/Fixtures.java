@@ -468,4 +468,28 @@ public final class Fixtures {
     public static String escapar(String s) {
         return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
     }
+
+    /** CT-e modelo 57 de terceiro (entrada), com ou sem o grupo imp/IBSCBS. */
+    public static String cteComIbsCbs(boolean comIbsCbs) {
+        String ibs = comIbsCbs
+                ? "<IBSCBS><CST>000</CST><cClassTrib>000001</cClassTrib><gIBSCBS><vBC>1000.00</vBC>"
+                + "<gIBSUF><pIBSUF>0.1000</pIBSUF><vIBSUF>1.00</vIBSUF></gIBSUF>"
+                + "<gIBSMun><pIBSMun>0.0500</pIBSMun><vIBSMun>0.50</vIBSMun></gIBSMun><vIBS>1.50</vIBS>"
+                + "<gCBS><pCBS>0.9000</pCBS><vCBS>9.00</vCBS></gCBS></gIBSCBS></IBSCBS><vTotDFe>1010.50</vTotDFe>"
+                : "";
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><cteProc xmlns=\"http://www.portalfiscal.inf.br/cte\" versao=\"4.00\">"
+                + "<CTe><infCte versao=\"4.00\" Id=\"CTe35260911222333000181570010000000771000000770\">"
+                + "<ide><cUF>35</cUF><CFOP>6353</CFOP><mod>57</mod><serie>1</serie><nCT>77</nCT>"
+                + "<dhEmi>2026-09-01T10:00:00-03:00</dhEmi><cDV>0</cDV><UFEnv>SP</UFEnv><UFFim>MA</UFFim>"
+                + "<toma3><toma>0</toma></toma3></ide>"
+                + "<emit><CNPJ>11222333000181</CNPJ><IE>111222333</IE><xNome>TRANSP</xNome>"
+                + "<enderEmit><xLgr>Rua C</xLgr><nro>3</nro><xBairro>Centro</xBairro><cMun>3550308</cMun><xMun>SAO PAULO</xMun>"
+                + "<CEP>01310100</CEP><UF>SP</UF></enderEmit></emit>"
+                + "<rem><CNPJ>99888777000166</CNPJ><xNome>Remetente</xNome></rem>"
+                + "<dest><CNPJ>03823704000152</CNPJ><xNome>Destino</xNome><enderDest><cMun>2111300</cMun></enderDest></dest>"
+                + "<vPrest><vTPrest>1000.00</vTPrest><vRec>1000.00</vRec></vPrest>"
+                + "<imp><ICMS><ICMS00><CST>00</CST><vBC>1000.00</vBC><pICMS>18.00</pICMS><vICMS>180.00</vICMS></ICMS00></ICMS>"
+                + ibs + "</imp></infCte></CTe><protCTe><infProt><chCTe>35260911222333000181570010000000771000000770</chCTe>"
+                + "<dhRecbto>2026-09-02T08:15:00-03:00</dhRecbto></infProt></protCTe></cteProc>";
+    }
 }

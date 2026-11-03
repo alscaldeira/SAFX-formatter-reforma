@@ -40,6 +40,14 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
         /// null usa a pasta Dados publicada com o projeto.</param>
         public static ResultadoReforma Converter(string pastaXml, string pastaSaida, string pastaCadastros)
         {
+            return Converter(pastaXml, pastaSaida, pastaCadastros, null, null);
+        }
+
+        /// <param name="capasCte">registros SAFX3007 ja montados a partir de CT-e (nome -> valor); pode ser null.</param>
+        /// <param name="itensCte">registros SAFX3008 ja montados a partir de CT-e; pode ser null.</param>
+        public static ResultadoReforma Converter(string pastaXml, string pastaSaida, string pastaCadastros,
+            List<Dictionary<string, object>> capasCte, List<Dictionary<string, object>> itensCte)
+        {
             lock (Trava)
             {
                 string cadastrosAnterior = ReformaConfig.PastaCadastros;
@@ -52,7 +60,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                     {
                         Directory.CreateDirectory(ReformaConfig.PastaSaida);
                     }
-                    return Executar(pastaXml);
+                    return Executar(pastaXml, capasCte, itensCte);
                 }
                 finally
                 {
@@ -62,13 +70,17 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
             }
         }
 
-        private static ResultadoReforma Executar(string pastaXml)
+        private static ResultadoReforma Executar(string pastaXml, List<Dictionary<string, object>> capasCte,
+            List<Dictionary<string, object>> itensCte)
         {
             ResultadoReforma resultado = new ResultadoReforma();
             Participantes.LimparAvisos();
             Estabelecimentos.LimparAvisos();
 
-            List<XmlNota> notas = XmlLeitor.LerPasta(pastaXml, resultado.Avisos);
+            // Lote so de CT-e: a pasta pode estar vazia (o CT-e sai de UploadXML antes), mas o
+            // 3007/3008 do CT-e ainda precisa ser gravado.
+            bool haCte = capasCte != null && capasCte.Count > 0;
+            List<XmlNota> notas = XmlLeitor.LerPasta(pastaXml, resultado.Avisos, haCte);
 
             foreach (XmlNota nota in notas)
             {
@@ -82,7 +94,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
             // registros da Reforma
             ParticipantesXml.Consolidar(notas);
 
-            XmlToSafxReforma.Gerar(notas, resultado);
+            XmlToSafxReforma.Gerar(notas, resultado, capasCte, itensCte);
 
             // roda depois do XmlToSafxReforma: é ele quem, ao montar a chave de
             // cada registro, popula Participantes.SemCadastro() — a lista de quem

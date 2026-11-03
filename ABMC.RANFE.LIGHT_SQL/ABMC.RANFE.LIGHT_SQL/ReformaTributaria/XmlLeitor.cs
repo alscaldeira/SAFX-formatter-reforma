@@ -29,6 +29,13 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
         /// <summary>Aceita uma pasta (varrida recursivamente) ou um único arquivo XML.</summary>
         internal static List<XmlNota> LerPasta(string origem, List<string> avisos)
         {
+            return LerPasta(origem, avisos, false);
+        }
+
+        /// <param name="permitirVazio">true quando o lote tem outra fonte de registros (CT-e): pasta
+        /// sem XML reconhecido deixa de ser erro.</param>
+        internal static List<XmlNota> LerPasta(string origem, List<string> avisos, bool permitirVazio)
+        {
             List<string> arquivos = new List<string>();
 
             if (Directory.Exists(origem))
@@ -41,7 +48,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                     }
                 }
                 arquivos.Sort(StringComparer.Ordinal);
-                if (arquivos.Count == 0)
+                if (arquivos.Count == 0 && !permitirVazio)
                 {
                     throw new IOException("Nenhum arquivo .xml encontrado em " + origem);
                 }
@@ -68,7 +75,7 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                     avisos.Add("Arquivo ignorado (schema não reconhecido): " + Path.GetFileName(arquivo));
                 }
             }
-            if (notas.Count == 0)
+            if (notas.Count == 0 && !permitirVazio)
             {
                 throw new IOException("Nenhum XML de NF-e ou NFS-e reconhecido em " + origem);
             }

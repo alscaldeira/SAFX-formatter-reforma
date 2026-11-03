@@ -29,6 +29,14 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
     {
         internal static void Gerar(List<XmlNota> notas, ResultadoReforma resultado)
         {
+            Gerar(notas, resultado, null, null);
+        }
+
+        /// <param name="capasCte">registros 3007 ja montados a partir de CT-e (HomeController.LerCTes)</param>
+        /// <param name="itensCte">registros 3008 ja montados a partir de CT-e</param>
+        internal static void Gerar(List<XmlNota> notas, ResultadoReforma resultado,
+            List<Dictionary<string, object>> capasCte, List<Dictionary<string, object>> itensCte)
+        {
             List<Dictionary<string, object>> capas = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> itensMercadoria = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> itensServico = new List<Dictionary<string, object>>();
@@ -61,6 +69,9 @@ namespace ABMC.RANFE.LIGHT_SQL.ReformaTributaria
                     itensServico.Add(ItemServico(nota));
                 }
             }
+
+            if (capasCte != null) capas.AddRange(capasCte);
+            if (itensCte != null) itensMercadoria.AddRange(itensCte);
 
             resultado.Safx3007 = Escrever("SAFX3007", capas, resultado);
             resultado.Safx3008 = Escrever("SAFX3008", itensMercadoria, resultado);

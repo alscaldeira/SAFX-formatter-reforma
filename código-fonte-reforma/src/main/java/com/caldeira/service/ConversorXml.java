@@ -18,7 +18,7 @@ import java.util.Set;
  *   <li>SAFX07, SAFX08, SAFX04, SAFX2013 e SAFX2043 a partir de NF-e
  *       ({@link NfeParaSafx}) e de CT-e ({@link CteParaSafx});</li>
  *   <li>SAFX3007/3008/3009, as extensões de Reforma Tributária (IBS/CBS)
- *       geradas a partir dos grupos IBSCBS do XML de NF-e e NFS-e, mais os CSV
+ *       geradas a partir dos grupos IBSCBS do XML de NF-e, NFS-e e CT-e (3007/3008), mais os CSV
  *       equivalentes.</li>
  * </ul>
  *
@@ -74,22 +74,8 @@ public final class ConversorXml {
             }
         }
 
-        // ---- Reforma Tributária (SAFX3007/3008/3009) — como antes
-        List<XmlNota> notas = new ArrayList<>();
-        boolean haOutroResultado = !nfe.isEmpty() || !cte.isEmpty();
-        if (!reforma.isEmpty()) {
-            try {
-                notas = reformaTributaria(reforma, pasta, avisos);
-            } catch (IOException e) {
-                // A falha da Reforma não derruba a exportação de NF-e/CT-e (o XML anterior ao
-                // novo regime nem tem grupo IBS/CBS). Sem NF-e nem CT-e para entregar, o erro
-                // é o resultado e segue para quem chamou.
-                if (!haOutroResultado) throw e;
-                avisos.add("Reforma Tributária (SAFX3007/3008/3009) não gerada: " + e.getMessage());
-            }
-        }
-
-        // ---- NF-e e CT-e (SAFX07/08/04/2013/2043)
+        // ---- NF-e e CT-e (SAFX07/08/04/2013/2043). Vêm antes da Reforma porque os
+        // SAFX3007/3008 do CT-e saem da própria conversão do CT-e.
         NfeParaSafx.Resultado resNfe = new NfeParaSafx.Resultado();
         if (!nfe.isEmpty()) resNfe = NfeParaSafx.converter(nfe, avisos);
 
@@ -100,6 +86,25 @@ public final class ConversorXml {
             } catch (IOException | RuntimeException e) {
                 resCte = new CteParaSafx.Resultado();
                 avisos.add("CT-e nao convertido: " + e.getMessage() + " Os demais arquivos foram gerados normalmente.");
+            }
+        }
+        if (resCte.semReforma > 0) {
+            avisos.add(resCte.semReforma + " CT-e sem grupo IBS/CBS (imp/IBSCBS) no XML não geraram registro "
+                    + "de Reforma Tributária — CT-e anterior ao novo regime não tem esses valores.");
+        }
+
+        // ---- Reforma Tributária (SAFX3007/3008/3009)
+        List<XmlNota> notas = new ArrayList<>();
+        boolean haOutroResultado = !nfe.isEmpty() || !cte.isEmpty();
+        if (!reforma.isEmpty() || !resCte.safx3007.isEmpty()) {
+            try {
+                notas = reformaTributaria(reforma, pasta, resCte, avisos);
+            } catch (IOException e) {
+                // A falha da Reforma não derruba a exportação de NF-e/CT-e (o XML anterior ao
+                // novo regime nem tem grupo IBS/CBS). Sem NF-e nem CT-e para entregar, o erro
+                // é o resultado e segue para quem chamou.
+                if (!haOutroResultado) throw e;
+                avisos.add("Reforma Tributária (SAFX3007/3008/3009) não gerada: " + e.getMessage());
             }
         }
 
@@ -157,9 +162,12 @@ public final class ConversorXml {
         return avisos;
     }
 
-    private static List<XmlNota> reformaTributaria(List<Path> arquivos, String origem, List<String> avisos)
+    private static List<XmlNota> reformaTributaria(List<Path> arquivos, String origem,
+                                                   CteParaSafx.Resultado cte, List<String> avisos)
             throws IOException {
-        List<XmlNota> notas = XmlLeitor.lerArquivos(arquivos, origem, avisos);
+        // lote só de CT-e: não há o que ler pelo XmlLeitor, mas o 3007/3008 do CT-e precisa ser gravado
+        List<XmlNota> notas = arquivos.isEmpty() ? new ArrayList<>()
+                : XmlLeitor.lerArquivos(arquivos, origem, avisos);
 
         for (XmlNota nota : notas) {
             if (nota.cnpjEstab == null || nota.cnpjEstab.isEmpty()) {
@@ -172,7 +180,7 @@ public final class ConversorXml {
         ParticipantesXml.consolidar(notas);
 
         // Extensões de Reforma Tributária (IBS/CBS): SAFX3007/3008/3009
-        XmlToSafxReforma.gerar(notas, avisos);
+        XmlToSafxReforma.gerar(notas, cte.safx3007, cte.safx3008, avisos);
         return notas;
     }
 }

@@ -249,6 +249,12 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 }
             }
 
+            if (cte.SemReforma > 0)
+            {
+                avisosCTe.Add(cte.SemReforma + " CT-e sem grupo IBS/CBS (imp/IBSCBS) no XML nao geraram registro "
+                    + "de Reforma Tributaria — CT-e anterior ao novo regime nao tem esses valores.");
+            }
+
             // Avisos do LerCTes: documento de CT-e ignorado, grupo obrigatorio
             // ausente, ICMS informado fora do CST esperado etc.
             avisosReforma.AddRange(avisosCTe);
@@ -258,7 +264,8 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 reforma = ConversorXmlReforma.Converter(
                     base.Server.MapPath("~/UploadXML"),
                     base.Server.MapPath("~/Export"),
-                    base.Server.MapPath("~/ReformaTributaria/Dados"));
+                    base.Server.MapPath("~/ReformaTributaria/Dados"),
+                    cte.Reforma3007, cte.Reforma3008);
                 avisosReforma.AddRange(reforma.Avisos);
             }
             catch (Exception ex)
@@ -499,6 +506,17 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                 "DATA_X04", "COD_FIS_JUR", "RAZAO_SOCIAL", "CPF_CGC", "INSC_ESTADUAL",
                 "NOME_FANTASIA", "ENDERECO", "NUM_ENDERECO", "COMPL_ENDERECO", "BAIRRO", "CIDADE",
                 "UF", "CEP", "TELEFONE", "COD_PAIS", "COD_MUNICIPIO", "IND_CONTEM_COD");
+
+            /// <summary>
+            /// Linhas SAFX3007/3008 (Reforma Tributaria) do CT-e, ja no formato nome -> valor
+            /// de XmlToSafxReforma. O CT-e e movido para fora de UploadXML, entao o leitor
+            /// da Reforma nao o ve: estas linhas chegam a ele pelo ConversorXmlReforma.
+            /// </summary>
+            public List<Dictionary<string, object>> Reforma3007 = new List<Dictionary<string, object>>();
+            public List<Dictionary<string, object>> Reforma3008 = new List<Dictionary<string, object>>();
+
+            /// <summary>CT-e sem o grupo imp/IBSCBS (anteriores ao novo regime).</summary>
+            public int SemReforma;
 
             public LoteCTe()
             {
@@ -820,9 +838,89 @@ namespace ABMC.RANFE.LIGHT_SQL.Controllers
                     l08["COD_SITUACAO_PIS"] = "70";
                     l08["COD_SITUACAO_COFINS"] = "70";
                 }
+
+                // ------------------------------------------------- SAFX3007 / SAFX3008
+                XmlElement ibsCbs = No(infCte, "imp", "IBSCBS");
+                XmlElement gIbsCbs = No(ibsCbs, "gIBSCBS");
+
+                if (gIbsCbs == null)
+                {
+                    lote.SemReforma++;
+                }
+                else
+                {
+                    lote.Reforma3007.Add(ReformaCapa(l08, ibsCbs, gIbsCbs, infCte));
+                    lote.Reforma3008.Add(ReformaItem(l08, ibsCbs, gIbsCbs, vTPrest));
+                }
             }
 
             return lote;
+        }
+
+        // -------------------------------------------------- Reforma Tributaria
+
+        /// <summary>
+        /// Chave das extensoes 3007/3008: copiada do SAFX08 do proprio CT-e, para que a
+        /// ligacao com a tabela-base seja campo a campo (incluindo o "@" da subserie).
+        /// </summary>
+        private static Dictionary<string, object> ChaveReforma(DataRow l08)
+        {
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            foreach (string campo in new[] { "COD_EMPRESA", "COD_ESTAB", "DATA_FISCAL", "MOVTO_E_S", "NORM_DEV",
+                "COD_DOCTO", "IND_FIS_JUR", "COD_FIS_JUR", "NUM_DOCFIS", "SERIE_DOCFIS", "SUB_SERIE_DOCFIS" })
+            {
+                r[campo] = Convert.ToString(l08[campo], CultureInfo.InvariantCulture);
+            }
+            return r;
+        }
+
+        private static double Num(XmlNode pai, params string[] caminho)
+        {
+            return (double)Dec(Txt(pai, caminho));
+        }
+
+        /// <summary>Campos IBS/CBS comuns a capa e ao item: o CT-e tem um unico item, igual ao documento.</summary>
+        private static void ValoresIbsCbs(Dictionary<string, object> r, XmlElement ibsCbs, XmlElement g)
+        {
+            r["CST_IBS_CBS"] = Txt(ibsCbs, "CST");
+            r["CCLASS_IBS_CBS"] = Txt(ibsCbs, "cClassTrib");
+            r["BC_IBS_CBS"] = Num(g, "vBC");
+            r["ALIQ_IBS_UF"] = Num(g, "gIBSUF", "pIBSUF");
+            r["VLR_IBS_UF"] = Num(g, "gIBSUF", "vIBSUF");
+            r["ALIQ_CBS"] = Num(g, "gCBS", "pCBS");
+            r["VLR_CBS"] = Num(g, "gCBS", "vCBS");
+        }
+
+        private static Dictionary<string, object> ReformaCapa(DataRow l08, XmlElement ibsCbs, XmlElement g,
+            XmlElement infCte)
+        {
+            Dictionary<string, object> r = ChaveReforma(l08);
+            // Lista do manual: 1 = NFS-e, 2 = NF-e, 3 = CT-e
+            r["TIPO_CHAVE_DFE"] = "3";
+            ValoresIbsCbs(r, ibsCbs, g);
+            r["ALIQ_IBS_MUN"] = Num(g, "gIBSMun", "pIBSMun");
+            r["VLR_IBS_MUN"] = Num(g, "gIBSMun", "vIBSMun");
+            // Totais do documento: o CT-e nao tem IBSCBSTot, vale o grupo do unico item
+            r["VLR_TOT_BC_IBS_CBS"] = Num(g, "vBC");
+            r["VLR_TOT_IBS_UF"] = Num(g, "gIBSUF", "vIBSUF");
+            r["VLR_TOT_IBS_MUN"] = Num(g, "gIBSMun", "vIBSMun");
+            r["VLR_TOT_IBS"] = Num(g, "vIBS");
+            r["VLR_TOT_CBS"] = Num(g, "gCBS", "vCBS");
+            r["VLR_TOT_NF_IBS_CBS_IS"] = Num(infCte, "imp", "vTotDFe");
+            return r;
+        }
+
+        private static Dictionary<string, object> ReformaItem(DataRow l08, XmlElement ibsCbs, XmlElement g,
+            string vTPrest)
+        {
+            Dictionary<string, object> r = ChaveReforma(l08);
+            foreach (string campo in new[] { "IND_BEM_PATR", "IND_PRODUTO", "COD_PRODUTO", "COD_UND_PADRAO", "NUM_ITEM" })
+            {
+                r[campo] = Convert.ToString(l08[campo], CultureInfo.InvariantCulture);
+            }
+            ValoresIbsCbs(r, ibsCbs, g);
+            r["VLR_TOT_ITEM"] = (double)Dec(vTPrest);
+            return r;
         }
 
         // ------------------------------------------------- acesso seguro ao XML

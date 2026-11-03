@@ -21,7 +21,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "cadastro estabelecimentos.properties",
+          "origem": "cadastro estabelecimentos.properties | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90001"
           ]
@@ -33,7 +33,7 @@
           "tamanho": "006",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "cadastro estabelecimentos.properties",
+          "origem": "cadastro estabelecimentos.properties | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90002"
           ]
@@ -45,7 +45,7 @@
           "tamanho": "008",
           "tipo": "N",
           "obrigatorio": true,
-          "origem": "NF-e ide/dhSaiEnt | NFS-e infDPS/dCompet"
+          "origem": "NF-e ide/dhSaiEnt | NFS-e infDPS/dCompet | CT-e: igual ao SAFX08 do CT-e"
         },
         {
           "posicao": 4,
@@ -54,7 +54,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "regra do SAFX07 (ide/tpNF)",
+          "origem": "regra do SAFX07 (ide/tpNF) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90129"
           ]
@@ -66,7 +66,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "regra do SAFX07 (ide/finNFe)",
+          "origem": "regra do SAFX07 (ide/finNFe) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90130"
           ]
@@ -78,7 +78,7 @@
           "tamanho": "005",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "fixo por tipo (NFI/NFS)",
+          "origem": "fixo por tipo (NFI/NFS) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90119",
             "90125",
@@ -92,7 +92,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "papel do participante (igual ao SAFX07)",
+          "origem": "papel do participante (igual ao SAFX07) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90088"
           ]
@@ -104,7 +104,7 @@
           "tamanho": "014",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "participantes.properties ou CNPJ",
+          "origem": "participantes.properties ou CNPJ | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90089",
             "90087",
@@ -118,7 +118,7 @@
           "tamanho": "012",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "ide/nNF | infNFSe/nNFSe",
+          "origem": "ide/nNF | infNFSe/nNFSe | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90112"
           ]
@@ -130,7 +130,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "ide/serie | infDPS/serie",
+          "origem": "ide/serie | infDPS/serie | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90504"
           ]
@@ -164,7 +164,7 @@
           "tamanho": "001",
           "tipo": "N",
           "obrigatorio": true,
-          "origem": "derivado do schema: 1 = NFS-e, 2 = NF-e (lista do manual)",
+          "origem": "derivado do schema: 1 = NFS-e, 2 = NF-e (lista do manual) | CT-e fixo 3",
           "codigosErroTaxOne": [
             "913277",
             "913278"
@@ -421,7 +421,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/CST",
+          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/CST | CT-e imp/IBSCBS/CST",
           "codigosErroTaxOne": [
             "913267"
           ]
@@ -433,7 +433,7 @@
           "tamanho": "006",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/cClassTrib",
+          "origem": "NFS-e infDPS/IBSCBS/valores/trib/gIBSCBS/cClassTrib | CT-e imp/IBSCBS/cClassTrib",
           "codigosErroTaxOne": [
             "913268"
           ]
@@ -445,7 +445,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "NFS-e infNFSe/IBSCBS/valores/vBC"
+          "origem": "NFS-e infNFSe/IBSCBS/valores/vBC | CT-e imp/IBSCBS/gIBSCBS/vBC"
         },
         {
           "posicao": 40,
@@ -462,7 +462,7 @@
           "tamanho": "003V004",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "NFS-e IBSCBS/valores/uf/pIBSUF"
+          "origem": "NFS-e IBSCBS/valores/uf/pIBSUF | CT-e imp/IBSCBS/gIBSCBS/gIBSUF/pIBSUF"
         },
         {
           "posicao": 42,
@@ -471,7 +471,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF"
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF | CT-e imp/IBSCBS/gIBSCBS/gIBSUF/vIBSUF"
         },
         {
           "posicao": 43,
@@ -522,7 +522,7 @@
           "tamanho": "003V004",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "NFS-e IBSCBS/valores/mun/pIBSMun"
+          "origem": "NFS-e IBSCBS/valores/mun/pIBSMun | CT-e imp/IBSCBS/gIBSCBS/gIBSMun/pIBSMun"
         },
         {
           "posicao": 49,
@@ -530,7 +530,8 @@
           "descricao": "Valor do IBS de competência do Município",
           "tamanho": "015V002",
           "tipo": "N",
-          "obrigatorio": false
+          "obrigatorio": false,
+          "origem": "CT-e imp/IBSCBS/gIBSCBS/gIBSMun/vIBSMun"
         },
         {
           "posicao": 50,
@@ -589,7 +590,7 @@
           "tamanho": "003V004",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "NFS-e IBSCBS/valores/fed/pCBS"
+          "origem": "NFS-e IBSCBS/valores/fed/pCBS | CT-e imp/IBSCBS/gIBSCBS/gCBS/pCBS"
         },
         {
           "posicao": 57,
@@ -598,7 +599,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS"
+          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS | CT-e imp/IBSCBS/gIBSCBS/gCBS/vCBS"
         },
         {
           "posicao": 58,
@@ -1030,7 +1031,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "total/IBSCBSTot/vBCIBSCBS | infNFSe/IBSCBS/valores/vBC"
+          "origem": "total/IBSCBSTot/vBCIBSCBS | infNFSe/IBSCBS/valores/vBC | CT-e imp/IBSCBS/gIBSCBS/vBC"
         },
         {
           "posicao": 110,
@@ -1057,7 +1058,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF"
+          "origem": "IBSCBSTot/gIBS/gIBSUF/vIBSUF | totCIBS/gIBS/gIBSUFTot/vIBSUF | CT-e imp/IBSCBS/gIBSCBS/gIBSUF/vIBSUF"
         },
         {
           "posicao": 113,
@@ -1084,7 +1085,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gIBS/gIBSMun/vIBSMun | totCIBS/gIBS/gIBSMunTot/vIBSMun"
+          "origem": "IBSCBSTot/gIBS/gIBSMun/vIBSMun | totCIBS/gIBS/gIBSMunTot/vIBSMun | CT-e imp/IBSCBS/gIBSCBS/gIBSMun/vIBSMun"
         },
         {
           "posicao": 116,
@@ -1093,7 +1094,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gIBS/vIBS | totCIBS/gIBS/vIBSTot"
+          "origem": "IBSCBSTot/gIBS/vIBS | totCIBS/gIBS/vIBSTot | CT-e imp/IBSCBS/gIBSCBS/vIBS"
         },
         {
           "posicao": 117,
@@ -1156,7 +1157,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS"
+          "origem": "IBSCBSTot/gCBS/vCBS | totCIBS/gCBS/vCBS | CT-e imp/IBSCBS/gIBSCBS/gCBS/vCBS"
         },
         {
           "posicao": 124,
@@ -1213,7 +1214,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "total/vNFTot | infNFSe/IBSCBS/totCIBS/vTotNF"
+          "origem": "total/vNFTot | infNFSe/IBSCBS/totCIBS/vTotNF | CT-e imp/vTotDFe"
         }
       ]
     },
@@ -1229,7 +1230,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "cadastro",
+          "origem": "cadastro | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90001"
           ]
@@ -1241,7 +1242,7 @@
           "tamanho": "006",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "cadastro",
+          "origem": "cadastro | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90002"
           ]
@@ -1253,7 +1254,7 @@
           "tamanho": "008",
           "tipo": "N",
           "obrigatorio": true,
-          "origem": "ide/dhSaiEnt",
+          "origem": "ide/dhSaiEnt | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90131",
             "90209",
@@ -1267,7 +1268,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "regra do SAFX08",
+          "origem": "regra do SAFX08 | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90129"
           ]
@@ -1279,7 +1280,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "regra do SAFX08",
+          "origem": "regra do SAFX08 | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90130"
           ]
@@ -1291,7 +1292,7 @@
           "tamanho": "005",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "fixo NFI",
+          "origem": "fixo NFI | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90119",
             "90125",
@@ -1305,7 +1306,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "papel do participante",
+          "origem": "papel do participante | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90088"
           ]
@@ -1317,7 +1318,7 @@
           "tamanho": "014",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "participantes.properties ou CNPJ",
+          "origem": "participantes.properties ou CNPJ | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90089",
             "90087",
@@ -1331,7 +1332,7 @@
           "tamanho": "012",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "ide/nNF",
+          "origem": "ide/nNF | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90112"
           ]
@@ -1343,7 +1344,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "ide/serie",
+          "origem": "ide/serie | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90504"
           ]
@@ -1366,7 +1367,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "fixo N (igual ao SAFX08)",
+          "origem": "fixo N (igual ao SAFX08) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90395"
           ]
@@ -1378,7 +1379,7 @@
           "tamanho": "001",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "fixo 5 (igual ao SAFX08)",
+          "origem": "fixo 5 (igual ao SAFX08) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90035"
           ]
@@ -1390,7 +1391,7 @@
           "tamanho": "060",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "det/prod/cProd",
+          "origem": "det/prod/cProd | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90033",
             "90034",
@@ -1424,7 +1425,7 @@
           "tamanho": "008",
           "tipo": "A",
           "obrigatorio": true,
-          "origem": "det/prod/uCom normalizado (unidades.properties)",
+          "origem": "det/prod/uCom normalizado (unidades.properties) | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90147",
             "90148",
@@ -1438,7 +1439,7 @@
           "tamanho": "005",
           "tipo": "N",
           "obrigatorio": true,
-          "origem": "det@nItem",
+          "origem": "det@nItem | CT-e: igual ao SAFX08 do CT-e",
           "codigosErroTaxOne": [
             "90132"
           ]
@@ -1517,7 +1518,7 @@
           "tamanho": "003",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "det/imposto/IBSCBS/CST",
+          "origem": "det/imposto/IBSCBS/CST | CT-e imp/IBSCBS/CST",
           "codigosErroTaxOne": [
             "913267"
           ]
@@ -1529,7 +1530,7 @@
           "tamanho": "006",
           "tipo": "A",
           "obrigatorio": false,
-          "origem": "det/imposto/IBSCBS/cClassTrib",
+          "origem": "det/imposto/IBSCBS/cClassTrib | CT-e imp/IBSCBS/cClassTrib",
           "codigosErroTaxOne": [
             "913268"
           ]
@@ -1541,7 +1542,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "det/imposto/IBSCBS/gIBSCBS/vBC"
+          "origem": "det/imposto/IBSCBS/gIBSCBS/vBC | CT-e imp/IBSCBS/gIBSCBS/vBC"
         },
         {
           "posicao": 30,
@@ -1558,7 +1559,7 @@
           "tamanho": "003V004",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "gIBSCBS/gIBSUF/pIBSUF"
+          "origem": "gIBSCBS/gIBSUF/pIBSUF | CT-e imp/IBSCBS/gIBSCBS/gIBSUF/pIBSUF"
         },
         {
           "posicao": 32,
@@ -1567,7 +1568,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "gIBSCBS/gIBSUF/vIBSUF"
+          "origem": "gIBSCBS/gIBSUF/vIBSUF | CT-e imp/IBSCBS/gIBSCBS/gIBSUF/vIBSUF"
         },
         {
           "posicao": 33,
@@ -1616,7 +1617,7 @@
           "tamanho": "003V004",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "gIBSCBS/gCBS/pCBS"
+          "origem": "gIBSCBS/gCBS/pCBS | CT-e imp/IBSCBS/gIBSCBS/gCBS/pCBS"
         },
         {
           "posicao": 39,
@@ -1625,7 +1626,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "gIBSCBS/gCBS/vCBS"
+          "origem": "gIBSCBS/gCBS/vCBS | CT-e imp/IBSCBS/gIBSCBS/gCBS/vCBS"
         },
         {
           "posicao": 40,
@@ -2022,7 +2023,7 @@
           "tamanho": "015V002",
           "tipo": "N",
           "obrigatorio": false,
-          "origem": "det/vItem"
+          "origem": "det/vItem | CT-e vPrest/vTPrest"
         },
         {
           "posicao": 88,

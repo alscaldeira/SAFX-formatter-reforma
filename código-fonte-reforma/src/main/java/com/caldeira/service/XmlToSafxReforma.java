@@ -24,6 +24,15 @@ final class XmlToSafxReforma {
     }
 
     static void gerar(List<XmlNota> notas, List<String> avisos) throws IOException {
+        gerar(notas, List.of(), List.of(), avisos);
+    }
+
+    /**
+     * @param capasCte  registros 3007 já montados a partir de CT-e ({@link CteParaSafx})
+     * @param itensCte  registros 3008 já montados a partir de CT-e
+     */
+    static void gerar(List<XmlNota> notas, List<Map<String, Object>> capasCte,
+                      List<Map<String, Object>> itensCte, List<String> avisos) throws IOException {
         List<Map<String, Object>> capas = new ArrayList<>();
         List<Map<String, Object>> itensMercadoria = new ArrayList<>();
         List<Map<String, Object>> itensServico = new ArrayList<>();
@@ -48,6 +57,8 @@ final class XmlToSafxReforma {
             }
         }
 
+        capas.addAll(capasCte);
+        itensMercadoria.addAll(itensCte);
         escrever("SAFX3007", capas, avisos);
         escrever("SAFX3008", itensMercadoria, avisos);
         escrever("SAFX3009", itensServico, avisos);

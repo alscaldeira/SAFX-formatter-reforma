@@ -30,6 +30,11 @@ final class CteParaSafx {
         final List<Map<String, String>> safx07 = new ArrayList<>();
         final List<Map<String, String>> safx08 = new ArrayList<>();
         final List<Map<String, String>> safx04 = new ArrayList<>();
+        /** Extensões de Reforma Tributária (IBS/CBS) do CT-e, no formato de {@link XmlToSafxReforma}. */
+        final List<Map<String, Object>> safx3007 = new ArrayList<>();
+        final List<Map<String, Object>> safx3008 = new ArrayList<>();
+        /** CT-e convertidos sem o grupo imp/IBSCBS (anteriores ao novo regime). */
+        int semReforma;
     }
 
     private static final String SEVEN_ZEROS = "0000000";
@@ -292,8 +297,73 @@ final class CteParaSafx {
                 l08.put("COD_SITUACAO_COFINS", "70");
             }
             r.safx08.add(l08);
+
+            // ------------------------------------------------- SAFX3007 / SAFX3008
+            Element ibsCbs = Dom.no(infCte, "imp", "IBSCBS");
+            Element gIbsCbs = ibsCbs == null ? null : Dom.no(ibsCbs, "gIBSCBS");
+            if (gIbsCbs == null) {
+                r.semReforma++;
+            } else {
+                r.safx3007.add(reformaCapa(l08, ibsCbs, gIbsCbs, infCte));
+                r.safx3008.add(reformaItem(l08, ibsCbs, gIbsCbs, vTPrest));
+            }
         }
 
+        return r;
+    }
+
+    // -------------------------------------------------- Reforma Tributária
+
+    /**
+     * Chave das extensões 3007/3008: copiada do SAFX08 do próprio CT-e, para que
+     * a ligação com a tabela-base seja campo a campo (incluindo o "@" da subsérie).
+     */
+    private static Map<String, Object> chaveReforma(Map<String, String> l08) {
+        Map<String, Object> r = new LinkedHashMap<>();
+        for (String campo : new String[]{"COD_EMPRESA", "COD_ESTAB", "DATA_FISCAL", "MOVTO_E_S", "NORM_DEV",
+                "COD_DOCTO", "IND_FIS_JUR", "COD_FIS_JUR", "NUM_DOCFIS", "SERIE_DOCFIS", "SUB_SERIE_DOCFIS"}) {
+            r.put(campo, l08.get(campo));
+        }
+        return r;
+    }
+
+    /** Campos IBS/CBS comuns à capa e ao item: o CT-e tem um único item, igual ao documento. */
+    private static void valoresIbsCbs(Map<String, Object> r, Element ibsCbs, Element g) {
+        r.put("CST_IBS_CBS", txt(ibsCbs, "CST"));
+        r.put("CCLASS_IBS_CBS", txt(ibsCbs, "cClassTrib"));
+        r.put("BC_IBS_CBS", dec(txt(g, "vBC")).doubleValue());
+        r.put("ALIQ_IBS_UF", dec(txt(g, "gIBSUF", "pIBSUF")).doubleValue());
+        r.put("VLR_IBS_UF", dec(txt(g, "gIBSUF", "vIBSUF")).doubleValue());
+        r.put("ALIQ_CBS", dec(txt(g, "gCBS", "pCBS")).doubleValue());
+        r.put("VLR_CBS", dec(txt(g, "gCBS", "vCBS")).doubleValue());
+    }
+
+    private static Map<String, Object> reformaCapa(Map<String, String> l08, Element ibsCbs, Element g,
+                                                   Element infCte) {
+        Map<String, Object> r = chaveReforma(l08);
+        // Lista do manual: 1 = NFS-e, 2 = NF-e, 3 = CT-e
+        r.put("TIPO_CHAVE_DFE", "3");
+        valoresIbsCbs(r, ibsCbs, g);
+        r.put("ALIQ_IBS_MUN", dec(txt(g, "gIBSMun", "pIBSMun")).doubleValue());
+        r.put("VLR_IBS_MUN", dec(txt(g, "gIBSMun", "vIBSMun")).doubleValue());
+        // Totais do documento: o CT-e não tem IBSCBSTot, vale o grupo do único item
+        r.put("VLR_TOT_BC_IBS_CBS", dec(txt(g, "vBC")).doubleValue());
+        r.put("VLR_TOT_IBS_UF", dec(txt(g, "gIBSUF", "vIBSUF")).doubleValue());
+        r.put("VLR_TOT_IBS_MUN", dec(txt(g, "gIBSMun", "vIBSMun")).doubleValue());
+        r.put("VLR_TOT_IBS", dec(txt(g, "vIBS")).doubleValue());
+        r.put("VLR_TOT_CBS", dec(txt(g, "gCBS", "vCBS")).doubleValue());
+        r.put("VLR_TOT_NF_IBS_CBS_IS", dec(txt(infCte, "imp", "vTotDFe")).doubleValue());
+        return r;
+    }
+
+    private static Map<String, Object> reformaItem(Map<String, String> l08, Element ibsCbs, Element g,
+                                                   String vTPrest) {
+        Map<String, Object> r = chaveReforma(l08);
+        for (String campo : new String[]{"IND_BEM_PATR", "IND_PRODUTO", "COD_PRODUTO", "COD_UND_PADRAO", "NUM_ITEM"}) {
+            r.put(campo, l08.get(campo));
+        }
+        valoresIbsCbs(r, ibsCbs, g);
+        r.put("VLR_TOT_ITEM", dec(vTPrest).doubleValue());
         return r;
     }
 

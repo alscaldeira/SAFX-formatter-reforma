@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public final class TestesReforma {
         capaEItemDeMercadoria(base);
         itemDeServico(base);
         documentoSemIbsCbs(base);
+        cteComIbsCbs(base);
+        cteSemIbsCbs(base);
         ordemConfirmadaGeraTxt(base);
     }
 
@@ -112,6 +115,82 @@ public final class TestesReforma {
                 camposDoTxt(caso, "SAFX3009") == 64, "" + camposDoTxt(caso, "SAFX3009"));
     }
 
+    private static void cteComIbsCbs(Path base) throws IOException {
+        Path caso = Fixtures.caso(base, "reforma-cte");
+        Fixtures.escrever(caso, "frete.xml", Fixtures.cteComIbsCbs(true));
+        Fixtures.escrever(caso, "venda.xml", Fixtures.nfeComIbsCbs());
+        System.setProperty("user.dir", caso.resolve("out").toString());
+        Conversao.apartirDeXml(caso.resolve("xmls").toString());
+
+        List<String> capa = csv(caso, "SAFX3007");
+        Assercoes.check("reforma CT-e: SAFX3007 com NF-e + CT-e", capa.size() == 3, "" + capa.size());
+        List<String> item = csv(caso, "SAFX3008");
+        Assercoes.check("reforma CT-e: SAFX3008 com NF-e + CT-e", item.size() == 3, "" + item.size());
+        if (capa.size() < 3 || item.size() < 3) return;
+
+        // a linha do CT-e é a última (NF-e vem da leitura do XmlLeitor, CT-e é acrescentado)
+        List<String> capaCte = List.of(capa.get(0), capa.get(2));
+        List<String> itemCte = List.of(item.get(0), item.get(2));
+        Assercoes.check("reforma CT-e: TIPO_CHAVE_DFE = 3", valor(capaCte, "TIPO_CHAVE_DFE").equals("3"),
+                valor(capaCte, "TIPO_CHAVE_DFE"));
+        Assercoes.check("reforma CT-e: COD_DOCTO CT-E", valor(capaCte, "COD_DOCTO").equals("CT-E"),
+                valor(capaCte, "COD_DOCTO"));
+        Assercoes.check("reforma CT-e: CST e classificação", valor(capaCte, "CST_IBS_CBS").equals("000")
+                && valor(capaCte, "CCLASS_IBS_CBS").equals("000001"), valor(capaCte, "CST_IBS_CBS"));
+        Assercoes.check("reforma CT-e: VLR_IBS_UF", valor(capaCte, "VLR_IBS_UF").equals(numero("SAFX3007", "VLR_IBS_UF", 1.00)),
+                valor(capaCte, "VLR_IBS_UF"));
+        Assercoes.check("reforma CT-e: VLR_IBS_MUN", valor(capaCte, "VLR_IBS_MUN").equals(numero("SAFX3007", "VLR_IBS_MUN", 0.50)),
+                valor(capaCte, "VLR_IBS_MUN"));
+        Assercoes.check("reforma CT-e: VLR_TOT_IBS", valor(capaCte, "VLR_TOT_IBS").equals(numero("SAFX3007", "VLR_TOT_IBS", 1.50)),
+                valor(capaCte, "VLR_TOT_IBS"));
+        Assercoes.check("reforma CT-e: VLR_TOT_CBS", valor(capaCte, "VLR_TOT_CBS").equals(numero("SAFX3007", "VLR_TOT_CBS", 9.00)),
+                valor(capaCte, "VLR_TOT_CBS"));
+        Assercoes.check("reforma CT-e: total do documento = vTotDFe",
+                valor(capaCte, "VLR_TOT_NF_IBS_CBS_IS").equals(numero("SAFX3007", "VLR_TOT_NF_IBS_CBS_IS", 1010.50)),
+                valor(capaCte, "VLR_TOT_NF_IBS_CBS_IS"));
+
+        // a chave tem de bater campo a campo com o SAFX08 do CT-e
+        List<String> s08 = csv(caso, "SAFX08");
+        List<String> s08Cte = new ArrayList<>();
+        s08Cte.add(s08.get(0));
+        for (int i = 1; i < s08.size(); i++) {
+            if (valor(List.of(s08.get(0), s08.get(i)), "COD_DOCTO").equals("CT-E")) s08Cte.add(s08.get(i));
+        }
+        Assercoes.check("reforma CT-e: SAFX08 do CT-e encontrado", s08Cte.size() == 2, "" + s08Cte.size());
+        if (s08Cte.size() < 2) return;
+        for (String c : new String[]{"COD_EMPRESA", "COD_ESTAB", "DATA_FISCAL", "MOVTO_E_S", "NORM_DEV", "COD_DOCTO",
+                "IND_FIS_JUR", "COD_FIS_JUR", "NUM_DOCFIS", "SERIE_DOCFIS", "SUB_SERIE_DOCFIS"}) {
+            Assercoes.check("reforma CT-e: " + c + " do 3007 = SAFX08", valor(capaCte, c).equals(valor(s08Cte, c)),
+                    valor(capaCte, c) + " x " + valor(s08Cte, c));
+            Assercoes.check("reforma CT-e: " + c + " do 3008 = SAFX08", valor(itemCte, c).equals(valor(s08Cte, c)),
+                    valor(itemCte, c) + " x " + valor(s08Cte, c));
+        }
+        for (String c : new String[]{"IND_PRODUTO", "COD_PRODUTO", "COD_UND_PADRAO", "NUM_ITEM"}) {
+            Assercoes.check("reforma CT-e: " + c + " do 3008 = SAFX08", valor(itemCte, c).equals(valor(s08Cte, c)),
+                    valor(itemCte, c) + " x " + valor(s08Cte, c));
+        }
+        Assercoes.check("reforma CT-e: VLR_TOT_ITEM = VLR_ITEM do SAFX08",
+                valor(itemCte, "VLR_TOT_ITEM").equals(numero("SAFX3008", "VLR_TOT_ITEM", 1000.00)),
+                valor(itemCte, "VLR_TOT_ITEM"));
+        Assercoes.check("reforma CT-e: alíquota da CBS no item", valor(itemCte, "ALIQ_CBS")
+                .equals(numero("SAFX3008", "ALIQ_CBS", 0.90)), valor(itemCte, "ALIQ_CBS"));
+    }
+
+    private static void cteSemIbsCbs(Path base) throws IOException {
+        Path caso = Fixtures.caso(base, "reforma-cte-ausente");
+        Fixtures.escrever(caso, "frete.xml", Fixtures.cteComIbsCbs(false));
+        System.setProperty("user.dir", caso.resolve("out").toString());
+        List<String> avisos = Conversao.apartirDeXml(caso.resolve("xmls").toString());
+
+        Assercoes.check("reforma CT-e: sem imp/IBSCBS não gera SAFX3007/3008",
+                csv(caso, "SAFX3007").size() <= 1 && csv(caso, "SAFX3008").size() <= 1,
+                csv(caso, "SAFX3007").size() + "/" + csv(caso, "SAFX3008").size());
+        Assercoes.check("reforma CT-e: ausência do grupo vira aviso",
+                avisos.stream().anyMatch(a -> a.contains("CT-e sem grupo IBS/CBS")), String.valueOf(avisos));
+        Assercoes.check("reforma CT-e: SAFX07/08 continuam sendo gerados",
+                Fixtures.linhas(caso, "SAFX07").size() == 1 && Fixtures.linhas(caso, "SAFX08").size() == 1, "");
+    }
+
     private static void documentoSemIbsCbs(Path base) throws IOException {
         Path caso = Fixtures.caso(base, "reforma-ausente");
         Fixtures.escrever(caso, "antiga.xml",
@@ -191,7 +270,10 @@ public final class TestesReforma {
         String[] cabecalho = csv.get(0).replace("﻿", "").split(";", -1);
         String[] valores = csv.get(1).split(";", -1);
         for (int i = 0; i < cabecalho.length; i++) {
-            if (cabecalho[i].equals(campo)) return i < valores.length ? valores[i] : "";
+            if (cabecalho[i].equals(campo)) {
+                // desfaz a proteção ="..." que o CSV põe contra o Excel
+                return i < valores.length ? valores[i].replaceAll("^\"=\"\"(.*)\"\"\"$", "$1") : "";
+            }
         }
         return "";
     }
